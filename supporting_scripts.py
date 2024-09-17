@@ -47,7 +47,18 @@ def extract_equation(latex_string):
     if match:
         # Extract the equation
         equation = match.group(1)
+        def replace_frac(match):
+            numerator = match.group(1)
+            denominator = match.group(2)
+            return f"(({numerator})/({denominator}))"
 
+        # First, handle fractions
+        #pattern = r'\\frac\{([^{}]+)\}\{([^{}]+)\}'
+        pattern = r'\\frac\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}'
+        equation = re.sub(pattern, replace_frac, equation)
+        #equation = re.sub(pattern, r'((\1)/(\2))', equation)
+        print(equation)
+        
         # Remove curly brackets
         # find better solution, maybe more underscores
         equation = re.sub(r'\{', '_lcb_', equation)
@@ -84,12 +95,6 @@ def reconstruct_latex(equation_string):
     return latex_string
 
 
-latex_string = r"""
-\begin{equation}
-    h_{LH_{pit}}(E2, P4, G\mhyphen R, LH_{pit}) = (b^{LH}_{syn}+k^{LH}_{E2} * X_{E2}) * (1-X_{P4}) \\ -(b^{LH}_{Rel}+k^{LH}_{G\mhyphen R} * X_{G\mhyphen R}) * X_{LH_{pit}}
-\end{equation}
-"""
-
 # Function to generate a truth table
 def generate_truth_table(num_vars):
     truth_table = list(product([0, 1], repeat=num_vars))
@@ -123,34 +128,62 @@ def infer_boolean_function(truth_table, num_vars):
 
 def evaluate_equation(latex_string):
     extracted_equation = extract_equation(latex_string)
-    print(extracted_equation)
+    #print(extracted_equation)
     extracted_variables = extract_variables(extracted_equation)
-    print(extracted_variables)
+    #print(extracted_variables)
     extended_variables = extend_variables_with_x(extracted_variables)
-    print(extended_variables)
+    #print(extended_variables)
 
     num_vars = len(extracted_variables)
     rhs = extracted_equation.split("=")[1]
     truth_table = generate_truth_table(num_vars)
     results = list()
     for row in truth_table:
-        print()
-        print(rhs)
-        print()
+        #print()
+        #print(rhs)
+        #print()
         new_rhs = rhs
         #rhs_tmp = rhs.copy()
         for i in range(num_vars):
             new_rhs = new_rhs.replace(extended_variables[i], str(row[i]))
-        print(new_rhs)
+        #print(new_rhs)
         lhs = eval(new_rhs)
-        results.append(lhs)
+        sgn_lhs = 0
+        if lhs > 0:
+            sgn_lhs = 1
+        elif lhs < 0:
+            sgn_lhs = -1
+        results.append(sgn_lhs)
     for res in results:
         print(res)
     #reconstructed = reconstruct_latex(extracted_equation)
     #print(reconstructed)
 
+lh_pit = r"""
+\begin{equation}
+    h_{LH_{pit}}(E2, P4, G\mhyphen R, LH_{pit}) = (b^{LH}_{syn}+k^{LH}_{E2} * X_{E2}) * (1-X_{P4}) \\ -(b^{LH}_{Rel}+k^{LH}_{G\mhyphen R} * X_{G\mhyphen R}) * X_{LH_{pit}}
+\end{equation}
+"""
 
-evaluate_equation(latex_string)
+lh_blood = r"""
+\begin{equation}
+    h_{LH_{blood}}(G\mhyphen R, LH_{pit}, R_{LH}, LH_{blood}) = \frac{1}{V_{blood}} * (b^{LH}_{Rel}+k^{LH}_{G\mhyphen R} * X_{G\mhyphen R}) * X_{LH_{pit}} \\ -(k^{LH}_{on} * X_{R_{LH}}+k^{LH}_{cl}) * X_{LH_{blood}}
+\end{equation}
+"""
+
+fsh_pit = r"""
+\begin{equation}
+    h_{FSH_{pit}}(IhA_e, IhB, freq, G\mhyphen R, FSH_{pit}) \\ = (1-X_{IhA_e}) * (1-X_{IhB}) * (1-X_{freq}) \\ - (b^{FSH}_{Rel}+k^{FSH}_{G\mhyphen R} * X_{G\mhyphen R}) * X_{FSH_{pit}}
+\end{equation}
+"""
+
+fsh_blood = r"""
+\begin{equation}
+    h_{FSH_{blood}}(G\mhyphen R, FSH_{pit}, R_{FSH}, FSH_{blood}) \\ = \frac{1}{V_{blood}} * (b^{FSH}_{Rel}+k^{FSH}_{G\mhyphen R} * X_{G\mhyphen R}) * X_{FSH_{pit}} \\ - (k^{FSH}_{on} * X_{R_{FSH}} + k^{FSH}_{cl}) * X_{FSH_{blood}}
+\end{equation}
+"""
+
+evaluate_equation(fsh_blood)
 
 """
 # Example usage
