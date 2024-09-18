@@ -2,7 +2,6 @@ import re
 from parameters import *
 from variable_handler import Variable_handler
 from equations import edes
-from sympy import simplify_logic
 
 
 def variable_latex_to_python(latex_string):
@@ -18,31 +17,14 @@ def variable_latex_to_python(latex_string):
 
 
 
-def reconstruct_latex(equation_string):
-    # Replace underscores and symbols back to their LaTeX equivalents
-    equation = re.sub(r'_lcb_', '{', equation_string)  # Replace custom _lcb_ with {
-    equation = re.sub(r'_rcb_', '}', equation)         # Replace custom _rcb_ with }
-    equation = re.sub(r'_pwr_', '^', equation)         # Replace custom _pwr_ with ^
-    equation = re.sub(r'_hyp_', r'\\mhyphen ', equation)  # Replace custom _hyp_ with \mhyphen
-    equation = re.sub(r'&', 'and', equation)           # Replace & with "and"
-    equation = re.sub(r'\|', 'or', equation)           # Replace | with "or"
-    equation = re.sub(r'!', 'not ', equation)          # Replace ! with "not"
-
-    # Wrap the result back into LaTeX equation format
-    latex_string = f"\\begin{{equation}}\n{equation}\n\\end{{equation}}"
-
-    return latex_string
+with open("boolean_functions_latex.txt", "w") as boolfuncs_latex:
+    for eq in edes:
+        vh = Variable_handler(eq)
+        vh.infer_boolean_function()
+        print(vh.boolean_function_latex, file=boolfuncs_latex, end='\n\n')
+        print(vh.name)
 
 
-
-
-lh_pit = Variable_handler(edes[0])
-lh_pit.infer_boolean_function()
-print(simplify_logic(lh_pit.boolean_function))
-
-lh_blood = Variable_handler(edes[1])
-lh_blood.infer_boolean_function()
-print(simplify_logic(lh_blood.boolean_function))
 """
 # Example usage
 num_vars = 3  # Number of input variables

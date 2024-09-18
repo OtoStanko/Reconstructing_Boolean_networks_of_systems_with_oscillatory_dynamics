@@ -1,6 +1,7 @@
 import re
 from itertools import product
 from parameters import *
+from sympy import simplify_logic
 
 
 def bp(orig, a):
@@ -33,6 +34,7 @@ class Variable_handler():
         self.name = ''
         self.update_values = []
         self.boolean_function = ''
+        self.boolean_function_latex = ''
 
 
         maybe_equation = self.extract_equation(equation_string)
@@ -49,6 +51,7 @@ class Variable_handler():
             self.rhs = re.sub(r',', '_c_', rhs)
 
             name_string = self.extract_name_string()
+            name_string = re.sub(r'\,', '_c_', name_string)
             name_extended = self.extend_variables_with_x([name_string])
             self.name = name_extended[0]
 
@@ -157,8 +160,6 @@ class Variable_handler():
         whole_table = []
         for i in range(len(self.truth_table)):
             whole_table.append([x for x in self.truth_table[i]] + [results[i]])
-        for res in results:
-            print(res)
         self.sgn_vector = results
         return whole_table
         #reconstructed = reconstruct_latex(extracted_equation)
@@ -171,6 +172,12 @@ class Variable_handler():
         for i in range(len(self.truth_table)):
             x_k_1.append(bp(self.truth_table[i][variable_index], self.sgn_vector[i]))
         self.update_values = x_k_1
+
+
+    def replace_match(self, match):
+        index = int(match.group(1))  # Extract the number 'i' from 'x<i>'
+        if index < len(self.input_variables):
+            return self.input_variables[index]
 
     
     # Function to infer the boolean function from the truth table (SOP form)
@@ -195,5 +202,28 @@ class Variable_handler():
             boolean_function = " | ".join(min_terms)
         else:
             boolean_function = "0"  # If no min-terms, the function is always false
-        self.boolean_function = boolean_function
-        return boolean_function
+        simplified_boolean_function = str(simplify_logic(boolean_function))
+        pattern = r'x(\d+)'
+        sbf_input_var_names = re.sub(pattern, self.replace_match, simplified_boolean_function)
+        self.boolean_function = sbf_input_var_names
+        sbf_plus_name = self.name + " = " + self.boolean_function
+        self.boolean_function_latex = self.reconstruct_latex(sbf_plus_name)
+        return simplified_boolean_function
+
+
+    def reconstruct_latex(self, equation_string):
+        # Replace underscores and symbols back to their LaTeX equivalents
+        equation = re.sub(r'_c_', r',', equation_string)
+        equation = re.sub(r'_lcb_', r'{', equation_string)  # Replace custom _lcb_ with {
+        equation = re.sub(r'_rcb_', r'}', equation)         # Replace custom _rcb_ with }
+        equation = re.sub(r'_pwr_', r'^', equation)         # Replace custom _pwr_ with ^
+        equation = re.sub(r'_hyp_', r'\\mhyphen ', equation)  # Replace custom _hyp_ with \mhyphen
+        equation = re.sub(r'&', r'\\And', equation)           # Replace & with "and"
+        equation = re.sub(r'\|', r'\\Or', equation)           # Replace | with "or"
+        equation = re.sub(r'~', r'\\neg ', equation)          # Replace ! with "not"
+
+        # Wrap the result back into LaTeX equation format
+        latex_string = f"""\\begin{{equation}} {equation} \\end{{equation}}"""
+        print(latex_string)
+        return latex_string
+    
