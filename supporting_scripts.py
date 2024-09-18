@@ -1,31 +1,11 @@
 import re
-from itertools import product
 from parameters import *
+from variable_handler import Variable_handler
 
-
-
-def extract_variables(string):
-    # Find the content inside normal brackets ()
-    match = re.search(r'\((.*?)\)', string)
-    
-    if match:
-        # Extract the content inside the brackets
-        variables_str = match.group(1)
-        # Split the string by commas and strip any extra spaces around the variable names
-        variables_list = [var.strip() for var in variables_str.split(',')]
-        return variables_list
-    else:
-        return []
-
-
-def extend_variables_with_x(variables):
-    extended = []
-    for variable in variables:
-        extended.append("X__lcb_" + variable + "_rcb_")
-    return extended
 
 
 def variable_latex_to_python(latex_string):
+    latex_string = re.sub(r'\,', '_c_', latex_string)
     latex_string = re.sub(r'\{', '_lcb_', latex_string)
     latex_string = re.sub(r'\}', '_rcb_', latex_string)
     # Replace ^ with underscores
@@ -35,48 +15,6 @@ def variable_latex_to_python(latex_string):
     print(latex_string)
     return latex_string
 
-
-
-def extract_equation(latex_string):
-    # Define the regular expression pattern to match the equation
-    pattern = r'\\begin{equation}\s*(.*?)\s*\\end{equation}'
-
-    # Use re.DOTALL to match across multiple lines
-    match = re.search(pattern, latex_string, re.DOTALL)
-
-    if match:
-        # Extract the equation
-        equation = match.group(1)
-        def replace_frac(match):
-            numerator = match.group(1)
-            denominator = match.group(2)
-            return f"(({numerator})/({denominator}))"
-
-        # First, handle fractions
-        #pattern = r'\\frac\{([^{}]+)\}\{([^{}]+)\}'
-        pattern = r'\\frac\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}'
-        equation = re.sub(pattern, replace_frac, equation)
-        #equation = re.sub(pattern, r'((\1)/(\2))', equation)
-        print(equation)
-        
-        # Remove curly brackets
-        # find better solution, maybe more underscores
-        equation = re.sub(r'\{', '_lcb_', equation)
-        equation = re.sub(r'\}', '_rcb_', equation)
-        # Remove the line cuts
-        equation = re.sub(r'\\\\', '', equation)
-        # Replace ^ with underscores
-        equation = re.sub(r'\^', '_pwr_', equation)
-        # Replace \mhyphen with underscores
-        equation = re.sub(r'\\mhyphen ', '_hyp_', equation)
-        # Replace ands, ors and negations
-        equation = re.sub(r'and', '&', equation)
-        equation = re.sub(r'or', '|', equation)
-        equation = re.sub(r'not ', '!', equation)
-
-        return equation
-    else:
-        return None
 
 
 def reconstruct_latex(equation_string):
@@ -95,69 +33,6 @@ def reconstruct_latex(equation_string):
     return latex_string
 
 
-# Function to generate a truth table
-def generate_truth_table(num_vars):
-    truth_table = list(product([0, 1], repeat=num_vars))
-    reversed_truth_table = [row[::-1] for row in truth_table]
-    return reversed_truth_table
-    #truth_table = [list(row) for row in enumerate(input_combinations)]
-    #return truth_table
-
-
-# Function to infer the boolean function from the truth table (SOP form)
-def infer_boolean_function(truth_table, num_vars):
-    min_terms = []
-    for row in truth_table:
-        inputs = row[:num_vars]
-        output = row[-1]
-        if output == 1:  # Only consider rows where output is 1
-            term = []
-            for i, val in enumerate(inputs):
-                if val == 1:
-                    term.append(f"x{i+1}")
-                else:
-                    term.append(f"~x{i+1}")
-            min_terms.append(" & ".join(term))
-    # Create the sum of products (OR of AND terms)
-    if min_terms:
-        boolean_function = " | ".join(min_terms)
-    else:
-        boolean_function = "0"  # If no min-terms, the function is always false
-    return boolean_function
-
-
-def evaluate_equation(latex_string):
-    extracted_equation = extract_equation(latex_string)
-    #print(extracted_equation)
-    extracted_variables = extract_variables(extracted_equation)
-    #print(extracted_variables)
-    extended_variables = extend_variables_with_x(extracted_variables)
-    #print(extended_variables)
-
-    num_vars = len(extracted_variables)
-    rhs = extracted_equation.split("=")[1]
-    truth_table = generate_truth_table(num_vars)
-    results = list()
-    for row in truth_table:
-        #print()
-        #print(rhs)
-        #print()
-        new_rhs = rhs
-        #rhs_tmp = rhs.copy()
-        for i in range(num_vars):
-            new_rhs = new_rhs.replace(extended_variables[i], str(row[i]))
-        #print(new_rhs)
-        lhs = eval(new_rhs)
-        sgn_lhs = 0
-        if lhs > 0:
-            sgn_lhs = 1
-        elif lhs < 0:
-            sgn_lhs = -1
-        results.append(sgn_lhs)
-    for res in results:
-        print(res)
-    #reconstructed = reconstruct_latex(extracted_equation)
-    #print(reconstructed)
 
 lh_pit = r"""
 \begin{equation}
@@ -183,8 +58,204 @@ fsh_blood = r"""
 \end{equation}
 """
 
-evaluate_equation(fsh_blood)
+rfsh = r"""
+\begin{equation}
+    h_{R_{FSH}}(R_{FSH,des}, FSH_{blood}, R_{FSH}) \\ = k^{FSH}_{recy} * X_{R_{FSH,des}} - k^{FSH}_{on} * X_{FSH_{blood}} * X_{R_{FSH}}
+\end{equation}
+"""
 
+fshr = r"""
+\begin{equation}
+    h_{FSH\mhyphen R}(FSH_{blood}, R_{FSH}, FSH\mhyphen R) \\ = k^{FSH}_{on} * X_{FSH_{blood}} * X_{R_{FSH}} - k^{FSH}_{des} * X_{FSH\mhyphen R}
+\end{equation}
+"""
+
+rfshdes = r"""
+\begin{equation}
+    k_{R_{FSH,des}}(FSH\mhyphen R, R_{FSH,des}) \\ = k^{FSH}_{des} * X_{FSH\mhyphen R} - k^{FSH}_{recy} * X_{R_{FSH,des}}
+\end{equation}
+"""
+
+rlh = r"""
+\begin{equation}
+    h_{R_{LH}}(R_{LH,des}, LH_{blood}, R_{LH}) \\ = k^{LH}_{recy} * X_{R_{LH,des}} - k^{LH}_{on} * X_{LH_{blood}} * X_{R_{LH}}
+\end{equation}
+"""
+
+lhr = r"""
+\begin{equation}
+    h_{LH\mhyphen R}(LH_{blood}, R_{LH}, LH\mhyphen R) \\ = k^{LH}_{on} * X_{LH_{blood}} * X_{R_{LH}} - k^{LH}_{des} * X_{LH\mhyphen R}
+\end{equation}
+"""
+
+rlhdes = r"""
+\begin{equation}
+    h_{R_{LH,des}}(LH\mhyphen R, R_{LH,des}) = k^{LH}_{des} * X_{LH\mhyphen R} - k^{LH}_{recy} * X_{R_{LH,des}}
+\end{equation}
+"""
+
+eqs = r"""
+\begin{equation}
+    k_s(FSH, P4, s) = k^{s} * X_{FSH} - k^{s}_{cl} * X_{P4} * X_{s}
+\end{equation}
+"""
+
+af1 = r"""
+\begin{equation}
+    h_{AF1}(FSH\mhyphen R, AF1) \\ = K^{AF1} * X_{FSH\mhyphen R} - k^{AF2}_{AF1} * X_{FSH\mhyphen R} * X_{AF1}
+\end{equation}
+"""
+
+af2 = r"""
+\begin{equation}
+    h_{AF2}(FSH\mhyphen R, AF1, LH\mhyphen R, s, AF2) \\ = k^{AF2}_{AF1} * X_{FSH\mhyphen R} * X_{AF1} - k^{AF3}_{AF2} * \frac{X_{LH\mhyphen R}}{SF_{LH}R} * X_{s} * X_{AF2}
+\end{equation}
+"""
+
+af3 = r"""
+\begin{equation}
+    h_{AF3}(LH\mhyphen R, s, AF2, FSH\mhyphen R, AF3) \\ =  k^{AF3}_{AF2} * \frac{X_{LH\mhyphen R}}{SF_{LH}R} * X_{s} * X_{AF2} \\ + k^{AF3}_{AF3} * X_{FSH\mhyphen R} * X_{AF3} *(1-\frac{X_{AF3}}{SeF_{max}}) \\ - k^{AF4}_{AF3} * \frac{X_{LH\mhyphen R}}{SF_{LH}R} * X_{s} * X_{AF3}
+\end{equation}
+"""
+
+af4 = r"""
+\begin{equation}
+    h_{AF4}(LH\mhyphen R, s, AF3, AF4) \\ = k^{AF4}_{AF3} * \frac{X_{LH\mhyphen R}}{SF_{LH}R} * X_{s} * X_{AF3} \\ + k^{AF4}_{AF4} * \frac{X_{LH\mhyphen R}}{SF_{LH}R} * X_{AF4} * (1-\frac{X_{AF4}}{SeF_{max}}) \\ - k^{PrF}_{AF4} * \frac{X_{LH\mhyphen R}}{SF_{LH}R} * X_{s} * X_{AF4}
+\end{equation}
+"""
+
+prf = r"""
+\begin{equation}
+    h_{PrF}(LH\mhyphen R, s, AF4, PrF) \\ = k^{PrF}_{AF4} * \frac{X_{LH\mhyphen R}}{SF_{LH}R} * X_{s} * X_{AF4} \\ - k^{PrF}_{cl} * \frac{X_{LH\mhyphen R}}{SF_{LH}R} * X_{s} * X_{PrF}
+\end{equation}
+"""
+
+ovf = r"""
+\begin{equation}
+    h_{OvF}(LH\mhyphen R, s, PrF, OvF) \\ = k^{OvF} * \frac{X_{LH\mhyphen R}}{SF_{LH}R} * X_{s} * X_{PrF} - k^{OvF}_{cl} * X_{OvF}
+\end{equation}
+"""
+
+sc1 = r"""
+\begin{equation}
+    h_{Sc1}(OvF, Sc1) = k^{Sc1} * X_{OvF} - k^{Sc2}_{Sc1} * X_{Sc1}
+\end{equation}
+"""
+
+sc2 = r"""
+\begin{equation}
+    h_{Sc2}(Sc1, Sc2) = k^{Sc2}_{Sc1} * X_{Sc1} - k^{Lut1}_{Sc2} * X_{Sc2}
+\end{equation}
+"""
+
+lut1 = r"""
+\begin{equation}
+    h_{Lut1}(Sc2, G\mhyphen R_{a}, Lut1) \\ = k^{Lut1}_{Sc2} * X_{Sc2} - k^{Lut2}_{Lut1} * (1+m^{Lut}_{G\mhyphen R} * X_{G\mhyphen R_{a}})*X_{Lut1}
+\end{equation}
+"""
+
+lut2 = r"""
+\begin{equation}
+    h_{Lut2}(G\mhyphen R_{a}, Lut1, Lut2) \\ = k^{Lut2}_{Lut1} * (1+m^{Lut}_{G\mhyphen R} * X_{G\mhyphen R_{a}})*X_{Lut1} \\ - k^{Lut3}_{Lut2} * (1+m^{Lut}_{G\mhyphen R} * X_{G\mhyphen R_{a}})*X_{Lut2}
+\end{equation}
+"""
+
+lut3 = r"""
+\begin{equation}
+    h_{Lut3}(G\mhyphen R_{a}, Lut2, Lut3) \\ = k^{Lut3}_{Lut2} * (1+m^{Lut}_{G\mhyphen R} * X_{G\mhyphen R_{a}})*X_{Lut2} \\ - k^{Lut4}_{Lut3} * (1+m^{Lut}_{G\mhyphen R} * X_{G\mhyphen R_{a}})*X_{Lut3}
+\end{equation}
+"""
+
+lut4 = r"""
+\begin{equation}
+    h_{Lut4}(G\mhyphen R_{a}, Lut3, Lut4) \\ = k^{Lut4}_{Lut3} * (1+m^{Lut}_{G\mhyphen R} * X_{G\mhyphen R_{a}})*X_{Lut3} \\ - k^{Lut4}_{cl} * (1+m^{Lut}_{G\mhyphen R} * X_{G\mhyphen R_{a}})*X_{Lut4}
+\end{equation}
+"""
+
+e2 = r"""
+\begin{equation}
+    h_{E2}(AF2, AF3, AF4, LH, Prf, Lut1, Lut4, E2) \\ = b^{E2} + k^{E2}_{AF2} * X_{AF2} + k^{E2}_{AF3} * X_{LH} * X_{AF3} + k^{E2}_{AF4} * X_{AF4} + k^{E2}_{Prf} * X_{LH} * X_{PrF} k^{E2}_{Lut1} * X_{Lut1} + k^{E2}_{Lut4} * X_{Lut4} - k^{E2}_{cl} * X_{E2}
+\end{equation}
+"""
+
+p4 = r"""
+\begin{equation}
+    h_{P4}(Lut4, P4) = b^{P4} + k^{P4}_{Lut4} * X_{Lut4} - k^{P4}_{cl} * X_{P4}
+\end{equation
+"""
+
+iha = r"""
+\begin{equation}
+    h_{IhA}(PrF, Sc1, Lut1, Lut2, Lut3, Lut4, IhA) \\ = b^{IhA} + k^{IhA}_{PrF} * X_{PrF} + k^{IhA}_{Sc1}*X_{Sc1} + k^{IhA}_{Lut1} * X_{Lut1} + k^{IhA}_{Lut2} * X_{Lut2} + k^{IhA}_{Lut3} * X_{Lut3} + k^{IhA}_{Lut4} * X_{Lut4} - k^{IhA} * X_{IhA}
+\end{equation}
+"""
+
+ihb = r"""
+\begin{equation}
+    h_{IhB}(AF2, Sc2, IhB) \\ = b^{IhB} + k^{IhB}_{AF2} * X_{AF2} + k^{IhB}_{SC2} * X_{Sc2} - k^{IhB}_{cl} * X_{IhB}
+\end{equation}
+"""
+
+ihae = r"""
+\begin{equation}
+    h_{IhA_{e}}(IhA, IhA_{e}) \\ = k^{IhA} * X_{IhA} - k^{IhA_{e}}_{cl} * X_{IhA_{e}}
+\end{equation}
+"""
+
+freq = r"""
+\begin{equation}
+    freq(P4, E2) = f_{0} * (1-X_{P4}) * (1 + m^{freq}_{E2} * X_{E2})
+\end{equation}
+"""
+
+mass = r"""
+\begin{equation}
+    mass(E2) = alpha_{0} * X_{E2} + (1-X_{E2})
+\end{equation}
+"""
+
+gnrh = r"""
+\begin{equation}
+    h_{GnRH}(mass, freq, GnRH, R_{G,a}, G\mhyphen R_{a}) \\ = X_{mass} * X_{freq} - k^{GnRH}_{on} * X_{GnRH} * X_{R_{G,a}} + k^{GnRH}_{off} * X_{G\mhyphen R_{a}} - k^{GnRH}_{deg} * X_{GnRH}
+\end{equation}
+"""
+
+rga = r"""
+\begin{equation}
+    h_{R_{G,a}}(G\mhyphen R, GnRH, R_{G,a}, R_{G,i}) \\ = k^{GnRH}_{off} * X_{G\mhyphen R} - k^{GnRH}_{on} * X_{GnRH} * X_{R_{G,a}} - k^{R_{G}}_{inter} * X_{R_{G,a}} + k^{R_{G}}_{recy} * X_{R_{G,i}}
+\end{equation}
+"""
+
+rgi = r"""
+\begin{equation}
+    h_{R_{G,i}}(G\mhyphen R_{i}, R_{G,a}, R_{G,i}) \\ = k^{G\mhyphen R_{i}}_{diss} * X_{G\mhyphen R_{i}} + k^{R_{G}}_{inter} * X_{R_{G,a}} - k^{R_{G}}_{recy} * X_{R_{G,i}} + k^{R_{G}}_{syn} - k^{R_{G}}_{degr} * X_{R_{G,i}}
+\end{equation}
+"""
+
+gra = r"""
+\begin{equation}
+    h_{G\mhyphen R_{a}}(GnRH, R_{G,a}, G\mhyphen R_{a}, G\mhyphen R_{i}) \\ = k^{GnRH}_{on} * X_{GnRH} * X_{R_{G,a}} - k^{GnRH}_{off} * X_{G\mhyphen R_{a}} - k^{G\mhyphen R}_{inact} * X_{G\mhyphen R_{a}} + k^{G\mhyphen R}_{act} * X_{G\mhyphen R_{i}}
+\end{equation}
+"""
+
+gri = r"""
+\begin{equation}
+    h_{G\mhyphen R_{i}}(G\mhyphen R_{a}, G\mhyphen R_{i}) \\ = k^{G\mhyphen R}_{inact} * X_{G\mhyphen R_{a}} - k^{G\mhyphen R}_{act} * X_{G\mhyphen R_{i}} - k^{G\mhyphen R}_{degr} * X_{G\mhyphen R_{i}} - k^{G\mhyphen R_{i}}_{diss} * X_{G\mhyphen R_{i}}
+\end{equation}
+"""
+
+gri = Variable_handler(gri, variable_latex_to_python("G\mhyphen R_{i}"))
+#table = evaluate_equation(lh_pit)
+#print(table)
+
+from sympy import simplify_logic
+lh_pit = Variable_handler(lh_pit, variable_latex_to_python("LH_{pit}"))
+lh_pit.infer_boolean_function()
+print(simplify_logic(lh_pit.boolean_function))
+
+lh_blood = Variable_handler(lh_blood, variable_latex_to_python("LH_{blood}"))
+lh_blood.infer_boolean_function()
+print(simplify_logic(lh_blood.boolean_function))
 """
 # Example usage
 num_vars = 3  # Number of input variables
