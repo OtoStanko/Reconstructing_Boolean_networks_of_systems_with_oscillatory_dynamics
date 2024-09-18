@@ -11,8 +11,19 @@ def bp(orig, a):
         return orig
 
 
+def variable_latex_to_python(latex_string):
+    latex_string = re.sub(r'\,', '_c_', latex_string)
+    latex_string = re.sub(r'\{', '_lcb_', latex_string)
+    latex_string = re.sub(r'\}', '_rcb_', latex_string)
+    # Replace ^ with underscores
+    latex_string = re.sub(r'\^', '_pwr_', latex_string)
+    # Replace \mhyphen with underscores
+    latex_string = re.sub(r'\\mhyphen ', '_hyp_', latex_string)
+    return latex_string
+
+
 class Variable_handler():
-    def __init__(self, equation_string, name_string):
+    def __init__(self, equation_string):
         self.equation = ''
         self.rhs = ''
         self.truth_table = []
@@ -23,20 +34,33 @@ class Variable_handler():
         self.update_values = []
         self.boolean_function = ''
 
+
         maybe_equation = self.extract_equation(equation_string)
         if maybe_equation is not None:
             self.equation = maybe_equation
-            variable_names_original = self.extract_variables(self.equation)
+            variable_names_original = self.extract_variables()
             self.num_vars = len(variable_names_original)
             for i in range(self.num_vars):
                 variable_names_original[i] = re.sub(r'\,', '_c_', variable_names_original[i])
             variable_names_extended = self.extend_variables_with_x(variable_names_original)
             self.input_variables = variable_names_extended
+            
             rhs = self.equation.split("=")[1]
             self.rhs = re.sub(r',', '_c_', rhs)
-        name_extended = self.extend_variables_with_x([name_string])
-        self.name = name_extended[0]
+
+            name_string = self.extract_name_string()
+            name_extended = self.extend_variables_with_x([name_string])
+            self.name = name_extended[0]
+
+    
+    def extract_name_string(self):
+        # Regular expression pattern to match h_{ and capture nested curly braces
+        #pattern = r'h_\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}'
         
+        # Search for the first occurrence of the pattern
+        name_part = self.equation.split('(')[0]
+        name = name_part[7:-5]
+        return name
 
 
     def extract_equation(self, latex_string):
@@ -59,7 +83,6 @@ class Variable_handler():
             pattern = r'\\frac\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}'
             equation = re.sub(pattern, replace_frac, equation)
             #equation = re.sub(pattern, r'((\1)/(\2))', equation)
-            print(equation)
             
             # Remove curly brackets
             # find better solution, maybe more underscores
@@ -81,9 +104,9 @@ class Variable_handler():
             return None
 
 
-    def extract_variables(self, equation):
+    def extract_variables(self):
         # Find the content inside normal brackets ()
-        match = re.search(r'\((.*?)\)', equation)
+        match = re.search(r'\((.*?)\)', self.equation)
         
         if match:
             # Extract the content inside the brackets
