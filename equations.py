@@ -60,7 +60,7 @@ rlhdes = r"""
 
 eqs = r"""
 \begin{equation}
-    h_{s}(FSH, P4, s) = k^{s} * X_{FSH} - k^{s}_{cl} * X_{P4} * X_{s}
+    h_{s}(FSH_{blood}, P4, s) = k^{s} * X_{FSH_{blood}} - k^{s}_{cl} * X_{P4} * X_{s}
 \end{equation}
 """
 
@@ -144,8 +144,8 @@ e2 = r"""
 
 p4 = r"""
 \begin{equation}
-    h_{P4}(Lut4, P4) = b^{P4} + k^{P4}_{Lut4} * X_{Lut4} - k^{P4}_{cl} * X_{P4}
-\end{equation
+    h_{P4}(Lut4, P4) \\ = b^{P4} + k^{P4}_{Lut4} * X_{Lut4} - k^{P4}_{cl} * X_{P4}
+\end{equation}
 """
 
 iha = r"""
@@ -174,7 +174,7 @@ freq = r"""
 
 mass = r"""
 \begin{equation}
-    mass(E2) = alpha_{0} * X_{E2} + (1-X_{E2})
+    mass(E2) \\ = alpha_{0} * X_{E2} + (1-X_{E2})
 \end{equation}
 """
 

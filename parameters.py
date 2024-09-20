@@ -48,7 +48,7 @@ k_pwr__lcb_Lut4_rcb___lcb_Lut3_rcb_ = 0.610
 k_pwr__lcb_Lut4_rcb___lcb_cl_rcb_ = 0.543
 
 
-b_pwr__lcb_E2_rcb_ = 51.558
+b_pwr__lcb_E2_rcb_ = 0  # 51.558
 k_pwr__lcb_E2_rcb___lcb_AF2_rcb_ = 2.0945
 k_pwr__lcb_E2_rcb___lcb_AF3_rcb_ = 9.28
 k_pwr__lcb_E2_rcb___lcb_AF4_rcb_ = 6960.53
@@ -58,12 +58,12 @@ k_pwr__lcb_E2_rcb___lcb_Lut4_rcb_ = 8675.14
 k_pwr__lcb_E2_rcb___lcb_cl_rcb_ = 5.235
 
 
-b_pwr__lcb_P4_rcb_ = 0.943
+b_pwr__lcb_P4_rcb_ = 0  # 0.943
 k_pwr__lcb_P4_rcb___lcb_Lut4_rcb_ = 761.64
 k_pwr__lcb_P4_rcb___lcb_cl_rcb_ = 5.13
 
 
-b_pwr__lcb_IhA_rcb_ = 1.445
+b_pwr__lcb_IhA_rcb_ = 0  # 1.445
 k_pwr__lcb_IhA_rcb___lcb_PrF_rcb_ = 2.285
 k_pwr__lcb_IhA_rcb___lcb_Sc1_rcb_ = 60
 k_pwr__lcb_IhA_rcb___lcb_Lut1_rcb_ = 180
@@ -73,7 +73,7 @@ k_pwr__lcb_IhA_rcb___lcb_Lut4_rcb_ = 114.25
 k_pwr__lcb_IhA_rcb_ = 4.287
 
 
-b_pwr__lcb_IhB_rcb_ = 89.493
+b_pwr__lcb_IhB_rcb_ = 0  # 89.493
 k_pwr__lcb_IhB_rcb___lcb_AF2_rcb_ = 447.47
 k_pwr__lcb_IhB_rcb___lcb_SC2_rcb_ = 134240.2
 k_pwr__lcb_IhB_rcb___lcb_cl_rcb_ = 172.45

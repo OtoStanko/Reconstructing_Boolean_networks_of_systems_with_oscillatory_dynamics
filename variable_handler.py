@@ -214,12 +214,12 @@ class Variable_handler():
     def reconstruct_latex(self, equation_string):
         # Replace underscores and symbols back to their LaTeX equivalents
         equation = re.sub(r'_c_', r',', equation_string)
-        equation = re.sub(r'_lcb_', r'{', equation_string)  # Replace custom _lcb_ with {
+        equation = re.sub(r'_lcb_', r'{', equation)  # Replace custom _lcb_ with {
         equation = re.sub(r'_rcb_', r'}', equation)         # Replace custom _rcb_ with }
         equation = re.sub(r'_pwr_', r'^', equation)         # Replace custom _pwr_ with ^
         equation = re.sub(r'_hyp_', r'\\mhyphen ', equation)  # Replace custom _hyp_ with \mhyphen
-        equation = re.sub(r'&', r'\\And', equation)           # Replace & with "and"
-        equation = re.sub(r'\|', r'\\Or', equation)           # Replace | with "or"
+        equation = re.sub(r'&', r'\\land', equation)           # Replace & with "and"
+        equation = re.sub(r'\|', r'\\lor', equation)           # Replace | with "or"
         equation = re.sub(r'~', r'\\neg ', equation)          # Replace ! with "not"
 
         # Wrap the result back into LaTeX equation format

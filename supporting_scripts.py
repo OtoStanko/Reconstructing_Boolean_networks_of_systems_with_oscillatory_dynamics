@@ -17,11 +17,11 @@ def variable_latex_to_python(latex_string):
 
 
 
-with open("boolean_functions_latex.txt", "w") as boolfuncs_latex:
+with open("boolean_functions_latex.txt", "w") as bool_funcs_latex:
     for eq in edes:
         vh = Variable_handler(eq)
         vh.infer_boolean_function()
-        print(vh.boolean_function_latex, file=boolfuncs_latex, end='\n\n')
+        print(vh.boolean_function_latex, file=bool_funcs_latex, end='\n\n')
         print(vh.name)
 
 
@@ -40,11 +40,10 @@ print("\nInferred Boolean Function (SOP):")
 print(boolean_function)
 """
 
-"""
-with open("parameter_names.txt", "r") as f:
-    with open("parameter_names_python.txt", "w") as of:
-        for line in f:
-            if line != "":
-                new_name = variable_latex_to_python(line)
-                print(new_name, file=of)
-"""
+def parameter_names():
+    with open("parameter_names.txt", "r") as f:
+        with open("parameter_names_python.txt", "w") as of:
+            for line in f:
+                if line != "":
+                    new_name = variable_latex_to_python(line)
+                    print(new_name, file=of)
