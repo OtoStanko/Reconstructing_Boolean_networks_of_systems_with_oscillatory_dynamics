@@ -12,7 +12,7 @@ lh_blood = r"""
 
 fsh_pit = r"""
 \begin{equation}
-    h_{FSH_{pit}}(IhA_e, IhB, freq, G\mhyphen R, FSH_{pit}) \\ = (1-X_{IhA_e}) * (1-X_{IhB}) * (1-X_{freq}) \\ - (b^{FSH}_{Rel}+k^{FSH}_{G\mhyphen R} * X_{G\mhyphen R}) * X_{FSH_{pit}}
+    h_{FSH_{pit}}(IhA_{e}, IhB, freq, G\mhyphen R, FSH_{pit}) \\ = (1-X_{IhA_{e}}) * (1-X_{IhB}) * (1-X_{freq}) \\ - (b^{FSH}_{Rel}+k^{FSH}_{G\mhyphen R} * X_{G\mhyphen R}) * X_{FSH_{pit}}
 \end{equation}
 """
 

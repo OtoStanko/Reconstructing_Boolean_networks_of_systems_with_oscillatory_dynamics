@@ -33,8 +33,8 @@ class Variable_handler():
         self.num_vars = 0
         self.name = ''
         self.update_values = []
-        self.boolean_function = ''
-        self.boolean_function_latex = ''
+        self.boolean_function = None
+        self.boolean_function_latex = None
 
 
         maybe_equation = self.extract_equation(equation_string)
@@ -179,7 +179,7 @@ class Variable_handler():
         if index < len(self.input_variables):
             return self.input_variables[index]
 
-    
+
     # Function to infer the boolean function from the truth table (SOP form)
     def infer_boolean_function(self):
         self.evaluate_equation()
@@ -206,9 +206,27 @@ class Variable_handler():
         pattern = r'x(\d+)'
         sbf_input_var_names = re.sub(pattern, self.replace_match, simplified_boolean_function)
         self.boolean_function = sbf_input_var_names
+        return simplified_boolean_function
+
+
+    def infer_boolean_function_latex(self):
+        if self.boolean_function_latex is None:
+            self.infer_boolean_function()
         sbf_plus_name = self.name + " = " + self.boolean_function
         self.boolean_function_latex = self.reconstruct_latex(sbf_plus_name)
-        return simplified_boolean_function
+
+
+
+    def boolean_function_to_aeon(self):
+        if self.boolean_function is None:
+            self.infer_boolean_function()
+        functions = []
+        for i in range(len(self.input_variables)):
+            functions.append(self.input_variables[i] + " -? " + self.name)
+        aeon_boolean_function = self.boolean_function.replace("~", "!")
+        functions.append("$" + self.name + ": " + aeon_boolean_function)
+        return functions
+
 
 
     def reconstruct_latex(self, equation_string):

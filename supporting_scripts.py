@@ -16,13 +16,24 @@ def variable_latex_to_python(latex_string):
     return latex_string
 
 
+def infer_boolean_function():
+    with open("boolean_functions_latex.txt", "w") as bool_funcs_latex:
+        for eq in edes:
+            vh = Variable_handler(eq)
+            vh.infer_boolean_function_latex()
+            print(vh.boolean_function_latex, file=bool_funcs_latex, end='\n\n')
+            print(vh.name)
 
-with open("boolean_functions_latex.txt", "w") as bool_funcs_latex:
-    for eq in edes:
-        vh = Variable_handler(eq)
-        vh.infer_boolean_function()
-        print(vh.boolean_function_latex, file=bool_funcs_latex, end='\n\n')
-        print(vh.name)
+
+def create_aeon_model():
+    with open("boolean_functions_aeon.aeon", "w") as bool_funcs_aeon:
+        for eq in edes:
+            vh = Variable_handler(eq)
+            lines = vh.boolean_function_to_aeon()
+            for line in lines:
+                print(line, file=bool_funcs_aeon, end='\n')
+            print(vh.name)
+create_aeon_model()
 
 
 """
