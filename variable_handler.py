@@ -11,7 +11,8 @@ def bp(orig, a):
             return 1
         return orig
 
-def return_brackets(string):
+def remove_curlies_andX(string):
+    string = re.sub(r'X_', r'', string)
     string = re.sub(r'_lcb_', r'', string)  # Replace custom _lcb_ with {
     string = re.sub(r'_rcb_', r'', string)
     return string
@@ -229,11 +230,11 @@ class Variable_handler():
         if self.boolean_function is None:
             self.infer_boolean_function()
         functions = []
-        name = return_brackets(self.name)
-        aeon_boolean_function = return_brackets(self.boolean_function.replace("~", "!"))
+        name = remove_curlies_andX(self.name)
+        aeon_boolean_function = remove_curlies_andX(self.boolean_function.replace("~", "!"))
         functions.append("$" + name + ": " + aeon_boolean_function)
         for i in range(len(self.input_variables_reduced)):
-            var_name = return_brackets(self.input_variables_reduced[i])
+            var_name = remove_curlies_andX(self.input_variables_reduced[i])
             functions.append(var_name + " -? " + name)
         return functions
 

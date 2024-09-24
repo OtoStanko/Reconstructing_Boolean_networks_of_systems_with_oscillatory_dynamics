@@ -33,27 +33,12 @@ def create_aeon_model():
             print(vh.name + " = " + vh.boolean_function)
             for line in lines:
                 print(line, file=bool_funcs_aeon, end='\n')
-            print("$X_mass: true", file=bool_funcs_aeon, end='\n')
-            print("$X_freq: !X_freq", file=bool_funcs_aeon, end='\n')
-            print("X_freq -? X_freq", file=bool_funcs_aeon, end='\n')
             print(vh.name)
+        print("$mass: true", file=bool_funcs_aeon, end='\n')
+        print("$freq: !freq", file=bool_funcs_aeon, end='\n')
+        print("freq -? freq", file=bool_funcs_aeon, end='\n')
 create_aeon_model()
 
-
-"""
-# Example usage
-num_vars = 3  # Number of input variables
-output_column = [0, 1, 1, 0, 1, 0, 1, 0]  # Output column (example)
-truth_table = generate_truth_table(num_vars, output_column)
-boolean_function = infer_boolean_function(truth_table, num_vars)
-
-print("Truth Table:")
-for row in truth_table:
-    print(row)
-
-print("\nInferred Boolean Function (SOP):")
-print(boolean_function)
-"""
 
 def parameter_names():
     with open("parameter_names.txt", "r") as f:
