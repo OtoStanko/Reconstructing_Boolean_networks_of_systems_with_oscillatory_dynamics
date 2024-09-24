@@ -11,6 +11,10 @@ def bp(orig, a):
             return 1
         return orig
 
+def return_brackets(string):
+    string = re.sub(r'_lcb_', r'', string)  # Replace custom _lcb_ with {
+    string = re.sub(r'_rcb_', r'', string)
+    return string
 
 def variable_latex_to_python(latex_string):
     latex_string = re.sub(r'\,', '_c_', latex_string)
@@ -30,6 +34,7 @@ class Variable_handler():
         self.truth_table = []
         self.sgn_vector = []
         self.input_variables = []
+        self.input_variables_reduced = []
         self.num_vars = 0
         self.name = ''
         self.update_values = []
@@ -206,6 +211,9 @@ class Variable_handler():
         pattern = r'x(\d+)'
         sbf_input_var_names = re.sub(pattern, self.replace_match, simplified_boolean_function)
         self.boolean_function = sbf_input_var_names
+        for var_name in self.input_variables:
+            if var_name in sbf_input_var_names:
+                self.input_variables_reduced.append(var_name)
         return simplified_boolean_function
 
 
@@ -221,10 +229,12 @@ class Variable_handler():
         if self.boolean_function is None:
             self.infer_boolean_function()
         functions = []
-        for i in range(len(self.input_variables)):
-            functions.append(self.input_variables[i] + " -? " + self.name)
-        aeon_boolean_function = self.boolean_function.replace("~", "!")
-        functions.append("$" + self.name + ": " + aeon_boolean_function)
+        name = return_brackets(self.name)
+        aeon_boolean_function = return_brackets(self.boolean_function.replace("~", "!"))
+        functions.append("$" + name + ": " + aeon_boolean_function)
+        for i in range(len(self.input_variables_reduced)):
+            var_name = return_brackets(self.input_variables_reduced[i])
+            functions.append(var_name + " -? " + name)
         return functions
 
 

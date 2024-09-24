@@ -30,8 +30,12 @@ def create_aeon_model():
         for eq in edes:
             vh = Variable_handler(eq)
             lines = vh.boolean_function_to_aeon()
+            print(vh.name + " = " + vh.boolean_function)
             for line in lines:
                 print(line, file=bool_funcs_aeon, end='\n')
+            print("$X_mass: true", file=bool_funcs_aeon, end='\n')
+            print("$X_freq: !X_freq", file=bool_funcs_aeon, end='\n')
+            print("X_freq -? X_freq", file=bool_funcs_aeon, end='\n')
             print(vh.name)
 create_aeon_model()
 

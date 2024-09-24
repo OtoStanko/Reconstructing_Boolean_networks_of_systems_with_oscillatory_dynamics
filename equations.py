@@ -138,7 +138,7 @@ lut4 = r"""
 
 e2 = r"""
 \begin{equation}
-    h_{E2}(AF2, AF3, AF4, LH, PrF, Lut1, Lut4, E2) \\ = b^{E2} + k^{E2}_{AF2} * X_{AF2} + k^{E2}_{AF3} * X_{LH} * X_{AF3} + k^{E2}_{AF4} * X_{AF4} + k^{E2}_{Prf} * X_{LH} * X_{PrF} + k^{E2}_{Lut1} * X_{Lut1} + k^{E2}_{Lut4} * X_{Lut4} - k^{E2}_{cl} * X_{E2}
+    h_{E2}(AF2, AF3, AF4, LH_{blood}, PrF, Lut1, Lut4, E2) \\ = b^{E2} + k^{E2}_{AF2} * X_{AF2} + k^{E2}_{AF3} * X_{LH_{blood}} * X_{AF3} + k^{E2}_{AF4} * X_{AF4} + k^{E2}_{Prf} * X_{LH_{blood}} * X_{PrF} + k^{E2}_{Lut1} * X_{Lut1} + k^{E2}_{Lut4} * X_{Lut4} - k^{E2}_{cl} * X_{E2}
 \end{equation}
 """
 
