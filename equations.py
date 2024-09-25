@@ -186,7 +186,7 @@ gnrh = r"""
 
 rga = r"""
 \begin{equation}
-    h_{R_{G,a}}(G\mhyphen R, GnRH, R_{G,a}, R_{G,i}) \\ = k^{GnRH}_{off} * X_{G\mhyphen R} - k^{GnRH}_{on} * X_{GnRH} * X_{R_{G,a}} - k^{R_{G}}_{inter} * X_{R_{G,a}} + k^{R_{G}}_{recy} * X_{R_{G,i}}
+    h_{R_{G,a}}(G\mhyphen R_{a}, GnRH, R_{G,a}, R_{G,i}) \\ = k^{GnRH}_{off} * X_{G\mhyphen R_{a}} - k^{GnRH}_{on} * X_{GnRH} * X_{R_{G,a}} - k^{R_{G}}_{inter} * X_{R_{G,a}} + k^{R_{G}}_{recy} * X_{R_{G,i}}
 \end{equation}
 """
 
