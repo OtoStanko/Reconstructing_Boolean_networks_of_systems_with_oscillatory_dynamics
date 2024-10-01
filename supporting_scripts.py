@@ -65,6 +65,25 @@ def augusta_run():
     df.to_csv('output.csv', sep=';')
     Augusta.RNASeq_to_BN(count_table_input = 'output.csv')
 
+def augusta_visualization():
+    df = pd.read_csv('copasi_simulation_100d.csv', delimiter='\t')
+    columns_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
+                        'Ago_d', 's113', 's114', 's115', 's116',
+                        'Ago_c', 'Ant_R', 'LH_Pit', 'FSH_pit']
+    df = df.drop(columns=columns_to_drop)
+    print(df)
+    time_column = df.columns[0]
+
+    for column in df.columns[1:]:
+        #plt.figure(figsize=(10, 6))  # Create a new figure for each column
+        plt.plot(df[time_column], df[column], label=column)
+    #plt.title(f"Time Series Plot for {column}")
+    plt.xlabel("Time")
+    plt.ylabel('Hormone levels')
+    plt.legend()
+    plt.grid(True)
+    plt.show()
+
 
 #create_aeon_model()
-augusta_run()
+#augusta_run()
