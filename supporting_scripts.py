@@ -1,7 +1,7 @@
 import re
 from parameters import *
+from predator_prey_parameters import *
 from variable_handler import Variable_handler
-from equations import edes
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -20,25 +20,39 @@ def variable_latex_to_python(latex_string):
 
 def infer_boolean_function():
     with open("boolean_functions_latex.txt", "w") as bool_funcs_latex:
-        for eq in edes:
+        for eq in eques:
             vh = Variable_handler(eq)
             vh.infer_boolean_function_latex()
             print(vh.boolean_function_latex, file=bool_funcs_latex, end='\n\n')
             print(vh.name)
 
 
-def create_aeon_model():
-    with open("boolean_functions_aeon.aeon", "w") as bool_funcs_aeon:
-        for eq in edes:
+def create_aeon_model(equations_file_name, output_eaon_file_name):
+    """
+    Takes in file with each ODE on a separate line in a latex format names and discetized meaning that each continuous
+    function is replaced by the variable itself, or 1-var.
+
+    For now also expects \\ and a space before = (equals sign)
+    :return: None
+    """
+    if equations_file_name is None or output_eaon_file_name is None:
+        print("File names not provided")
+        return
+    eques = []
+    with open(equations_file_name, "r") as equations_file:
+        for line in equations_file:
+            eques.append(line)
+    with open(output_eaon_file_name, "w") as bool_funcs_aeon:
+        for eq in eques:
             vh = Variable_handler(eq)
+            if vh.equation is None:
+                print("sth went wrong, ", eq)
+                return
             lines = vh.boolean_function_to_aeon()
             print(vh.name + " = " + vh.boolean_function)
             for line in lines:
                 print(line, file=bool_funcs_aeon, end='\n')
             print(vh.name)
-        print("$mass: true", file=bool_funcs_aeon, end='\n')
-        print("$freq: !freq", file=bool_funcs_aeon, end='\n')
-        print("freq -? freq", file=bool_funcs_aeon, end='\n')
 
 
 def parameter_names():
@@ -65,6 +79,7 @@ def augusta_run():
     df.to_csv('output.csv', sep=';')
     Augusta.RNASeq_to_BN(count_table_input = 'output.csv')
 
+
 def augusta_visualization():
     df = pd.read_csv('copasi_simulation_100d.csv', delimiter='\t')
     columns_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
@@ -73,7 +88,6 @@ def augusta_visualization():
     df = df.drop(columns=columns_to_drop)
     print(df)
     time_column = df.columns[0]
-
     for column in df.columns[1:]:
         #plt.figure(figsize=(10, 6))  # Create a new figure for each column
         plt.plot(df[time_column], df[column], label=column)
@@ -85,5 +99,16 @@ def augusta_visualization():
     plt.show()
 
 
+
+def hormonal_cycle_euler_transform_to_aeon():
+    create_aeon_model("hormonal_cycle_equations.txt", "boolean_functions_aeon.aeon")
+    with open("boolean_functions_aeon", "a") as bool_funcs_aeon:
+        print("$mass: true", file=bool_funcs_aeon, end='\n')
+        print("$freq: !freq", file=bool_funcs_aeon, end='\n')
+        print("freq -? freq", file=bool_funcs_aeon, end='\n')
+
 #create_aeon_model()
 #augusta_run()
+def predator_prey_euler_transform_to_aeon():
+    create_aeon_model("predator_prey_equations.txt", "predator_prey_aeon.aeon")
+predator_prey_euler_transform_to_aeon()

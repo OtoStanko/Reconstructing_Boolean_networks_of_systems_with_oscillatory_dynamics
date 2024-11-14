@@ -1,6 +1,7 @@
 import re
 from itertools import product
 from parameters import *
+from predator_prey_parameters import *
 from sympy import simplify_logic
 
 
@@ -30,7 +31,7 @@ def variable_latex_to_python(latex_string):
 
 class Variable_handler():
     def __init__(self, equation_string):
-        self.equation = ''
+        self.equation = None
         self.rhs = ''
         self.truth_table = []
         self.sgn_vector = []
@@ -72,45 +73,48 @@ class Variable_handler():
         return name
 
 
-    def extract_equation(self, latex_string):
+    def extract_equation(self, string, latex=False):
         # Define the regular expression pattern to match the equation
-        pattern = r'\\begin{equation}\s*(.*?)\s*\\end{equation}'
+        if latex:
+            pattern = r'\\begin{equation}\s*(.*?)\s*\\end{equation}'
 
-        # Use re.DOTALL to match across multiple lines
-        match = re.search(pattern, latex_string, re.DOTALL)
-
-        if match:
-            # Extract the equation
-            equation = match.group(1)
-            def replace_frac(match):
-                numerator = match.group(1)
-                denominator = match.group(2)
-                return f"(({numerator})/({denominator}))"
-
-            # First, handle fractions
-            #pattern = r'\\frac\{([^{}]+)\}\{([^{}]+)\}'
-            pattern = r'\\frac\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}'
-            equation = re.sub(pattern, replace_frac, equation)
-            #equation = re.sub(pattern, r'((\1)/(\2))', equation)
-            
-            # Remove curly brackets
-            # find better solution, maybe more underscores
-            equation = re.sub(r'\{', '_lcb_', equation)
-            equation = re.sub(r'\}', '_rcb_', equation)
-            # Remove the line cuts
-            equation = re.sub(r'\\\\', '', equation)
-            # Replace ^ with underscores
-            equation = re.sub(r'\^', '_pwr_', equation)
-            # Replace \mhyphen with underscores
-            equation = re.sub(r'\\mhyphen ', '_hyp_', equation)
-            # Replace ands, ors and negations
-            equation = re.sub(r'and', '&', equation)
-            equation = re.sub(r'or', '|', equation)
-            equation = re.sub(r'not ', '!', equation)
-
-            return equation
+            # Use re.DOTALL to match across multiple lines
+            match = re.search(pattern, string, re.DOTALL)
+            if match:
+                equation = match.group(1)
+            else:
+                print("No match!", string)
+                return
         else:
-            return None
+            equation = string
+
+        def replace_frac(match):
+            numerator = match.group(1)
+            denominator = match.group(2)
+            return f"(({numerator})/({denominator}))"
+
+        # First, handle fractions
+        #pattern = r'\\frac\{([^{}]+)\}\{([^{}]+)\}'
+        pattern = r'\\frac\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}\{((?:[^{}]|\{(?:[^{}]|\{[^{}]*\})*\})*)\}'
+        equation = re.sub(pattern, replace_frac, equation)
+        #equation = re.sub(pattern, r'((\1)/(\2))', equation)
+
+        # Remove curly brackets
+        # find better solution, maybe more underscores
+        equation = re.sub(r'\{', '_lcb_', equation)
+        equation = re.sub(r'\}', '_rcb_', equation)
+        # Remove the line cuts
+        equation = re.sub(r'\\\\', '', equation)
+        # Replace ^ with underscores
+        equation = re.sub(r'\^', '_pwr_', equation)
+        # Replace \mhyphen with underscores
+        equation = re.sub(r'\\mhyphen ', '_hyp_', equation)
+        # Replace ands, ors and negations
+        equation = re.sub(r'and', '&', equation)
+        equation = re.sub(r'or', '|', equation)
+        equation = re.sub(r'not ', '!', equation)
+
+        return equation
 
 
     def extract_variables(self):

@@ -208,6 +208,6 @@ gri = r"""
 \end{equation}
 """
 
-edes = [lh_pit,lh_blood,fsh_pit,fsh_blood,rfsh,fshr,rfshdes,rlh,lhr,
-        rlhdes,eqs,af1,af2,af3,af4,prf,ovf,sc1,sc2,lut1,lut2,lut3,
-        lut4,e2,p4,iha,ihb,ihae,gnrh,rga,rgi,gra,gri]
+eques = [lh_pit, lh_blood, fsh_pit, fsh_blood, rfsh, fshr, rfshdes, rlh, lhr,
+         rlhdes, eqs, af1, af2, af3, af4, prf, ovf, sc1, sc2, lut1, lut2, lut3,
+         lut4, e2, p4, iha, ihb, ihae, gnrh, rga, rgi, gra, gri]
