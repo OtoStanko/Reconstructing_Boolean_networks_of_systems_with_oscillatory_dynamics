@@ -78,8 +78,9 @@ def hormonal_cycle_augusta_run():
     print(df.index)
     print(df)
     df.to_csv('output.csv', sep=';')
-    #Augusta.RNASeq_to_BN(count_table_input = 'output.csv')
-hormonal_cycle_augusta_run()
+    Augusta.RNASeq_to_BN(count_table_input = 'output.csv')
+#hormonal_cycle_augusta_run()
+
 
 def predator_prey_augusta_run():
     df = pd.read_csv('predator_prey_ODE_sim_results.csv', delimiter='\t')
@@ -91,7 +92,8 @@ def predator_prey_augusta_run():
     print(df)
     df.to_csv('predator_prey_ODE_sim_results_T.csv', sep=';')
     Augusta.RNASeq_to_BN(count_table_input = 'predator_prey_ODE_sim_results_T.csv')
-predator_prey_augusta_run()
+#predator_prey_augusta_run()
+
 
 def hormonal_cycle_augusta_visualization():
     df = pd.read_csv('copasi_simulation_100d.csv', delimiter='\t')
