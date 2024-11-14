@@ -1,7 +1,7 @@
-import numpy as np
-from scipy.integrate import odeint
-#from array import array
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from scipy.integrate import odeint
 
 a = 1
 b = 0.1
@@ -15,11 +15,11 @@ def model(y,t):
     return [dy0dt,dy1dt]
 
 # initial condition
-y0 = [2, 10]                     # initials conditions: 10 rabbits and 5 foxes  
+y0 = [15, 8]                     # initials conditions: 10 rabbits and 5 foxes
 
 # time points
-length = 50
-t = np.linspace(0,length,length*1000)
+length = 20
+t = np.linspace(0,length,length*10)
 L = len(t)
 
 # solve ODEs
@@ -36,6 +36,19 @@ plt.xlabel('time')
 plt.ylabel('population')
 plt.title('Evolution of fox and rabbit populations')
 plt.show()
+
+# Save the data to csv
+time = [i for i in range(len(t))]
+df = pd.DataFrame({
+    'Time': t,
+    'Rabbits': y[:,0],
+    'Foxes': y[:,1]
+})
+df.set_index('Time', inplace=True, drop=True)
+#df = pd.DataFrame([y[:,0], y[:,1]], columns=time, index=['Rabbits', 'Foxes'])
+print(df)
+# Save to CSV
+df.to_csv('predator_prey_ODE_sim_results.csv', sep='\t')
 
 #------------------------------------------------------------
 

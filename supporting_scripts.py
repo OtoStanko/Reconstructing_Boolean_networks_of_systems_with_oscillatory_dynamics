@@ -64,10 +64,9 @@ def parameter_names():
                     print(new_name, file=of)
 
 
-def augusta_run():
+def hormonal_cycle_augusta_run():
     df = pd.read_csv('copasi_simulation_100d.csv', delimiter='\t')
     df = df.T
-    print(df.index)
     import Augusta
     df = df.iloc[1:-1]
     rows_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
@@ -76,11 +75,25 @@ def augusta_run():
     for row_to_drop in rows_to_drop:
         df = df.drop(index=row_to_drop)
     df = df * 1000
+    print(df.index)
+    print(df)
     df.to_csv('output.csv', sep=';')
-    Augusta.RNASeq_to_BN(count_table_input = 'output.csv')
+    #Augusta.RNASeq_to_BN(count_table_input = 'output.csv')
+hormonal_cycle_augusta_run()
 
+def predator_prey_augusta_run():
+    df = pd.read_csv('predator_prey_ODE_sim_results.csv', delimiter='\t')
+    df = df.T
+    df = df.iloc[1:]
+    import Augusta
+    df = (df * 100).astype(int)
+    print(df.index)
+    print(df)
+    df.to_csv('predator_prey_ODE_sim_results_T.csv', sep=';')
+    Augusta.RNASeq_to_BN(count_table_input = 'predator_prey_ODE_sim_results_T.csv')
+predator_prey_augusta_run()
 
-def augusta_visualization():
+def hormonal_cycle_augusta_visualization():
     df = pd.read_csv('copasi_simulation_100d.csv', delimiter='\t')
     columns_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
                         'Ago_d', 's113', 's114', 's115', 's116',
@@ -99,7 +112,6 @@ def augusta_visualization():
     plt.show()
 
 
-
 def hormonal_cycle_euler_transform_to_aeon():
     create_aeon_model("hormonal_cycle_equations.txt", "boolean_functions_aeon.aeon")
     with open("boolean_functions_aeon", "a") as bool_funcs_aeon:
@@ -107,8 +119,6 @@ def hormonal_cycle_euler_transform_to_aeon():
         print("$freq: !freq", file=bool_funcs_aeon, end='\n')
         print("freq -? freq", file=bool_funcs_aeon, end='\n')
 
-#create_aeon_model()
-#augusta_run()
+
 def predator_prey_euler_transform_to_aeon():
     create_aeon_model("predator_prey_equations.txt", "predator_prey_aeon.aeon")
-predator_prey_euler_transform_to_aeon()
