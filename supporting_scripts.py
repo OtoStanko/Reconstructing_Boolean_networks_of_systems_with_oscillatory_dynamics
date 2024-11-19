@@ -1,3 +1,4 @@
+import os
 import re
 from parameters import *
 from predator_prey_parameters import *
@@ -123,4 +124,7 @@ def hormonal_cycle_euler_transform_to_aeon():
 
 
 def predator_prey_euler_transform_to_aeon():
-    create_aeon_model("predator_prey_equations.txt", "predator_prey_aeon.aeon")
+    input_file_path = os.path.join(os.getcwd(), "predator_prey_equations.txt")
+    output_file_path = os.path.join(os.getcwd(), "predator-prey_model", "euler-like_transformation", "predator_prey.aeon")
+    create_aeon_model(input_file_path, output_file_path)
+predator_prey_euler_transform_to_aeon()
