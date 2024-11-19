@@ -85,15 +85,23 @@ def hormonal_cycle_augusta_run():
 
 def predator_prey_augusta_run():
     df = pd.read_csv('predator_prey_ODE_sim_results.csv', delimiter='\t')
+    time_column = df.columns[0]
+    df = df[df['Time'] >= 4]
+    for column in df.columns[1:]:
+        #plt.figure(figsize=(10, 6))  # Create a new figure for each column
+        plt.plot(df[time_column], df[column], label=column)
+    plt.legend()
+    plt.grid(True)
+    plt.show()
     df = df.T
     df = df.iloc[1:]
     import Augusta
-    df = (df * 100).astype(int)
+    #df = (df * 100).astype(int)
     print(df.index)
     print(df)
     df.to_csv('predator_prey_ODE_sim_results_T.csv', sep=';')
     Augusta.RNASeq_to_BN(count_table_input = 'predator_prey_ODE_sim_results_T.csv')
-#predator_prey_augusta_run()
+predator_prey_augusta_run()
 
 
 def hormonal_cycle_augusta_visualization():
@@ -127,4 +135,3 @@ def predator_prey_euler_transform_to_aeon():
     input_file_path = os.path.join(os.getcwd(), "predator_prey_equations.txt")
     output_file_path = os.path.join(os.getcwd(), "predator-prey_model", "euler-like_transformation", "predator_prey.aeon")
     create_aeon_model(input_file_path, output_file_path)
-predator_prey_euler_transform_to_aeon()
