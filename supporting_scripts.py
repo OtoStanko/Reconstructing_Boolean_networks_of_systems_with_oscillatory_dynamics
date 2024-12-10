@@ -101,7 +101,7 @@ def predator_prey_augusta_run():
     print(df)
     df.to_csv('predator_prey_ODE_sim_results_T.csv', sep=';')
     Augusta.RNASeq_to_BN(count_table_input = 'predator_prey_ODE_sim_results_T.csv')
-predator_prey_augusta_run()
+#predator_prey_augusta_run()
 
 
 def hormonal_cycle_augusta_visualization():
