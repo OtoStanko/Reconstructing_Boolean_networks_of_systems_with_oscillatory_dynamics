@@ -1,0 +1,6 @@
+#position:Rabbits:-24.856055847443198,23.90682752109115
+$Rabbits:!Foxes
+Foxes -| Rabbits
+#position:Foxes:104.98933385815151,7.038695323687605
+$Foxes:Rabbits
+Rabbits -> Foxes
