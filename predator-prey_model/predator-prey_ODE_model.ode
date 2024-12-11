@@ -1,0 +1,8 @@
+# predator-prey ODE model
+
+dRabbits/dt=alpha*Rabbits-beta*Rabbits*Foxes
+dFoxes/dt=-gamma*Foxes+delta*Rabbits*Foxes
+
+par alpha=1,beta=0.1,gamma=1.5,delta=0.075
+
+done
