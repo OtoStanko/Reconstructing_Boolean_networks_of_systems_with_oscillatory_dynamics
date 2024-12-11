@@ -29,7 +29,7 @@ def variable_latex_to_python(latex_string):
     return latex_string
 
 
-class Variable_handler():
+class VariableHandler():
     def __init__(self, equation_string):
         self.equation = None
         self.rhs = ''

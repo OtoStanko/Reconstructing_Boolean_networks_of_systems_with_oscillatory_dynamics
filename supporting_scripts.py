@@ -2,7 +2,7 @@ import os
 import re
 from parameters import *
 from predator_prey_parameters import *
-from variable_handler import Variable_handler
+from VariableHandler import VariableHandler
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -22,7 +22,7 @@ def variable_latex_to_python(latex_string):
 def infer_boolean_function():
     with open("boolean_functions_latex.txt", "w") as bool_funcs_latex:
         for eq in eques:
-            vh = Variable_handler(eq)
+            vh = VariableHandler(eq)
             vh.infer_boolean_function_latex()
             print(vh.boolean_function_latex, file=bool_funcs_latex, end='\n\n')
             print(vh.name)
@@ -39,13 +39,13 @@ def create_aeon_model(equations_file_name, output_eaon_file_name):
     if equations_file_name is None or output_eaon_file_name is None:
         print("File names not provided")
         return
-    eques = []
+    list_of_ODEs = []  # differential equations
     with open(equations_file_name, "r") as equations_file:
         for line in equations_file:
-            eques.append(line)
+            list_of_ODEs.append(line)
     with open(output_eaon_file_name, "w") as bool_funcs_aeon:
-        for eq in eques:
-            vh = Variable_handler(eq)
+        for eq in list_of_ODEs:
+            vh = VariableHandler(eq)
             if vh.equation is None:
                 print("sth went wrong, ", eq)
                 return
