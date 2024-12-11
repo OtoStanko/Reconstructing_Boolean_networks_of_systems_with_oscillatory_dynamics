@@ -1,19 +1,27 @@
 import os
 import re
 
+from EulerlikeTransformer import EulerlikeTransformer
+
+
 class ODE:
     def __init__(self, variable_name, rhs):
         self.variable_name = variable_name
         self.rhs = rhs
         self.input_variables = []
-        self.num_input_variables = 0
-        self.parameters = []
+        self.num_vars = 0
+        self.parameters = {}
+
+    def replace_match(self, match):
+        index = int(match.group(1))  # Extract the number 'i' from 'x<i>'
+        if index < len(self.input_variables):
+            return self.input_variables[index]
 
     def __str__(self):
         equation = "d"+self.variable_name + "/dt = " + self.rhs + "\n"
         input_info = "input variables: " + str(self.input_variables) + "\n"
-        input_length = "num_input_variables: " + str(self.num_input_variables) + "\n"
-        parameters = "parameters: " + str(self.parameters) + "\n"
+        input_length = "num_input_variables: " + str(self.num_vars) + "\n"
+        parameters = "parameters: " + str(self.parameters)
         return equation + input_info + input_length + parameters
 
 
@@ -25,9 +33,9 @@ class ODESystem:
         and then alphabetically.
         :param ode_file_path: path to .ode file containing ODE model
         """
-        odes = []
-        parameters = {}
-        all_variables = set()
+        self.odes = []
+        self.parameters = {}
+        self.all_variables = set()
         with open (ode_file_path, "r") as ode_file:
             pattern_ode = r'd([^/]+)/.*=(.*)'
             pattern_params = r'par\s(.*)'
@@ -37,30 +45,32 @@ class ODESystem:
                     variable = match.group(1)  # Substring between 'd' and '/'
                     rhs = match.group(2)  # Everything after '='
                     ode = ODE(variable, rhs)
-                    odes.append(ode)
-                    all_variables.add(variable)
+                    self.odes.append(ode)
+                    self.all_variables.add(variable)
                 match =re.search(pattern_params, line)
                 if match:
                     parameters_grouped = match.group(1)
                     parameters_split = parameters_grouped.split(",")
                     for parameter in parameters_split:
                         name, value = parameter.split("=")
-                        parameters[name] = float(value)
+                        self.parameters[name] = float(value)
         # At this point we have lhs rhs and parameters
         # Now we want for each ode a number of variables that it is dependent on
-        sorted_parameters = dict(sorted(parameters.items(), key=lambda x: -len(x[0])))
+        sorted_parameters = dict(sorted(self.parameters.items(), key=lambda x: -len(x[0])))
         print(sorted_parameters)
-        for ode in odes:
-            for variable in all_variables:
+        for ode in self.odes:
+            for variable in self.all_variables:
                 if variable in ode.rhs:
                     ode.input_variables.append(variable)
-            ode.num_input_variables = len(ode.input_variables)
+            ode.num_vars = len(ode.input_variables)
             for parameter_name in sorted_parameters.keys():
                 if parameter_name in ode.rhs:
-                    ode.parameters.append(parameter_name)
+                    ode.parameters[parameter_name] = sorted_parameters[parameter_name]
+            print()
             print(ode)
-        print(odes)
-        print(all_variables)
+        print(self.odes)
+        print(self.all_variables)
 
-ODESystem(os.path.join(os.getcwd(), "predator-prey_model", "predator-prey_ODE_model.ode"))
-
+ode_system = ODESystem(os.path.join(os.getcwd(), "predator-prey_model", "predator-prey_ODE_model.ode"))
+bn = EulerlikeTransformer(ode_system)
+print(bn)
