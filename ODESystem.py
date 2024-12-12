@@ -74,3 +74,5 @@ class ODESystem:
 ode_system = ODESystem(os.path.join(os.getcwd(), "predator-prey_model", "predator-prey_ODE_model.ode"))
 bn = EulerlikeTransformer(ode_system)
 print(bn)
+
+bn.save_bn_to_aeon("predator_prey_euler-like.aeon")
