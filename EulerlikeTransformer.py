@@ -49,10 +49,12 @@ class EulerlikeTransformer:
         results = list()
         for row in truth_table:
             new_rhs = ode.rhs
-            for i in range(ode.num_vars):
-                new_rhs = new_rhs.replace(ode.input_variables[i], str(row[i]))
             for param in ode.parameters.keys():
                 new_rhs = new_rhs.replace(param, str(ode.parameters[param]))
+            for i in range(ode.num_vars):
+                new_rhs = new_rhs.replace(ode.input_variables[i], str(row[i]))
+            #for param in ode.parameters.keys():
+            #    new_rhs = new_rhs.replace(param, str(ode.parameters[param]))
             lhs = eval(new_rhs)
             sgn_lhs = 0
             if lhs > 0:
@@ -93,7 +95,7 @@ class EulerlikeTransformer:
             boolean_function = " | ".join(min_terms)
         else:
             boolean_function = "0"  # If no min-terms, the function is always false
-        simplified_boolean_function = str(simplify_logic(boolean_function))
+        simplified_boolean_function = str(simplify_logic(boolean_function, form='dnf'))
         pattern = r'x(\d+)'
         boolean_function = re.sub(pattern, ode.replace_match, simplified_boolean_function)
         input_variables_reduced = []
