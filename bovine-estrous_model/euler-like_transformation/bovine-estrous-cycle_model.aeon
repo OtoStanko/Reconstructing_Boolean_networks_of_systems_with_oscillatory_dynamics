@@ -4,18 +4,18 @@ E2 -? GnRH
 $FSH: !Inh
 Inh -? FSH
 $LH: GnRH & !P4
-GnRH -? LH
 P4 -? LH
-$Foll: (FSH & !Foll) | (FSH & !LH) | (Foll & !P4 & !LH)
-Foll -? Foll
-FSH -? Foll
+GnRH -? LH
+$Foll: (FSH & !LH) | (FSH & !Foll) | (Foll & !P4 & !LH)
 P4 -? Foll
 LH -? Foll
-$CL: (CL & !IOF) | (Foll & LH & !CL)
-Foll -? CL
-CL -? CL
-LH -? CL
+FSH -? Foll
+Foll -? Foll
+$CL: (CL & !IOF) | (LH & Foll & !CL)
 IOF -? CL
+LH -? CL
+CL -? CL
+Foll -? CL
 $P4: CL
 CL -? P4
 $E2: Foll
