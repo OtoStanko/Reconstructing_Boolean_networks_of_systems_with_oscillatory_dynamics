@@ -1,0 +1,25 @@
+# reduced discretized ODE model of bovine estrous cycle
+
+dGnRH/dt=m_GnRH_E2_P4*(1-P4)*E2-c_GnRH*GnRH
+dFSH/dt=m_FSH_Inh*(1-Inh)-c_FSH*FSH
+dLH/dt=m_LH_GnRH_P4*(1-P4)*GnRH-c_LH*LH
+dFoll/dt=m_Foll_FSH*FSH*(1+m_Foll_Foll*Foll)-(m_Foll_P4*P4+m_Foll_LH*LH)*Foll
+dCL/dt=SF_CL*m_Foll_LH*LH*Foll+m_CL_CL*CL-m_CL_IOF*IOF*CL
+dP4/dt=k_P4_CL*CL-c_P4*P4
+dE2/dt=k_E2_Foll*Foll-c_E2*E2
+dInh/dt=k_Inh_Foll*Foll-c_Inh*Inh
+dPGF/dt=m_PGF_E2*E2*P4-c_PGF*PGF
+dIOF/dt=m_IOF_PGF_CL*PGF*CL-c_IOF*IOF
+
+par m_GnRH_E2_P4=5.707,c_GnRH=1.223
+par m_FSH_Inh=1.044,c_FSH=0.559
+par m_LH_GnRH_P4=46.647,c_LH=9.006
+par m_Foll_FSH=0.269,m_Foll_Foll=3.927,m_Foll_P4=0.79,m_Foll_LH=1.7
+par SF_CL=1.2,m_Foll_LH=1.7,m_CL_CL=0.0372,m_CL_IOF=7.534
+par k_P4_CL=0.564,c_P4=0.533
+par k_E2_Foll=1.009,c_E2=0.72
+par k_Inh_Foll=0.644,c_Inh=0.368
+par m_PGF_E2=1.291,c_PGF=0.356
+par m_IOF_PGF_CL=12.269,c_IOF=0.215
+
+done
