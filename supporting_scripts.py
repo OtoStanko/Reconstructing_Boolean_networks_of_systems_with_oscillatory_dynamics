@@ -110,7 +110,9 @@ def hormonal_cycle_euler_transform_to_aeon():
         print("freq -? freq", file=bool_funcs_aeon, end='\n')
 
 
-def predator_prey_euler_transform_to_aeon():
-    input_file_path = os.path.join(os.getcwd(), "predator_prey_equations.txt")
-    output_file_path = os.path.join(os.getcwd(), "predator-prey_model", "euler-like_transformation", "predator_prey.aeon")
-    create_aeon_model(input_file_path, output_file_path)
+def predator_prey_euler_transform_to_aeon(ode_file, aeon_file):
+    create_aeon_model(ode_file, aeon_file)
+
+
+def bovine_estrous_euler_transform_to_aeon(ode_file, aeon_file):
+    create_aeon_model(ode_file, aeon_file)

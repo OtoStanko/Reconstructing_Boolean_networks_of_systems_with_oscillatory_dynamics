@@ -4,11 +4,12 @@ import os
 
 euler_like_pp_model_path = os.path.join(os.getcwd(), "predator-prey_model", "euler-like_transformation", "a_ge_b_d_l_g.aeon")
 augusta_pp_model_path = os.path.join(os.getcwd(), "predator-prey_model", "augusta", "pp.sbml")
-ideal_pp_model_path = os.path.join(os.getcwd(), "predator-prey_model", "ideal.aeon")
+ideal_pp_model_path = os.path.join(os.getcwd(), "predator-prey_model", "predator-prey_boolean_model_ideal.aeon")
 pp_model_paths = [euler_like_pp_model_path, augusta_pp_model_path, ideal_pp_model_path]
 
 euler_like_be_model_path = os.path.join(os.getcwd(), "bovine-estrous_model", "euler-like_transformation", "first_model.aeon")
-be_model_paths = [euler_like_be_model_path]
+euler_like_automated_be_model_path = os.path.join(os.getcwd(), "bovine-estrous_model", "euler-like_transformation", "bovine-estrous-cycle_model.aeon")
+be_model_paths = [euler_like_be_model_path, euler_like_automated_be_model_path]
 
 for model_path in pp_model_paths:
     model = BooleanNetwork.from_file(model_path)
@@ -79,3 +80,4 @@ for model_path in be_model_paths:
     # "(LH & EU(!P4, (E2 & EU(!LH, (P4 & EU(!E2, LH))))))"
     attractors_mc = ModelChecking.verify(stg, c2)
     print(attractors_mc)
+    print()

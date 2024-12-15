@@ -76,3 +76,5 @@ class ODESystem:
 #print(bn)
 
 #bn.save_bn_to_aeon("predator_prey_euler-like.aeon")
+#ode_file = os.path.join(os.getcwd(), "bovine-estrous_model", "bovine-estrous-cycle_ODE_model.ode")
+#ode_system = ODESystem(ode_file)
