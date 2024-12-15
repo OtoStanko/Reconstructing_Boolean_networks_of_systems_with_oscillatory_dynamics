@@ -1,7 +1,5 @@
 import re
 from itertools import product
-from parameters import *
-from predator_prey_parameters import *
 from sympy import simplify_logic
 
 

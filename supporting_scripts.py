@@ -1,8 +1,8 @@
 import os
 import re
-from parameters import *
-from predator_prey_parameters import *
-from VariableHandler import VariableHandler
+
+from EulerlikeTransformer import EulerlikeTransformer
+from ODESystem import ODESystem
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -19,16 +19,7 @@ def variable_latex_to_python(latex_string):
     return latex_string
 
 
-def infer_boolean_function():
-    with open("boolean_functions_latex.txt", "w") as bool_funcs_latex:
-        for eq in eques:
-            vh = VariableHandler(eq)
-            vh.infer_boolean_function_latex()
-            print(vh.boolean_function_latex, file=bool_funcs_latex, end='\n\n')
-            print(vh.name)
-
-
-def create_aeon_model(equations_file_name, output_eaon_file_name):
+def create_aeon_model(equations_ode_file_path, output_eaon_file_path):
     """
     Takes in file with each ODE on a separate line in a latex format names and discetized meaning that each continuous
     function is replaced by the variable itself, or 1-var.
@@ -36,24 +27,12 @@ def create_aeon_model(equations_file_name, output_eaon_file_name):
     For now also expects \\ and a space before = (equals sign)
     :return: None
     """
-    if equations_file_name is None or output_eaon_file_name is None:
+    if equations_ode_file_path is None or output_eaon_file_path is None:
         print("File names not provided")
         return
-    list_of_ODEs = []  # differential equations
-    with open(equations_file_name, "r") as equations_file:
-        for line in equations_file:
-            list_of_ODEs.append(line)
-    with open(output_eaon_file_name, "w") as bool_funcs_aeon:
-        for eq in list_of_ODEs:
-            vh = VariableHandler(eq)
-            if vh.equation is None:
-                print("sth went wrong, ", eq)
-                return
-            lines = vh.boolean_function_to_aeon()
-            print(vh.name + " = " + vh.boolean_function)
-            for line in lines:
-                print(line, file=bool_funcs_aeon, end='\n')
-            print(vh.name)
+    ode_system = ODESystem(equations_ode_file_path)
+    bn = EulerlikeTransformer(ode_system)
+    bn.save_bn_to_aeon(output_eaon_file_path)
 
 
 def parameter_names():
