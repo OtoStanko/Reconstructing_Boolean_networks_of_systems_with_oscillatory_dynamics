@@ -1,0 +1,30 @@
+$GnRH: E2 & !P4
+P4 -? GnRH
+E2 -? GnRH
+$FSH: !Inh
+Inh -? FSH
+$LH: GnRH & !P4
+GnRH -? LH
+P4 -? LH
+$Foll: (FSH & !Foll) | (FSH & !LH) | (Foll & !P4 & !LH)
+Foll -? Foll
+FSH -? Foll
+P4 -? Foll
+LH -? Foll
+$CL: (CL & !IOF) | (Foll & LH & !CL)
+Foll -? CL
+CL -? CL
+LH -? CL
+IOF -? CL
+$P4: CL
+CL -? P4
+$E2: Foll
+Foll -? E2
+$Inh: Foll
+Foll -? Inh
+$PGF: P4 & E2
+P4 -? PGF
+E2 -? PGF
+$IOF: CL & PGF
+CL -? IOF
+PGF -? IOF
