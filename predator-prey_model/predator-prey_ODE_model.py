@@ -1,3 +1,5 @@
+import os.path
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -48,7 +50,13 @@ df.set_index('Time', inplace=True, drop=True)
 #df = pd.DataFrame([y[:,0], y[:,1]], columns=time, index=['Rabbits', 'Foxes'])
 print(df)
 # Save to CSV
-df.to_csv('predator_prey_ODE_sim_results.csv', sep='\t')
+simulation_output_file = os.path.join(".", "predator_prey_ODE_sim_results.csv")
+df.to_csv(simulation_output_file, sep='\t')
+
+simulation_output_file_rows = os.path.join(".", "predator_prey_ODE_sim_results_rows.csv")
+df_t = df.T
+df_t.to_csv(simulation_output_file_rows, sep=',')
+
 
 #------------------------------------------------------------
 
