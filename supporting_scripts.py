@@ -1,8 +1,8 @@
-import os
+import os.path
 import re
 
-from EulerlikeTransformer import EulerlikeTransformer
-from ODESystem import ODESystem
+from Eulerlike_transformation.EulerlikeTransformer import EulerlikeTransformer
+from Eulerlike_transformation.ODESystem import ODESystem
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -19,7 +19,7 @@ def variable_latex_to_python(latex_string):
     return latex_string
 
 
-def create_aeon_model(equations_ode_file_path, output_eaon_file_path):
+def ode_eulerlike_transform_to_aeon(equations_ode_file_path, output_eaon_file_path):
     """
     Takes in file with each ODE on a separate line in a latex format names and discetized meaning that each continuous
     function is replaced by the variable itself, or 1-var.
@@ -63,7 +63,7 @@ def hormonal_cycle_augusta_run():
 
 
 def predator_prey_augusta_run():
-    df = pd.read_csv('predator_prey_ODE_sim_results.csv', delimiter='\t')
+    df = pd.read_csv('predator-prey_model/predator_prey_ODE_sim_results.csv', delimiter='\t')
     time_column = df.columns[0]
     df = df[df['Time'] >= 4]
     for column in df.columns[1:]:
@@ -110,9 +110,19 @@ def hormonal_cycle_euler_transform_to_aeon():
         print("freq -? freq", file=bool_funcs_aeon, end='\n')
 
 
-def predator_prey_euler_transform_to_aeon(ode_file, aeon_file):
-    create_aeon_model(ode_file, aeon_file)
-
-
-def bovine_estrous_euler_transform_to_aeon(ode_file, aeon_file):
-    create_aeon_model(ode_file, aeon_file)
+def simplify_parameters_file(in_file, out_file):
+    remove_left_brackets = '_lcb_'
+    remove_right_brackets = '_rcb_'
+    remove_power = '_pwr_'
+    my_hyphen = '_hyp_'
+    with open(in_file, 'r') as file:
+        content = file.read()
+    updated_content = content.replace(remove_left_brackets, '')
+    updated_content = updated_content.replace(remove_right_brackets, '')
+    updated_content = updated_content.replace(remove_power, '')
+    updated_content = updated_content.replace(my_hyphen, 'mhyphen')
+    with open(out_file, 'w') as file:
+        file.write(updated_content)
+#gc_param_file = os.path.join(os.getcwd(), "old_files", "parameters_gc.txt")
+#gc_param_simplified = os.path.join(os.getcwd(), "old_files", "parameters_gc_simplified.txt")
+#simplify_parameters_file(gc_param_file, gc_param_simplified)
