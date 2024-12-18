@@ -68,9 +68,13 @@ class EulerlikeTransformer:
         sgn_vector = results
 
         x_k_1 = []
-        variable_index = ode.input_variables.index(ode.variable_name)
-        for i in range(len(truth_table)):
-            x_k_1.append(bp(truth_table[i][variable_index], sgn_vector[i]))
+        if ode.variable_name in ode.input_variables:
+            variable_index = ode.input_variables.index(ode.variable_name)
+            for i in range(len(truth_table)):
+                x_k_1.append(bp(truth_table[i][variable_index], sgn_vector[i]))
+        else:
+            for i in range(len(truth_table)):
+                x_k_1.append(bp(0, sgn_vector[i]))
         update_values = x_k_1
 
         return truth_table, update_values

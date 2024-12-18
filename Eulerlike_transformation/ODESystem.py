@@ -1,7 +1,4 @@
-import os
 import re
-
-from EulerlikeTransformer import EulerlikeTransformer
 
 
 class ODE:
@@ -60,8 +57,10 @@ class ODESystem:
         print(sorted_parameters)
         for ode in self.odes:
             for variable in self.all_variables:
-                if variable in ode.rhs:
+                pattern = r'(^|[-+*/()=])' + re.escape(variable) + r'($|[-+*/()=]|\s)'
+                if re.search(pattern, ode.rhs):
                     ode.input_variables.append(variable)
+            ode.input_variables = sorted(ode.input_variables, key=len, reverse=True)
             ode.num_vars = len(ode.input_variables)
             for parameter_name in sorted_parameters.keys():
                 if parameter_name in ode.rhs:
@@ -71,10 +70,17 @@ class ODESystem:
         print(self.odes)
         print(self.all_variables)
 
-#ode_system = ODESystem(os.path.join(os.getcwd(), "predator-prey_model", "predator-prey_ODE_model.ode"))
-#bn = EulerlikeTransformer(ode_system)
+    def to_network(self, network_file):
+        with open(network_file, "w") as network_file:
+            for ode in self.odes:
+                for variable in ode.input_variables:
+                    network_file.write(str(variable) + "\t" + str(ode.variable_name) + "\t" + "1" + "\n")
+
+#ode_file_pp = ODESystem(os.path.join(os.getcwd(), "predator-prey_model", "predator-prey_ODE_model.ode"))
+#bn = EulerlikeTransformer(ode_file_pp)
 #print(bn)
 
 #bn.save_bn_to_aeon("predator_prey_euler-like.aeon")
-#ode_file = os.path.join(os.getcwd(), "bovine-estrous_model", "bovine-estrous-cycle_ODE_model.ode")
-#ode_system = ODESystem(ode_file)
+#ode_file_be = os.path.join(os.getcwd(), "bovine-estrous_model", "bovine-estrous-cycle_ODE_model.ode")
+#ode_system = ODESystem(ode_file_be)
+
