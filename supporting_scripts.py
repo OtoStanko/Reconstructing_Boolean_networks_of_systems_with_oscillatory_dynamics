@@ -44,11 +44,11 @@ def parameter_names():
                     print(new_name, file=of)
 
 
-def hormonal_cycle_augusta_run():
+def gyn_cycle_augusta_run():
     df = pd.read_csv('gyn-cycle_model/copasi_simulation_100d.csv', delimiter='\t')
     df = df.T
     import Augusta
-    df = df.iloc[1:-1]
+    df = df.iloc[1:]
     rows_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
                     'Ago_d', 's113', 's114', 's115', 's116',
                     'Ago_c', 'Ant_R', ]
@@ -83,7 +83,7 @@ def predator_prey_augusta_run():
 #predator_prey_augusta_run()
 
 
-def hormonal_cycle_augusta_visualization():
+def gyn_cycle_augusta_visualization():
     df = pd.read_csv('gyn-cycle_model/copasi_simulation_100d.csv', delimiter='\t')
     columns_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
                         'Ago_d', 's113', 's114', 's115', 's116',
@@ -126,3 +126,14 @@ def simplify_parameters_file(in_file, out_file):
 #gc_param_file = os.path.join(os.getcwd(), "old_files", "parameters_gc.txt")
 #gc_param_simplified = os.path.join(os.getcwd(), "old_files", "parameters_gc_simplified.txt")
 #simplify_parameters_file(gc_param_file, gc_param_simplified)
+
+
+def SAILoR_to_aeon(list_of_boolean_functions, aeon_file_path):
+    """
+    $LH_pit: !P4
+    P4 -? LH_pit
+    """
+    with open(aeon_file_path, 'w') as file:
+        for boolean_function in list_of_boolean_functions:
+            variable, rhs = boolean_function.split(" = ")
+            print("$" + variable + ":", rhs, file=file)

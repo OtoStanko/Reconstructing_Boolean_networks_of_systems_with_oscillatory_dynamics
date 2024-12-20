@@ -23,19 +23,22 @@ aeon_file_pp = os.path.join(pp_model, "euler-like_transformation", "predator-pre
 """
 SAILoR inference from time series and prior networks
 """
-from SAILoR.SAILoR import ContextSpecificDecoder
+
+"""from SAILoR.SAILoR import ContextSpecificDecoder
 
 time_series_data_predator_prey = os.path.join(pp_model, "predator_prey_ODE_sim_results.csv")
 prior_network_predator_prey = os.path.join(pp_model, "prior_network_pp.tsv")
 
-"""decoder = ContextSpecificDecoder(timeSeriesPath=time_series_data_predator_prey,
+decoder = ContextSpecificDecoder(timeSeriesPath=time_series_data_predator_prey,
                                  referenceNetPaths=[prior_network_predator_prey])
 print(decoder)
 best = decoder.run()
 
 boolean_expressions = []
 for bfun in best:
-    boolean_expressions.append(bfun[4])"""
+    boolean_expressions.append(bfun[4])
+print(boolean_expressions)
+SAILoR_to_aeon(boolean_expressions, os.path.join(pp_model, "SAILoR", "gyn-cycle_model.aeon"))"""
 
 
 """**********************************
@@ -69,15 +72,37 @@ aeon_file_gc = os.path.join(gc_model, "euler-like_transformation", "gyn-cycle_mo
 """
 SAILoR inference from time series and prior networks
 """
-
-"""time_series_data_gyn_cycle = os.path.join(wc, "gyn-cycle_model", "copasi_simulation_100d.csv")
-prior_network_gyn_cycle = os.path.join(wc, "gyn-cycle_model", "prior_network_gc.csv")
+"""time_series_data_gyn_cycle = os.path.join(gc_model, "copasi_simulation_100d.csv")
+prior_network_gyn_cycle = os.path.join(gc_model, "prior_network_gc.csv")
 
 decoder = ContextSpecificDecoder(timeSeriesPath=time_series_data_gyn_cycle,
-                                 referenceNetPaths=[prior_network_gyn_cycle])
+                                 referenceNetPaths=[prior_network_gyn_cycle, prior_network_gyn_cycle, prior_network_gyn_cycle,
+                                                    prior_network_gyn_cycle, prior_network_gyn_cycle, prior_network_gyn_cycle])
 print(decoder)
 best = decoder.run()
 
 boolean_expressions = []
 for bfun in best:
-    boolean_expressions.append(bfun[4])"""
+    boolean_expressions.append(bfun[4])
+print(boolean_expressions)
+SAILoR_to_aeon(boolean_expressions, os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon"))"""
+
+"""
+Augusta
+"""
+
+from Augusta.Augusta import *
+df = pd.read_csv('gyn-cycle_model/copasi_simulation_100d.csv', delimiter='\t')
+df = df.T
+df = df.iloc[1:]
+rows_to_drop = ['Ant_c', 'Ago_R_i', 'Ago_R_a','Ant_p','Ant_d',
+                'Ago_d', 'Ago_c', 'Ant_R', ]
+for row_to_drop in rows_to_drop:
+    df = df.drop(index=row_to_drop)
+df = df * 10
+print(df.index)
+print(df)
+df.to_csv('output.csv', sep=';')
+RNASeq_to_BN(count_table_input = 'output.csv')
+
+

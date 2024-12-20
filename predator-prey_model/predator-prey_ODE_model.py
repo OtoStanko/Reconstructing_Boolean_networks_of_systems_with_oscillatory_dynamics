@@ -33,10 +33,10 @@ infodict['message']                     # >>> 'Integration successful.'
 plt.plot(t, y[:,0], 'r-', label='Rabbits')
 plt.plot(t, y[:,1]  , 'b-', label='Foxes')
 plt.grid()
-plt.legend(loc='best')
-plt.xlabel('time')
-plt.ylabel('population')
-plt.title('Evolution of fox and rabbit populations')
+plt.legend(loc='upper left')
+plt.xlabel('Time')
+plt.ylabel('Population density')
+plt.title('Evolution of foxes and rabbits populations')
 plt.show()
 
 # Save the data to csv
