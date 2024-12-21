@@ -76,6 +76,19 @@ class ODESystem:
                 for variable in ode.input_variables:
                     network_file.write(str(variable) + "\t" + str(ode.variable_name) + "\t" + "1" + "\n")
 
+    def get_requiredDependencies(self):
+        max_input_vars = 0
+        result = "list("
+        for ode in self.odes:
+            max_input_vars = max(max_input_vars, len(ode.input_variables))
+            ode_dependency = "\"" + ode.variable_name + "\"=c("
+            for variable in ode.input_variables:
+                ode_dependency += "\"" + str(variable) + "\","
+            ode_dependency = ode_dependency[:-1] + "),"
+            result += ode_dependency
+        result = result[:-1] + ")"
+        return max_input_vars, result
+
 #ode_file_pp = ODESystem(os.path.join(os.getcwd(), "predator-prey_model", "predator-prey_ODE_model.ode"))
 #bn = EulerlikeTransformer(ode_file_pp)
 #print(bn)

@@ -137,3 +137,27 @@ def SAILoR_to_aeon(list_of_boolean_functions, aeon_file_path):
         for boolean_function in list_of_boolean_functions:
             variable, rhs = boolean_function.split(" = ")
             print("$" + variable + ":", rhs, file=file)
+
+
+def simplify_TS(raw_ts, binarized_ts, simplified_raw, simplified_bin):
+    binarized_data = pd.read_csv(binarized_ts, sep=",", index_col=0)
+
+    simplified_ts_states = list()
+    indexes = []
+    for i in range(len(binarized_data.columns)):
+        column = binarized_data.columns[i]
+        state = list(binarized_data[column])
+        if len(simplified_ts_states) == 0:
+            simplified_ts_states.append(state)
+            indexes.append(i)
+            continue
+        if simplified_ts_states[-1] != state:
+            simplified_ts_states.append(state)
+            indexes.append(i)
+    print(simplified_ts_states)
+    print(indexes)
+    names = list(binarized_data.index)
+    df = pd.DataFrame(simplified_ts_states).T
+    df.index = names
+    df.to_csv(simplified_bin)
+            
