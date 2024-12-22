@@ -9,7 +9,7 @@ wc = os.getcwd()
     Predator-prey model abstractions
 **********************************"""
 pp_model = os.path.join(wc, "predator-prey_model")
-ode_file_pp = os.path.join(pp_model, "predator-prey_ODE_model.ode")
+ode_file_pp = os.path.join(pp_model, "predator-prey_ODE_model.dode")
 sim_raw_pp = os.path.join(pp_model, "predator_prey_ODE_sim_results.csv")
 
 """
@@ -59,7 +59,7 @@ def pp_boolnet():
     Bovine-estrous cycle abstractions
 **********************************"""
 be_model = os.path.join(wc, "bovine-estrous_model")
-ode_file_be = os.path.join(be_model, "bovine-estrous-cycle_ODE_model.ode")
+ode_file_be = os.path.join(be_model, "bovine-estrous-cycle_ODE_model.dode")
 
 """
 euler-like transformation from .ode file to .aeon file
@@ -75,7 +75,7 @@ def be_eulerlike_transform():
     Gyn cycle abstractions
 **********************************"""
 gc_model = os.path.join(wc, "gyn-cycle_model")
-ode_file_gc = os.path.join(gc_model, "gyn-cycle_ODE_model.ode")
+ode_file_gc = os.path.join(gc_model, "gyn-cycle_ODE_model.dode")
 sim_raw_gc = os.path.join(gc_model, "copasi_simulation_100d.csv")
 
 """
@@ -110,25 +110,29 @@ def gc_sailor():
     SAILoR_to_aeon(boolean_expressions, os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon"))
 
 
-
 """
 BoolNet
 """
 #ode_system_gc = ODESystem(ode_file_gc)
 #print(ode_system_gc.get_requiredDependencies())
 def gc_preprocess():
-    sim_raw_gc_rows = os.path.join(gc_model, "copasi_sim_rows.csv")
+    sim_raw_gc_rows = os.path.join(gc_model, "gyn-cycle_sim_rows.csv")
     raw_ts = pd.read_csv(sim_raw_gc, delimiter='\t')
     raw_ts = raw_ts.T
+    rows_to_drop = ['Ant_c', 'Ago_R_i', 'Ago_R_a', 'Ant_p', 'Ant_d',
+                    'Ago_d', 'Ago_c', 'Ant_R', ]
+    for row_to_drop in rows_to_drop:
+        raw_ts = raw_ts.drop(index=row_to_drop)
     raw_ts = raw_ts.iloc[1:]
     raw_ts.to_csv(sim_raw_gc_rows)
 
-                  
+
 def gc_boolnet():
     bin_ts = os.path.join(gc_model, "simulation_binarized_rows.csv")
     bin_ts_simple = os.path.join(gc_model, "simulation_binarized_rows_simplified_auto.csv")
     simplify_TS(None, bin_ts, None, bin_ts_simple)
 #gc_boolnet()
+
 
 """
 Augusta

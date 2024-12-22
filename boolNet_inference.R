@@ -41,7 +41,7 @@ binarized_data
 net <- reconstructNetwork(binarized_data,
                           method="bestfit",
                           maxK=8,
-                          )
+                          requiredDependencies=list("LH_Pit"=c("GnRH_R_a","LH_Pit","P4","E2"),"LH_bld"=c("GnRH_R_a","LH_bld","LH_Pit","R_LH"),"FSH_pit"=c("GnRH_R_a","FSH_pit","InhB","freq"),"FSH_bld"=c("GnRH_R_a","FSH_pit","FSH_bld","R_FSH"),"R_FSH"=c("R_FSH_des","FSH_bld","R_FSH"),"FSH_R"=c("FSH_bld","R_FSH","FSH_R"),"R_FSH_des"=c("R_FSH_des","FSH_R"),"R_LH"=c("R_LH_des","LH_bld","R_LH"),"LH_R"=c("LH_bld","R_LH","LH_R"),"R_LH_des"=c("R_LH_des","LH_R"),"R_Foll"=c("FSH_bld","R_Foll","P4"),"AF1"=c("FSH_R","AF1"),"AF2"=c("R_Foll","FSH_R","LH_R","AF2","AF1"),"AF3"=c("R_Foll","FSH_R","LH_R","AF2","AF3"),"AF4"=c("R_Foll","LH_R","AF4","AF3"),"PrF"=c("R_Foll","LH_R","AF4","PrF"),"OvF"=c("R_Foll","LH_R","PrF","OvF"),"Sc1"=c("Sc1","OvF"),"Sc2"=c("Sc1","Sc2"),"Lut1"=c("GnRH_R_a","Lut1","Sc2"),"Lut2"=c("GnRH_R_a","Lut1","Lut2"),"Lut3"=c("GnRH_R_a","Lut3","Lut2"),"Lut4"=c("GnRH_R_a","Lut3","Lut4"),"E2"=c("LH_bld","Lut1","Lut4","AF4","AF2","PrF","AF3","E2"),"P4"=c("Lut4","P4"),"InhA"=c("Lut1","Lut3","Lut4","Lut2","InhA","Sc1","PrF"),"InhB"=c("InhB","AF2","Sc2"),"InhA_delay"=c("InhA_delay","InhA"),"freq"=c("P4","E2"),"mass"=c("E2"),"GnRH"=c("GnRH_R_a","R_GnRH_a","GnRH","mass","freq"),"R_GnRH_a"=c("R_GnRH_i","GnRH_R_a","R_GnRH_a","GnRH"),"R_GnRH_i"=c("GnRH_R_i","R_GnRH_i","R_GnRH_a"),"GnRH_R_a"=c("GnRH_R_i","GnRH_R_a","R_GnRH_a","GnRH"),"GnRH_R_i"=c("GnRH_R_i","GnRH_R_a")))
 net
 plotNetworkWiring(net)
 

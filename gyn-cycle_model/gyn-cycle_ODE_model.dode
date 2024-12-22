@@ -1,0 +1,132 @@
+# gyn cycle ode file
+
+dLH_Pit/dt=(b_LH_syn+k_LH_E2*E2)*(1-P4)-(b_LH_Rel+k_LH_GmhyphenR*GnRH_R_a)*LH_Pit
+dLH_bld/dt=(1/V_blood)*(b_LH_Rel+k_LH_GmhyphenR*GnRH_R_a)*LH_Pit-(k_LH_on*R_LH+k_LH_cl)*LH_bld
+dFSH_pit/dt=(1-IhA_e)*(1-InhB)*(1-freq)-(b_FSH_Rel+k_FSH_GmhyphenR*GnRH_R_a)*FSH_pit
+dFSH_bld/dt=(1/V_blood)*(b_FSH_Rel+k_FSH_GmhyphenR*GnRH_R_a)*FSH_pit-(k_FSH_on*R_FSH+k_FSH_cl)*FSH_bld
+dR_FSH/dt=k_FSH_recy*R_FSH_des-k_FSH_on*FSH_bld*R_FSH
+dFSH_R/dt=k_FSH_on*FSH_bld*R_FSH-k_FSH_des*FSH_R
+dR_FSH_des/dt=k_FSH_des*FSH_R-k_FSH_recy*R_FSH_des
+dR_LH/dt=k_LH_recy*R_LH_des-k_LH_on*LH_bld*R_LH
+dLH_R/dt=k_LH_on*LH_bld*R_LH-k_LH_des*LH_R
+dR_LH_des/dt=k_LH_des*LH_R-k_LH_recy*R_LH_des
+dR_Foll/dt=k_s*FSH_bld-k_s_cl*P4*R_Foll
+dAF1/dt=k_AF1*FSH_R-k_AF2_AF1*FSH_R*AF1
+dAF2/dt=k_AF2_AF1*FSH_R*AF1-k_AF3_AF2*(LH_R/SF_LH_R)*R_Foll*AF2
+dAF3/dt=k_AF3_AF2*(LH_R/SF_LH_R)*R_Foll*AF2+k_AF3_AF3*FSH_R*AF3*(1-(AF3/SeF_max))-k_AF4_AF3*(LH_R/SF_LH_R)*R_Foll*AF3
+dAF4/dt=k_AF4_AF3*(LH_R/SF_LH_R)*R_Foll*AF3+k_AF4_AF4*(LH_R/SF_LH_R)*AF4*(1-(AF4/SeF_max))-k_PrF_AF4*(LH_R/SF_LH_R)*R_Foll*AF4
+dPrF/dt=k_PrF_AF4*(LH_R/SF_LH_R)*R_Foll*AF4-k_PrF_cl*(LH_R/SF_LH_R)*R_Foll*PrF
+dOvF/dt=k_OvF*(LH_R/SF_LH_R)*R_Foll*PrF-k_OvF_cl*OvF
+dSc1/dt=k_Sc1*OvF-k_Sc2_Sc1*Sc1
+dSc2/dt=k_Sc2_Sc1*Sc1-k_Lut1_Sc2*Sc2
+dLut1/dt=k_Lut1_Sc2*Sc2-k_Lut2_Lut1*(1+m_Lut_GmhyphenR*GnRH_R_a)*Lut1
+dLut2/dt=k_Lut2_Lut1*(1+m_Lut_GmhyphenR*GnRH_R_a)*Lut1-k_Lut3_Lut2*(1+m_Lut_GmhyphenR*GnRH_R_a)*Lut2
+dLut3/dt=k_Lut3_Lut2*(1+m_Lut_GmhyphenR*GnRH_R_a)*Lut2-k_Lut4_Lut3*(1+m_Lut_GmhyphenR*GnRH_R_a)*Lut3
+dLut4/dt=k_Lut4_Lut3*(1+m_Lut_GmhyphenR*GnRH_R_a)*Lut3-k_Lut4_cl*(1+m_Lut_GmhyphenR*GnRH_R_a)*Lut4
+dE2/dt=b_E2+k_E2_AF2*AF2+k_E2_AF3*LH_bld*AF3+k_E2_AF4*AF4+k_E2_Prf*LH_bld*PrF+k_E2_Lut1*Lut1+k_E2_Lut4*Lut4-k_E2_cl*E2
+dP4/dt=b_P4+k_P4_Lut4*Lut4-k_P4_cl*P4
+dInhA/dt=b_IhA+k_IhA_PrF*PrF+k_IhA_Sc1*Sc1+k_IhA_Lut1*Lut1+k_IhA_Lut2*Lut2+k_IhA_Lut3*Lut3+k_IhA_Lut4*Lut4-k_IhA*InhA
+dInhB/dt=b_IhB+k_IhB_AF2*AF2+k_IhB_SC2*Sc2-k_IhB_cl*InhB
+dInhA_delay/dt=k_IhA*InhA-k_IhA_e_cl*InhA_delay
+dfreq/dt=f_0*(1-P4)*(1+m_freq_E2*E2)
+dmass/dt=alpha_0*E2+(1-E2)
+dGnRH/dt=mass*freq-k_GnRH_on*GnRH*R_GnRH_a+k_GnRH_off*GnRH_R_a-k_GnRH_deg*GnRH
+dR_GnRH_a/dt=k_GnRH_off*GnRH_R_a-k_GnRH_on*GnRH*R_GnRH_a-k_R_G_inter*R_GnRH_a+k_R_G_recy*R_GnRH_i
+dR_GnRH_i/dt=k_GmhyphenR_i_diss*GnRH_R_i+k_R_G_inter*R_GnRH_a-k_R_G_recy*R_GnRH_i+k_R_G_syn-k_R_G_degr*R_GnRH_i
+dGnRH_R_a/dt=k_GnRH_on*GnRH*R_GnRH_a-k_GnRH_off*GnRH_R_a-k_GmhyphenR_inact*GnRH_R_a+k_GmhyphenR_act*GnRH_R_i
+dGnRH_R_i/dt=k_GmhyphenR_inact*GnRH_R_a-k_GmhyphenR_act*GnRH_R_i-k_GmhyphenR_degr*GnRH_R_i-k_GmhyphenR_i_diss*GnRH_R_i
+
+par b_LH_syn=7309.92
+par k_LH_E2=7309.92
+par b_LH_Rel=0.00476
+par k_LH_GmhyphenR=0.1904
+par V_blood=6.589
+
+par k_LH_on=2.143
+par k_LH_cl=74.851
+
+par b_FSH_Rel=0.057
+par k_FSH_GmhyphenR=0.272
+par k_FSH_on=3.529
+par k_FSH_cl=114.25
+par k_FSH_recy=61.029
+par k_FSH_des=138.3
+
+par k_LH_recy=68.949
+par k_LH_des=183.36
+
+
+par k_s=0.219
+par k_s_cl=1.343
+par k_AF1=3.662
+par k_AF2_AF1=1.221
+par k_AF3_AF2=4.882
+par SF_LH_R=2.726
+par k_AF3_AF3=0.122
+par SeF_max=10
+par k_AF4_AF3=122.06
+par k_AF4_AF4=12.206
+
+par k_PrF_AF4=332.75
+par k_PrF_cl=122.06
+par k_OvF=7.984
+par k_OvF_cl=12.206
+
+
+par k_Sc1=1.208
+par k_Sc2_Sc1=1.221
+par k_Lut1_Sc2=0.958
+par k_Lut2_Lut1=0.925
+par m_Lut_GmhyphenR=20
+par k_Lut3_Lut2=0.7567
+par k_Lut4_Lut3=0.610
+par k_Lut4_cl=0.543
+
+
+par b_E2=0
+par k_E2_AF2=2.0945
+par k_E2_AF3=9.28
+par k_E2_AF4=6960.53
+par k_E2_Prf=0.972
+par k_E2_Lut1=1713.71
+par k_E2_Lut4=8675.14
+par k_E2_cl=5.235
+
+
+par b_P4=0
+par k_P4_Lut4=761.64
+par k_P4_cl=5.13
+
+
+par b_IhA=0
+par k_IhA_PrF=2.285
+par k_IhA_Sc1=60
+par k_IhA_Lut1=180
+par k_IhA_Lut2=28.211
+par k_IhA_Lut3=216.85
+par k_IhA_Lut4=114.25
+par k_IhA=4.287
+
+
+par b_IhB=0
+par k_IhB_AF2=447.47
+par k_IhB_SC2=134240.2
+par k_IhB_cl=172.45
+par k_IhA_e_cl=0.199
+
+par f_0=16
+par m_freq_E2=1
+par alpha_0=5.593e-3
+
+par k_GnRH_on=322.18
+par k_GnRH_off=644.35
+par k_GnRH_deg=0.447
+par k_R_G_inter=3.222
+par k_R_G_recy=32.218
+par k_GmhyphenR_i_diss=32.218
+par k_GmhyphenR_i_degr=0.00895
+par k_R_G_syn=8.949e-5
+par k_R_G_degr=0.0895
+par k_GmhyphenR_inact=32.218
+par k_GmhyphenR_act=3.222
+par k_GmhyphenR_degr=0.0895
