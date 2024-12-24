@@ -44,11 +44,11 @@ T_IOF_CL = 0.639
 c_IOF = 0.215
 
 
-def h_neg(y, T, e):
+def h_pos(y, T, e):
     return (y**e) / ((y**e)+(T**e))
 
 
-def h_pos(y, T, e):
+def h_neg(y, T, e):
     return (T**e) / ((y**e)+(T**e))
 
 
@@ -68,7 +68,7 @@ def model(y, t):
     Inh = y[7]
     PGF = y[8]
     IOF = y[9]
-    dGnRHdt = m_GnRH_E2_P4 * h_neg(P4, T_GnRH_P4, 5) * h_pos(E2, T_GnRH_E2, 2) - c_GnRH * GnRH
+    dGnRHdt = m_GnRH_E2_P4 * h_neg(P4, T_GnRH_P4, 2) * h_pos(E2, T_GnRH_E2, 5) - c_GnRH * GnRH
     dFSHdt = m_FSH_Inh * h_neg(Inh, T_FSH_Inh, 5) - c_FSH * FSH
     dLHdt = m_LH_GnRH_P4 * h_neg(P4, T_LH_P4, 2) * h_pos(GnRH, T_LH_GnRH, 2) - c_LH * LH
     dFolldt = (m_Foll_FSH * h_pos(FSH, T_Foll_FSH, 2) * (1+m_Foll_Foll * h_pos(Foll, T_Foll_Foll, 2))
@@ -90,7 +90,7 @@ t = np.linspace(0,length,length*100)
 y, infodict = odeint(model,y0,t, full_output=True)
 print(infodict['message'])
 
-for i in range(10):
+for i in [2, 3, 5, 6]:
     plt.plot(t, y[:, i], label=hormones[i])
 plt.grid()
 plt.legend(loc='best')
