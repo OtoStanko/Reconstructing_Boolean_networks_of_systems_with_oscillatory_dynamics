@@ -1,5 +1,8 @@
+import os
+
 import matplotlib.pyplot as plt
 import numpy as np
+import pandas as pd
 from scipy.integrate import odeint
 
 
@@ -85,7 +88,7 @@ def model(y, t):
 hormones = ["GnRH", "FSH", "LH", "Foll", "CL", "P4", "E2", "Inh", "PGF", "IOF"]
 y0 = [0.0027, 0.5706, 0.0, 0.6131, 0.0098, 0.0504, 0.3650, 0.2603, 0.1418, 0.2630]
 length = 60
-t = np.linspace(0,length,length*100)
+t = np.linspace(0,length,length*10)
 
 y, infodict = odeint(model,y0,t, full_output=True)
 print(infodict['message'])
@@ -97,3 +100,21 @@ plt.legend(loc='best')
 plt.xlabel('time')
 plt.ylabel('c')
 plt.show()
+
+# Save the data to csv
+time = [i for i in range(len(t))]
+df = pd.DataFrame({
+    'Time': t,
+})
+for hormone in hormones:
+    df[hormone] = y[:,hormones.index(hormone)]
+
+df.set_index('Time', inplace=True, drop=True)
+print(df)
+
+simulation_output_file = os.path.join(".", "bov_cycle_ODE_sim_results.csv")
+df.to_csv(simulation_output_file, sep='\t')
+
+simulation_output_file_rows = os.path.join(".", "bov_cycle_ODE_sim_results_rows.csv")
+df_t = df.T
+df_t.to_csv(simulation_output_file_rows, sep=',')
