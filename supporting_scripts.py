@@ -45,7 +45,7 @@ def parameter_names():
 
 
 def gyn_cycle_augusta_run():
-    df = pd.read_csv('gyn-cycle_model/copasi_simulation_100d.csv', delimiter='\t')
+    df = pd.read_csv('model_3_gyn-cycle/copasi_simulation_100d.csv', delimiter='\t')
     df = df.T
     import Augusta
     df = df.iloc[1:]
@@ -63,7 +63,7 @@ def gyn_cycle_augusta_run():
 
 
 def predator_prey_augusta_run():
-    df = pd.read_csv('predator-prey_model/predator_prey_ODE_sim_results.csv', delimiter='\t')
+    df = pd.read_csv('model_1_predator-prey/predator_prey_ODE_sim_results.csv', delimiter='\t')
     time_column = df.columns[0]
     df = df[df['Time'] >= 4]
     for column in df.columns[1:]:
@@ -84,7 +84,7 @@ def predator_prey_augusta_run():
 
 
 def gyn_cycle_augusta_visualization():
-    df = pd.read_csv('gyn-cycle_model/copasi_simulation_100d.csv', delimiter='\t')
+    df = pd.read_csv('model_3_gyn-cycle/copasi_simulation_100d.csv', delimiter='\t')
     columns_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
                         'Ago_d', 's113', 's114', 's115', 's116',
                         'Ago_c', 'Ant_R', 'LH_Pit', 'FSH_pit']
@@ -103,7 +103,7 @@ def gyn_cycle_augusta_visualization():
 
 
 def hormonal_cycle_euler_transform_to_aeon():
-    create_aeon_model("gyn-cycle_model/hormonal_cycle_equations.txt", "gyn-cycle_model/boolean_functions_aeon.aeon")
+    create_aeon_model("model_3_gyn-cycle/hormonal_cycle_equations.txt", "model_3_gyn-cycle/boolean_functions_aeon.aeon")
     with open("boolean_functions_aeon", "a") as bool_funcs_aeon:
         print("$mass: true", file=bool_funcs_aeon, end='\n')
         print("$freq: !freq", file=bool_funcs_aeon, end='\n')

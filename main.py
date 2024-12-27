@@ -8,7 +8,7 @@ wc = os.getcwd()
 """**********************************
     Predator-prey model abstractions
 **********************************"""
-pp_model = os.path.join(wc, "predator-prey_model")
+pp_model = os.path.join(wc, "model_1_predator-prey")
 ode_file_pp = os.path.join(pp_model, "predator-prey_ODE_model.dode")
 sim_raw_pp = os.path.join(pp_model, "predator_prey_ODE_sim_results.csv")
 
@@ -58,7 +58,7 @@ def pp_boolnet():
 """**********************************
     Bovine-estrous cycle abstractions
 **********************************"""
-be_model = os.path.join(wc, "bovine-estrous_model")
+be_model = os.path.join(wc, "model_2_bovine-estrous")
 ode_file_be = os.path.join(be_model, "bovine-estrous-cycle_ODE_model.dode")
 
 """
@@ -74,7 +74,7 @@ def be_eulerlike_transform():
 """**********************************
     Gyn cycle abstractions
 **********************************"""
-gc_model = os.path.join(wc, "gyn-cycle_model")
+gc_model = os.path.join(wc, "model_3_gyn-cycle")
 ode_file_gc = os.path.join(gc_model, "gyn-cycle_ODE_model.dode")
 sim_raw_gc = os.path.join(gc_model, "copasi_simulation_100d.csv")
 

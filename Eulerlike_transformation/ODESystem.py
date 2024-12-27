@@ -89,11 +89,11 @@ class ODESystem:
         result = result[:-1] + ")"
         return max_input_vars, result
 
-#ode_file_pp = ODESystem(os.path.join(os.getcwd(), "predator-prey_model", "predator-prey_ODE_model.dode"))
+#ode_file_pp = ODESystem(os.path.join(os.getcwd(), "model_1_predator-prey", "predator-prey_ODE_model.dode"))
 #bn = EulerlikeTransformer(ode_file_pp)
 #print(bn)
 
 #bn.save_bn_to_aeon("predator_prey_euler-like.aeon")
-#ode_file_be = os.path.join(os.getcwd(), "bovine-estrous_model", "bovine-estrous-cycle_ODE_model.dode")
+#ode_file_be = os.path.join(os.getcwd(), "model_2_bovine-estrous", "bovine-estrous-cycle_ODE_model.dode")
 #ode_system = ODESystem(ode_file_be)
 
