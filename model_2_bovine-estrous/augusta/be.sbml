@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8' standalone='no'?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" qual:required="true" level="3" xmlns:qual="http://www.sbml.org/sbml/level3/version1/qual/version1" version="1"><model id="None"> 
+     <listOfCompartments>
+       <compartment id="main" constant="true">
+       </compartment>
+     </listOfCompartments>
+<qual:listOfQualitativeSpecies xmlns:qual="http://www.sbml.org/sbml/level3/version1/qual/version1">
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="GnRH"/>
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="FSH"/>
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="LH"/>
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="Foll"/>
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="CL"/>
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="P4"/>
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="E2"/>
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="Inh"/>
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="PGF"/>
+<qual:qualitativeSpecies qual:constant="false" qual:compartment="main" qual:id="IOF"/>
+</qual:listOfQualitativeSpecies>
+<qual:listOfTransitions xmlns:qual="http://www.sbml.org/sbml/level3/version1/qual/version1">
+</qual:listOfTransitions>
+</model>
+</sbml>

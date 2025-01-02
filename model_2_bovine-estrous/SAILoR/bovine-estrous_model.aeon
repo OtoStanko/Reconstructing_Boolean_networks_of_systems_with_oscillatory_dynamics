@@ -1,0 +1,10 @@
+$GnRH: LH
+$FSH: not Inh
+$LH: Foll and CL
+$Foll: 0
+$CL: LH or P4 and not IOF
+$P4: CL
+$E2: Foll
+$Inh: Foll or not FSH and not P4
+$PGF: not CL and P4
+$IOF: not CL and PGF
