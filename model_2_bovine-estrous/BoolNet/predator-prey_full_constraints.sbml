@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1" xmlns:qual="http://www.sbml.org/sbml/level3/version1/qual/version1" qual:required="true">
+	<model id="predator_prey">
+		<listOfCompartments>
+			<compartment id="default" constant="true"/>
+		</listOfCompartments>
+		<qual:listOfQualitativeSpecies>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="GnRH" qual:name="GnRH" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="FSH" qual:name="FSH" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="LH" qual:name="LH" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="Foll" qual:name="Foll" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="CL" qual:name="CL" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="P4" qual:name="P4" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="E2" qual:name="E2" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="Inh" qual:name="Inh" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="PGF" qual:name="PGF" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="IOF" qual:name="IOF" qual:maxLevel="1"/>
+		</qual:listOfQualitativeSpecies>
+		<qual:listOfTransitions>
+			<qual:transition qual:id="tr_GnRH" qual:name="Interactions targeting GnRH">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="Inh" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="E2" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="P4" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="GnRH" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="GnRH" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<and/>
+								<apply>
+									<eq/>
+									<ci>Inh</ci>
+									<cn type="integer">1</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>E2</ci>
+									<cn type="integer">1</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>P4</ci>
+									<cn type="integer">0</cn>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_FSH" qual:name="Interactions targeting FSH">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="LH" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="IOF" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Inh" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="FSH" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="FSH" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<or/>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>LH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Inh</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>LH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>IOF</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_LH" qual:name="Interactions targeting LH">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="CL" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="P4" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="LH" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="GnRH" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="LH" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<and/>
+								<apply>
+									<eq/>
+									<ci>CL</ci>
+									<cn type="integer">0</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>P4</ci>
+									<cn type="integer">0</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>GnRH</ci>
+									<cn type="integer">1</cn>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_Foll" qual:name="Interactions targeting Foll">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="P4" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Foll" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="LH" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="FSH" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="Foll" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<or/>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>LH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>P4</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_CL" qual:name="Interactions targeting CL">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="IOF" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="CL" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Foll" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="LH" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="CL" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<or/>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>IOF</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>CL</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>IOF</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>CL</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_P4" qual:name="Interactions targeting P4">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="Foll" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="P4" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="CL" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="P4" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<or/>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>CL</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>P4</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_E2" qual:name="Interactions targeting E2">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="GnRH" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="IOF" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="E2" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Foll" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="E2" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<or/>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>GnRH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>IOF</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>GnRH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>E2</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>GnRH</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>IOF</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>E2</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_Inh" qual:name="Interactions targeting Inh">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="E2" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="IOF" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Inh" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Foll" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="Inh" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<or/>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>E2</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>IOF</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>E2</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Inh</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_PGF" qual:name="Interactions targeting PGF">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="Foll" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="PGF" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="E2" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="P4" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="PGF" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<or/>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>PGF</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>E2</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>P4</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>PGF</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>P4</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_IOF" qual:name="Interactions targeting IOF">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="Foll" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="IOF" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="PGF" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="CL" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="IOF" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<or/>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>IOF</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>CL</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>IOF</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>PGF</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>CL</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>IOF</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>PGF</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+		</qual:listOfTransitions>
+	</model>
+</sbml>
