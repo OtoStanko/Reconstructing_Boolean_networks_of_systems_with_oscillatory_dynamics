@@ -1,5 +1,6 @@
 $R_GnRH_a: 1
 $R_GnRH_i: AF3
+AF3 -? R_GnRH_i
 $Ant_c: 0
 $GnRH_R_i: 1
 $Ago_R_i: 0
@@ -10,24 +11,34 @@ $AF3: 0
 $FSH_bld: 1
 $AF4: 0
 $InhB: PrF
+PrF -? InhB
 $LH_Pit: OvF
+OvF -? LH_Pit
 $Lut1: OvF
+OvF -? Lut1
 $Lut3: Lut1
+Lut1 -? Lut3
 $OvF: 0
 $P4: Lut2
+Lut2 -? P4
 $R_FSH_des: 1
 $R_Foll: 0
 $AF1: 1
 $R_LH_des: 0
 $Sc1: 0
 $InhA_delay: InhA
+InhA -? InhA_delay
 $FSH_pit: freq
+freq -? FSH_pit
 $E2: 0
 $Ant_R: 0
 $PrF: 0
 $GnRH_R_a: 0
-$InhA: R_GnRH_i and not FSH_pit
-$Lut4: not LH_Pit
+$InhA: R_GnRH_i & !FSH_pit
+R_GnRH_i -? InhA
+FSH_pit -? InhA
+$Lut4: !LH_Pit
+LH_Pit -? Lut4
 $Ago_R_a: 1
 $FSH_R: 1
 $R_LH: 1
@@ -37,7 +48,9 @@ $Sc2: 0
 $Ant_d: 0
 $Ago_d: 0
 $Lut2: Sc1
+Sc1 -? Lut2
 $R_FSH: 0
 $LH_R: 0
 $freq: AF2
+AF2 -? freq
 $mass: 0

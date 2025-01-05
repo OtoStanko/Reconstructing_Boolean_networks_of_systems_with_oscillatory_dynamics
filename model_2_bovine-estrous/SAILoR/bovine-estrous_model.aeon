@@ -1,10 +1,26 @@
 $GnRH: LH
-$FSH: not Inh
-$LH: Foll and CL
+LH -? GnRH
+$FSH: !Inh
+Inh -? FSH
+$LH: Foll & CL
+CL -? LH
+Foll -? LH
 $Foll: 0
-$CL: LH or P4 and not IOF
+$CL: LH | P4 & !IOF
+LH -? CL
+P4 -? CL
+IOF -? CL
 $P4: CL
+CL -? P4
 $E2: Foll
-$Inh: Foll or not FSH and not P4
-$PGF: not CL and P4
-$IOF: not CL and PGF
+Foll -? E2
+$Inh: Foll | !FSH & !P4
+Foll -? Inh
+FSH -? Inh
+P4 -? Inh
+$PGF: !CL & P4
+P4 -? PGF
+CL -? PGF
+$IOF: !CL & PGF
+CL -? IOF
+PGF -? IOF
