@@ -1,56 +1,79 @@
-$R_GnRH_a: 1
-$R_GnRH_i: AF3
-AF3 -? R_GnRH_i
-$Ant_c: 0
-$GnRH_R_i: 1
-$Ago_R_i: 0
-$GnRH: 0
+$R_GnRH_a: !PrF
+PrF -? R_GnRH_a
+$R_GnRH_i: !P4
+P4 -? R_GnRH_i
+$Ant_c: 1
+$GnRH_R_i: !Lut4 | Lut3 & !P4
+Lut3 -? GnRH_R_i
+Lut4 -? GnRH_R_i
+P4 -? GnRH_R_i
+$Ago_R_i: 1
+$GnRH: PrF
+PrF -? GnRH
 $Ago_c: 0
-$LH_bld: 0
-$AF3: 0
-$FSH_bld: 1
+$LH_bld: PrF
+PrF -? LH_bld
+$AF3: 1
+$FSH_bld: !Lut3 & AF1
+AF1 -? FSH_bld
+Lut3 -? FSH_bld
 $AF4: 0
 $InhB: PrF
 PrF -? InhB
-$LH_Pit: OvF
-OvF -? LH_Pit
+$LH_Pit: R_Foll
+R_Foll -? LH_Pit
 $Lut1: OvF
 OvF -? Lut1
 $Lut3: Lut1
 Lut1 -? Lut3
 $OvF: 0
-$P4: Lut2
-Lut2 -? P4
+$P4: InhA & !Sc2
+InhA -? P4
+Sc2 -? P4
 $R_FSH_des: 1
-$R_Foll: 0
-$AF1: 1
+$R_Foll: 1
+$AF1: !P4
+P4 -? AF1
 $R_LH_des: 0
-$Sc1: 0
-$InhA_delay: InhA
-InhA -? InhA_delay
-$FSH_pit: freq
-freq -? FSH_pit
-$E2: 0
-$Ant_R: 0
+$Sc1: R_GnRH_a & GnRH
+GnRH -? Sc1
+R_GnRH_a -? Sc1
+$InhA_delay: !AF2
+AF2 -? InhA_delay
+$FSH_pit: !Lut4
+Lut4 -? FSH_pit
+$E2: !freq & mass
+freq -? E2
+mass -? E2
+$Ant_R: 1
 $PrF: 0
-$GnRH_R_a: 0
-$InhA: R_GnRH_i & !FSH_pit
-R_GnRH_i -? InhA
-FSH_pit -? InhA
-$Lut4: !LH_Pit
-LH_Pit -? Lut4
+$GnRH_R_a: PrF
+PrF -? GnRH_R_a
+$InhA: !R_GnRH_a
+R_GnRH_a -? InhA
+$Lut4: P4 | Lut3
+Lut3 -? Lut4
+P4 -? Lut4
 $Ago_R_a: 1
 $FSH_R: 1
 $R_LH: 1
-$AF2: 0
+$AF2: !AF4 & !Lut4
+AF4 -? AF2
+Lut4 -? AF2
 $Ant_p: 0
-$Sc2: 0
-$Ant_d: 0
-$Ago_d: 0
-$Lut2: Sc1
-Sc1 -? Lut2
-$R_FSH: 0
-$LH_R: 0
+$Sc2: AF4
+AF4 -? Sc2
+$Ant_d: 1
+$Ago_d: 1
+$Lut2: Sc2
+Sc2 -? Lut2
+$R_FSH: !AF2 & !Sc2
+AF2 -? R_FSH
+Sc2 -? R_FSH
+$LH_R: PrF
+PrF -? LH_R
 $freq: AF2
 AF2 -? freq
-$mass: 0
+$mass: E2 & !freq
+E2 -? mass
+freq -? mass

@@ -141,7 +141,17 @@ def SAILoR_to_aeon(list_of_boolean_functions, aeon_file_path):
     with open(aeon_file_path, 'w') as file:
         for boolean_function in list_of_boolean_functions:
             variable, rhs = boolean_function.split(" = ")
-            print("$" + variable + ":", rhs, file=file)
+            equation = re.sub(r'and', '&', rhs)
+            equation = re.sub(r'or', '|', equation)
+            equation = re.sub(r'not ', '!', equation)
+            print("$" + variable + ":", equation, file=file)
+            pattern = r'\b!?\w+\b'
+            variables = re.findall(pattern, equation)
+            unique_variables = sorted(set(variables))
+            if unique_variables[0] == '0' or unique_variables[0] == '1':
+                continue
+            for input_variable in unique_variables:
+                print(input_variable + " -? " + variable, file=file)
 
 
 def simplify_TS(raw_ts, binarized_ts, simplified_raw, simplified_bin):

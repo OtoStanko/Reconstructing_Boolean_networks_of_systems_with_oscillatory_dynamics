@@ -6,21 +6,20 @@ $LH: Foll & CL
 CL -? LH
 Foll -? LH
 $Foll: 0
-$CL: LH | P4 & !IOF
-LH -? CL
-P4 -? CL
+$CL: P4 & !IOF
 IOF -? CL
+P4 -? CL
 $P4: CL
 CL -? P4
 $E2: Foll
 Foll -? E2
 $Inh: Foll | !FSH & !P4
-Foll -? Inh
 FSH -? Inh
+Foll -? Inh
 P4 -? Inh
 $PGF: !CL & P4
-P4 -? PGF
 CL -? PGF
+P4 -? PGF
 $IOF: !CL & PGF
 CL -? IOF
 PGF -? IOF
