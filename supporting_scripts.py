@@ -88,18 +88,23 @@ def gyn_cycle_augusta_visualization():
     columns_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
                         'Ago_d', 's113', 's114', 's115', 's116',
                         'Ago_c', 'Ant_R', 'LH_Pit', 'FSH_pit']
-    df = df.drop(columns=columns_to_drop)
+    #df = df.drop(columns=columns_to_drop)
     print(df)
     time_column = df.columns[0]
-    for column in df.columns[1:]:
+    columns_to_plot = ['LH_bld', 'FSH_bld', 'P4', 'E2']
+    fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+    axes = axes.flatten()
+    for column, ax in zip(columns_to_plot, axes):
         #plt.figure(figsize=(10, 6))  # Create a new figure for each column
-        plt.plot(df[time_column], df[column], label=column)
+        ax.plot(df[time_column], df[column], label=column)
+        ax.set_title(column)
+        ax.set_xlabel('days')
+        plt.grid(True)
     #plt.title(f"Time Series Plot for {column}")
-    plt.xlabel("Time")
-    plt.ylabel('Hormone levels')
-    plt.legend()
-    plt.grid(True)
+    #plt.legend()
+    plt.tight_layout()
     plt.show()
+#gyn_cycle_augusta_visualization()
 
 
 def hormonal_cycle_euler_transform_to_aeon():

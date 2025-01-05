@@ -2,18 +2,37 @@ from biodivine_aeon import *
 import os
 
 
-euler_like_pp_model_path = os.path.join(os.getcwd(), "model_1_predator-prey", "euler-like_transformation", "a_ge_b_d_l_g.aeon")
-augusta_pp_model_path = os.path.join(os.getcwd(), "model_1_predator-prey", "augusta", "pp.sbml")
-ideal_pp_model_path = os.path.join(os.getcwd(), "model_1_predator-prey", "predator-prey_boolean_model_ideal.aeon")
-pp_model_paths = [euler_like_pp_model_path, augusta_pp_model_path, ideal_pp_model_path]
+pp_model = os.path.join(os.getcwd(), "model_1_predator-prey")
+augusta_pp_model_path = os.path.join(pp_model, "augusta", "pp.sbml")
+boolnet_pp_model_path = os.path.join(pp_model, "BoolNet", "predator-prey.sbml")
+euler_like_pp_model_path = os.path.join(pp_model, "euler-like_transformation", "predator-prey_model.aeon")
+sailor_pp_model_path = os.path.join(pp_model, "SAILoR", "predator-prey.aeon")
+ideal_pp_model_path = os.path.join(pp_model, "predator-prey_boolean_model_ideal.aeon")
+pp_model_paths = [augusta_pp_model_path, boolnet_pp_model_path,
+                  euler_like_pp_model_path, sailor_pp_model_path,
+                  ideal_pp_model_path]
 
-euler_like_be_model_path = os.path.join(os.getcwd(), "model_2_bovine-estrous", "euler-like_transformation", "first_model.aeon")
-euler_like_automated_be_model_path = os.path.join(os.getcwd(), "model_2_bovine-estrous", "euler-like_transformation", "bovine-estrous-cycle_model.aeon")
-be_model_paths = [euler_like_be_model_path, euler_like_automated_be_model_path]
+be_model = os.path.join(os.getcwd(), "model_2_bovine-estrous")
+augusta_be_model_path = os.path.join(be_model, "augusta", "be.sbml")
+boolnet_be_model_path = os.path.join(be_model, "BoolNet", "bovine-estrous_maxK4_colored_edges.aeon")
+euler_like_be_model_path = os.path.join(be_model, "euler-like_transformation", "first_model.aeon")
+euler_like_automated_be_model_path = os.path.join(be_model, "euler-like_transformation", "bovine-estrous-cycle_model.aeon")
+sailor_be_model_path = os.path.join(be_model, "SAILoR", "bovine-estrous_model.aeon")
+be_model_paths = [augusta_be_model_path, boolnet_be_model_path,
+                  euler_like_automated_be_model_path, sailor_be_model_path]
+
+
+gc_model = os.path.join(os.getcwd(), "model_3_gyn-cycle")
+augusta_gc_model_path = os.path.join(gc_model, "augusta", "gc.sbml")
+boolnet_gc_model_path = os.path.join(gc_model, "BoolNet", "gyn-cycle.sbml")
+euler_like_gc_model_path = os.path.join(gc_model, "euler-like_transformation", "gyn-cycle_model.aeon")
+sailor_gc_model_path = os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon")
+gc_model_paths = [augusta_gc_model_path, boolnet_gc_model_path,
+                  euler_like_gc_model_path, sailor_gc_model_path]
 
 for model_path in pp_model_paths:
-    model = BooleanNetwork.from_file(model_path)
     print(model_path)
+    model = BooleanNetwork.from_file(model_path, repair_graph=True)
     print(model.implicit_parameters())
     print(model.variables())
     for v in model.variables():
@@ -55,7 +74,9 @@ for model_path in pp_model_paths:
     print(attractors_mc)
     print()
 
+
 for model_path in be_model_paths:
+    print(model_path)
     model = BooleanNetwork.from_file(model_path)
     for v in model.variables():
         print(model.get_variable_name(v), "=", model.get_update_function(v))
@@ -80,4 +101,23 @@ for model_path in be_model_paths:
     # "(LH & EU(!P4, (E2 & EU(!LH, (P4 & EU(!E2, LH))))))"
     attractors_mc = ModelChecking.verify(stg, c2)
     print(attractors_mc)
+    print()
+
+
+for model_path in gc_model_paths:
+    print(model_path)
+    model = BooleanNetwork.from_file(model_path, repair_graph=True)
+    print(model.implicit_parameters())
+    print(model.variables())
+    for v in model.variables():
+        print(model.get_variable_name(v), "=", model.get_update_function(v))
+
+    stg = AsynchronousGraph.mk_for_model_checking(model, 2)
+
+    attractors = Attractors.attractors(stg)
+
+    print(attractors)
+    for attractor in attractors:
+        classes = Classification.classify_long_term_behavior(stg, attractor)
+        print(classes)
     print()

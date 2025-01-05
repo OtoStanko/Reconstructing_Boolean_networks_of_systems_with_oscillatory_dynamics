@@ -92,13 +92,26 @@ t = np.linspace(0,length,length*10)
 
 y, infodict = odeint(model,y0,t, full_output=True)
 print(infodict['message'])
+columns_to_plot = [2, 1, 5, 6]
 
-for i in [2, 3, 5, 6]:
+for i in columns_to_plot:
     plt.plot(t, y[:, i], label=hormones[i])
 plt.grid()
 plt.legend(loc='best')
 plt.xlabel('time')
 plt.ylabel('c')
+plt.show()
+
+fig, axes = plt.subplots(2, 2, figsize=(10, 8))
+axes = axes.flatten()
+for i, ax in zip(columns_to_plot, axes):
+    ax.plot(t, y[:, i], label=hormones[i])
+    ax.set_title(hormones[i])
+    ax.set_xlabel('days')
+    ax.set_ylabel('Concentration (c)')
+    ax.grid(True)
+    #ax.legend(loc='best')
+plt.tight_layout()
 plt.show()
 
 # Save the data to csv
