@@ -21,9 +21,11 @@ def pp_boolnet():
     print("Running function: pp_boolnet")
     raw_ts = os.path.join(pp_model, "predator_prey_ODE_sim_results_rows.csv")
     bin_ts = os.path.join(pp_model, "predator_prey_ODE_sim_binarized_k_means.csv")
+    bin_ts = os.path.join(pp_model, "Leigh1968_harelynx_rows_binarized.csv")
     bin_ts_simple = os.path.join(pp_model,
-                                 "predator_prey_ODE_sim_binarized_k_means_simplified_auto.csv")
+                                 "Leigh1968_harelynx_rows_binarized_simplified.csv")
     simplify_TS(None, bin_ts, None, bin_ts_simple)
+pp_boolnet()
 
 
 """
@@ -57,7 +59,8 @@ def pp_sailor():
     for bfun in best:
         boolean_expressions.append(bfun[4])
     print(boolean_expressions)
-    SAILoR_to_aeon(boolean_expressions, os.path.join(pp_model, "SAILoR", "gyn-cycle_model.aeon"))
+    SAILoR_to_aeon(boolean_expressions, os.path.join(pp_model, "SAILoR", "predator-prey.aeon"))
+#pp_sailor()
 
 
 """
@@ -133,7 +136,7 @@ def be_sailor():
         boolean_expressions.append(bfun[4])
     print(boolean_expressions)
     SAILoR_to_aeon(boolean_expressions, os.path.join(be_model, "SAILoR", "bovine-estrous_model.aeon"))
-be_sailor()
+#be_sailor()
 
 
 """
@@ -224,3 +227,4 @@ def gc_sailor():
         boolean_expressions.append(bfun[4])
     print(boolean_expressions)
     SAILoR_to_aeon(boolean_expressions, os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon"))
+#gc_sailor()

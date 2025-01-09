@@ -175,4 +175,61 @@ def simplify_TS(raw_ts, binarized_ts, simplified_raw, simplified_bin):
     df = pd.DataFrame(simplified_ts_states).T
     df.index = names
     df.to_csv(simplified_bin)
-            
+
+
+def visualize_lynx_hare():
+    df = pd.read_csv("model_1_predator-prey/Leigh1968_harelynx.csv")
+
+    # Assume the first column is the 'Year' and the rest are values for different labels
+    years = df.iloc[:, 0]  # First column (Years)
+    values = df.iloc[:, 1:]  # All other columns (Values)
+
+    # Plot each value series against years
+    plt.figure(figsize=(10, 6))
+    for column in values.columns:
+        plt.plot(years, values[column], label=column)
+
+    # Add labels and title
+    plt.xlabel('Year')
+    plt.ylabel('# of furs sold to Hudson Bay company')
+    plt.title('Hudson Bay company Lynx-Hare dataset (1847 - 1903)')
+
+    # Optional: Add a legend to indicate what each line represents
+    plt.legend(loc='upper left')
+
+    # Show the plot
+    plt.grid(True)  # Optional: Add grid for better readability
+    plt.show()
+visualize_lynx_hare()
+
+
+def visualize_lynx_hare_discrete():
+    df = pd.read_csv("model_1_predator-prey/Leigh1968_harelynx.csv")
+    # Assume the first column is the 'Year' and the rest are values for different labels
+    years = df.iloc[:, 0]  # First column (Years)
+    values = df.iloc[:, 1:]  # All other columns (Values)
+
+    df_disc = pd.read_csv("model_1_predator-prey/Leigh1968_harelynx_rows_binarized.csv",
+                          header=0, index_col=0)
+    df_disc = df_disc.T
+
+    features = ["Hares", "Lynxes"]
+    for feature in features:
+        plt.figure(figsize=(10, 6))
+        ts = values[feature]
+        ts = ts / max(ts)
+        plt.plot(years, ts, label="raw {}".format(feature))
+        plt.plot(years, df_disc[feature], label="discretized {}".format(feature))
+
+        # Add labels and title
+        plt.xlabel('Year')
+        plt.ylabel('# of furs sold to Hudson Bay company')
+        plt.title('Hudson Bay company {} dataset (1847 - 1903) raw vs discretized values'.format(feature))
+
+        # Optional: Add a legend to indicate what each line represents
+        plt.legend(loc='upper left')
+
+        # Show the plot
+        plt.grid(True)  # Optional: Add grid for better readability
+        plt.show()
+visualize_lynx_hare_discrete()

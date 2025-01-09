@@ -4,32 +4,6 @@ setwd("D:\\MUNI\\FI\\_mgr\\Diplomka\\boolean_gynCycle")
 
 
 #
-# PREDATOR-PREY MODEL
-#
-model_directory <- "model_1_predator-prey"
-
-binarized_data <- read.delim(file.path(getwd(), model_directory, "predator_prey_ODE_sim_binarized_k_means _simplified.csv"),
-                             header = TRUE,
-                             sep = ",",
-                             row.names = 1,
-                             stringsAsFactors = FALSE)
-binarized_data
-
-net <- reconstructNetwork(binarized_data,
-                          method="bestfit",
-                          maxK=2,
-                          requiredDependencies=list("Rabbits"=c("Foxes"), "Foxes"=c("Rabbits")))
-net
-plotNetworkWiring(net)
-
-bn <- chooseNetwork(net, c(1, 1))
-bn
-
-toSBML(bn, file.path(getwd(), model_directory, "BoolNet", "predator-prey.sbml"))
-
-
-
-#
 # BOVINE ESTROUS MODEL
 #
 model_directory <- "model_2_bovine-estrous"

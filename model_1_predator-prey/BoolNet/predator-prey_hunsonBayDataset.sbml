@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1" xmlns:qual="http://www.sbml.org/sbml/level3/version1/qual/version1" qual:required="true">
+	<model id="predator_prey_hunsonBayDataset">
+		<listOfCompartments>
+			<compartment id="default" constant="true"/>
+		</listOfCompartments>
+		<qual:listOfQualitativeSpecies>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="Hares" qual:name="Hares" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="Lynxes" qual:name="Lynxes" qual:maxLevel="1"/>
+		</qual:listOfQualitativeSpecies>
+		<qual:listOfTransitions>
+			<qual:transition qual:id="tr_Hares" qual:name="Interactions targeting Hares">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="Lynxes" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Hares" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="Hares" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<eq/>
+								<ci>Lynxes</ci>
+								<cn type="integer">0</cn>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+			<qual:transition qual:id="tr_Lynxes" qual:name="Interactions targeting Lynxes">
+				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="Lynxes" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Hares" qual:transitionEffect="none"/>
+				</qual:listOfInputs>
+				<qual:listOfOutputs>
+					<qual:output qual:qualitativeSpecies="Lynxes" qual:transitionEffect="assignmentLevel"/>
+				</qual:listOfOutputs>
+				<qual:listOfFunctionTerms>
+					<qual:functionTerm qual:resultLevel="1">
+						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<and/>
+								<apply>
+									<eq/>
+									<ci>Lynxes</ci>
+									<cn type="integer">0</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>Hares</ci>
+									<cn type="integer">1</cn>
+								</apply>
+							</apply>
+						</math>
+					</qual:functionTerm>
+					<qual:defaultTerm qual:resultLevel="0"/>
+				</qual:listOfFunctionTerms>
+			</qual:transition>
+		</qual:listOfTransitions>
+	</model>
+</sbml>

@@ -30,21 +30,21 @@ infodict['message']                     # >>> 'Integration successful.'
 
 # Plot the time course of the solution
 
-plt.plot(t, y[:,0], 'r-', label='Rabbits')
-plt.plot(t, y[:,1]  , 'b-', label='Foxes')
+plt.plot(t, y[:,0], label='Hares')
+plt.plot(t, y[:,1], label='Lynxes')
 plt.grid()
 plt.legend(loc='upper left')
 plt.xlabel('Time')
 plt.ylabel('Population density')
-plt.title('Evolution of foxes and rabbits populations')
+plt.title('Evolution of lynxes and hares populations')
 plt.show()
 
 # Save the data to csv
 time = [i for i in range(len(t))]
 df = pd.DataFrame({
     'Time': t,
-    'Rabbits': y[:,0],
-    'Foxes': y[:,1]
+    'Hares': y[:,0],
+    'Lynxes': y[:,1]
 })
 df.set_index('Time', inplace=True, drop=True)
 #df = pd.DataFrame([y[:,0], y[:,1]], columns=time, index=['Rabbits', 'Foxes'])
@@ -76,8 +76,8 @@ for v in values:
 
 
 plt.title('Trajectories')
-plt.xlabel('Number of rabbits')
-plt.ylabel('Number of foxes')
+plt.xlabel('Number of hares')
+plt.ylabel('Number of lynxes')
 plt.legend(loc='best')
 plt.grid()
 #plt.show()
@@ -99,8 +99,8 @@ plt.title('Nullclines and direction fields')
 Q = plt.quiver(X1, Y1, DX1, DY1)
 plt.plot([c/d,c/d],[0,40],'b--',label='nullcline 1')
 plt.plot([0,60],[a/b,a/b],'r--',label='nullcline 2')
-plt.xlabel('Number of rabbits')
-plt.ylabel('Number of foxes')
+plt.xlabel('Number of hares')
+plt.ylabel('Number of lynxes')
 plt.grid()
 plt.show()
 
