@@ -27,7 +27,7 @@ plotNetworkWiring(net)
 bn <- chooseNetwork(net, c(1, 1))
 bn
 
-toSBML(bn, file.path(getwd(), model_directory, "BoolNet", "predator-prey_hunsonBayDataset.sbml"))
+toSBML(bn, file.path(getwd(), model_directory, "BoolNet", "predator-prey_hudsonBayDataset.sbml"))
 
 
 

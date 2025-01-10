@@ -25,7 +25,7 @@ def pp_boolnet():
     bin_ts_simple = os.path.join(pp_model,
                                  "Leigh1968_harelynx_rows_binarized_simplified.csv")
     simplify_TS(None, bin_ts, None, bin_ts_simple)
-pp_boolnet()
+#pp_boolnet()
 
 
 """
@@ -43,24 +43,38 @@ def pp_eulerlike_transform():
 SAILoR inference from time series and prior networks
 """
 def pp_sailor():
+    sailor_pp_model_path = os.path.join(pp_model, "SAILoR")
     print("Running function: pp_sailor")
     from SAILoR.SAILoR import ContextSpecificDecoder
 
-    prior_network_predator_prey = os.path.join(pp_model, "prior_network_pp.tsv")
-    ode_system_pp = ODESystem(ode_file_pp)
-    ode_system_pp.to_network(prior_network_predator_prey)
-
-    decoder = ContextSpecificDecoder(timeSeriesPath=sim_raw_pp,
-                                     referenceNetPaths=[prior_network_predator_prey])
-    print(decoder)
-    best = decoder.run()
+    prior_network_predator_prey = os.path.join(sailor_pp_model_path, "prior_network_pp.tsv")
+    #ode_system_pp = ODESystem(ode_file_pp)
+    #ode_system_pp.to_network(prior_network_predator_prey)
+    prior_networks_pp = [os.path.join(sailor_pp_model_path, "prior_network_pp_{:02d}.tsv".format(i))
+                         for i in range(1, 15)] + [prior_network_predator_prey]
+    decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=sim_raw_pp,
+                                     referenceNetPaths=prior_networks_pp)
+    print(decoder_simDataset)
+    best = decoder_simDataset.run()
 
     boolean_expressions = []
     for bfun in best:
         boolean_expressions.append(bfun[4])
     print(boolean_expressions)
-    SAILoR_to_aeon(boolean_expressions, os.path.join(pp_model, "SAILoR", "predator-prey.aeon"))
-#pp_sailor()
+    SAILoR_to_aeon(boolean_expressions, os.path.join(sailor_pp_model_path, "predator-prey_simDataset.aeon"))
+
+    ts_raw_lynxhare = os.path.join(pp_model, "Leigh1968_harelynx_tabs.csv")
+    decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=ts_raw_lynxhare,
+                                                referenceNetPaths=prior_networks_pp)
+    print(decoder_simDataset)
+    best = decoder_simDataset.run()
+
+    boolean_expressions = []
+    for bfun in best:
+        boolean_expressions.append(bfun[4])
+    print(boolean_expressions)
+    SAILoR_to_aeon(boolean_expressions, os.path.join(sailor_pp_model_path, "predator-prey_hudsonBayDataset.aeon"))
+pp_sailor()
 
 
 """

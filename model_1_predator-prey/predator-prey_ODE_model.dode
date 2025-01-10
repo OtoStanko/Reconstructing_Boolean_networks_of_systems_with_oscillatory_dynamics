@@ -1,7 +1,7 @@
-# predator-prey ODE model
+# discretized predator-prey ODE model
 
-dRabbits/dt=alpha*Rabbits-beta*Rabbits*Foxes
-dFoxes/dt=-gamma*Foxes+delta*Rabbits*Foxes
+dHares/dt=alpha*Hares-beta*Hares*Lynxes
+dLynxes/dt=-gamma*Lynxes+delta*Hares*Lynxes
 
 par alpha=1,beta=0.1,gamma=1.5,delta=0.075
 
