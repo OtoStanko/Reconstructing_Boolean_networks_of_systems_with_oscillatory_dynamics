@@ -47,11 +47,10 @@ def pp_sailor():
     print("Running function: pp_sailor")
     from SAILoR.SAILoR import ContextSpecificDecoder
 
-    prior_network_predator_prey = os.path.join(sailor_pp_model_path, "prior_network_pp.tsv")
     #ode_system_pp = ODESystem(ode_file_pp)
     #ode_system_pp.to_network(prior_network_predator_prey)
-    prior_networks_pp = [os.path.join(sailor_pp_model_path, "prior_network_pp_{:02d}.tsv".format(i))
-                         for i in range(1, 15)] + [prior_network_predator_prey]
+    prior_networks_pp = [os.path.join(sailor_pp_model_path, "prior_networks", "prior_network_pp_{:02d}.tsv".format(i))
+                         for i in range(1, 16)]
     decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=sim_raw_pp,
                                      referenceNetPaths=prior_networks_pp)
     print(decoder_simDataset)
