@@ -1,5 +1,6 @@
 import os
 
+import scipy.signal
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
@@ -92,16 +93,36 @@ t = np.linspace(0,length,length*10)
 
 y, infodict = odeint(model,y0,t, full_output=True)
 print(infodict['message'])
+
+colours = ["lightseagreen", "yellow", "orange",
+           "gray", "green", "blue", "red",
+           "darkblue", "purple", "black"]
+LH_CL_P4 = [2, 4, 5]  # LH, CL, P4
+Foll_E2_Inh = [3, 6, 7]  # Foll, E2, INh
+folls = [3, 1, 5]  # Foll, FSH, P4
+rest = [0, 8, 9]  # GnRH, PGF, IOF
+plots = [LH_CL_P4, Foll_E2_Inh, folls, rest]
+
+lh_peaks, _ = scipy.signal.find_peaks(y[:, hormones.index("LH")], distance=10, height=0.5)
+if len(lh_peaks) >= 3:
+    starttime = lh_peaks[0]
+    endtime = lh_peaks[2]
+    ct = t - t[lh_peaks[1]]
+else:
+    starttime = 0
+    endtime = len(t)
+    ct = t
+
+for plot in plots:
+    for i in plot:
+        plt.plot(ct[starttime:endtime], y[:, i][starttime:endtime], label=hormones[i], color=colours[i])
+    plt.grid()
+    plt.legend(loc='upper right')
+    plt.xlabel('time')
+    plt.ylabel('c')
+    plt.show()
+
 columns_to_plot = [2, 1, 5, 6]
-
-for i in columns_to_plot:
-    plt.plot(t, y[:, i], label=hormones[i])
-plt.grid()
-plt.legend(loc='best')
-plt.xlabel('time')
-plt.ylabel('c')
-plt.show()
-
 fig, axes = plt.subplots(2, 2, figsize=(10, 8))
 axes = axes.flatten()
 for i, ax in zip(columns_to_plot, axes):

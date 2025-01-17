@@ -240,9 +240,9 @@
         "nodes": [
           {
             "layout": "default",
-            "variable": "PGF",
-            "px": 136.45366,
-            "py": -161.80544
+            "variable": "E2",
+            "px": 34.68611,
+            "py": -158.97803
           },
           {
             "layout": "default",
@@ -252,9 +252,9 @@
           },
           {
             "layout": "default",
-            "variable": "IOF",
-            "px": 237.02898,
-            "py": -113.62341
+            "variable": "Foll",
+            "px": -206.3237,
+            "py": 67.3474
           },
           {
             "layout": "default",
@@ -270,21 +270,15 @@
           },
           {
             "layout": "default",
-            "variable": "Foll",
-            "px": -206.3237,
-            "py": 67.3474
+            "variable": "IOF",
+            "px": 237.02898,
+            "py": -113.62341
           },
           {
             "layout": "default",
             "variable": "GnRH",
             "px": -77.11279,
             "py": -141.81836
-          },
-          {
-            "layout": "default",
-            "variable": "E2",
-            "px": 34.68611,
-            "py": -158.97803
           },
           {
             "layout": "default",
@@ -297,12 +291,58 @@
             "variable": "P4",
             "px": 85.19222,
             "py": -55.918045
+          },
+          {
+            "layout": "default",
+            "variable": "PGF",
+            "px": 136.45366,
+            "py": -161.80544
           }
         ]
       }
     ]
   },
   "datasets": [
+    {
+      "name": "ovul",
+      "id": "ovul",
+      "annotation": "",
+      "observations": [
+        {
+          "id": "obs_1",
+          "name": "obs_1",
+          "annotation": "",
+          "dataset": "ovul",
+          "values": "100"
+        },
+        {
+          "id": "obs_2",
+          "name": "obs_2",
+          "annotation": "",
+          "dataset": "ovul",
+          "values": "110"
+        },
+        {
+          "id": "obs_3",
+          "name": "obs_3",
+          "annotation": "",
+          "dataset": "ovul",
+          "values": "101"
+        },
+        {
+          "id": "obs_4",
+          "name": "obs_4",
+          "annotation": "",
+          "dataset": "ovul",
+          "values": "000"
+        }
+      ],
+      "variables": [
+        "E2",
+        "LH",
+        "P4"
+      ]
+    },
     {
       "name": "time_series",
       "id": "time_series",
@@ -881,49 +921,16 @@
         "PGF",
         "IOF"
       ]
-    },
-    {
-      "name": "ovul",
-      "id": "ovul",
-      "annotation": "",
-      "observations": [
-        {
-          "id": "obs_1",
-          "name": "obs_1",
-          "annotation": "",
-          "dataset": "ovul",
-          "values": "100"
-        },
-        {
-          "id": "obs_2",
-          "name": "obs_2",
-          "annotation": "",
-          "dataset": "ovul",
-          "values": "110"
-        },
-        {
-          "id": "obs_3",
-          "name": "obs_3",
-          "annotation": "",
-          "dataset": "ovul",
-          "values": "101"
-        },
-        {
-          "id": "obs_4",
-          "name": "obs_4",
-          "annotation": "",
-          "dataset": "ovul",
-          "values": "000"
-        }
-      ],
-      "variables": [
-        "E2",
-        "LH",
-        "P4"
-      ]
     }
   ],
   "dyn_properties": [
+    {
+      "id": "a02_CL_b_P4",
+      "name": "Generic dynamic property",
+      "annotation": "",
+      "variant": "GenericDynProp",
+      "formula": "3 {x}: ((~CL & ~P4) => EF (CL & ~P4)) => EF (CL & P4)"
+    },
     {
       "id": "Ovul",
       "name": "Trajectory existence",
@@ -932,34 +939,28 @@
       "dataset": "ovul"
     },
     {
-      "id": "TS",
+      "id": "ts",
       "name": "Trajectory existence",
       "annotation": "",
       "variant": "ExistsTrajectory",
       "dataset": "time_series"
+    },
+    {
+      "id": "a03_Foll_b_E2Inh",
+      "name": "Generic dynamic property",
+      "annotation": "",
+      "variant": "GenericDynProp",
+      "formula": "3 {x}: (Foll & ~E2 & ~Inh) => EF (Foll & E2 & Inh)"
+    },
+    {
+      "id": "a01_LH_b_CL",
+      "name": "Generic dynamic property",
+      "annotation": "",
+      "variant": "GenericDynProp",
+      "formula": "3 {x}: (LH & ~CL) => EF (~LH & CL)"
     }
   ],
   "stat_properties": [
-    {
-      "id": "essentiality_P4_Foll",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "P4",
-      "target": "Foll",
-      "value": "True",
-      "context": null
-    },
-    {
-      "id": "monotonicity_P4_LH",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "P4",
-      "target": "LH",
-      "value": "Inhibition",
-      "context": null
-    },
     {
       "id": "essentiality_Inh_FSH",
       "name": "Regulation essentiality property",
@@ -971,202 +972,12 @@
       "context": null
     },
     {
-      "id": "monotonicity_P4_PGF",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "P4",
-      "target": "PGF",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "monotonicity_LH_Foll",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "LH",
-      "target": "Foll",
-      "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "monotonicity_LH_CL",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "LH",
-      "target": "CL",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "essentiality_P4_GnRH",
+      "id": "essentiality_P4_Foll",
       "name": "Regulation essentiality property",
       "annotation": "",
       "variant": "RegulationEssential",
-      "input": "P4",
-      "target": "GnRH",
-      "value": "True",
-      "context": null
-    },
-    {
-      "id": "monotonicity_GnRH_LH",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "GnRH",
-      "target": "LH",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "essentiality_GnRH_LH",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "GnRH",
-      "target": "LH",
-      "value": "True",
-      "context": null
-    },
-    {
-      "id": "essentiality_P4_PGF",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "P4",
-      "target": "PGF",
-      "value": "True",
-      "context": null
-    },
-    {
-      "id": "essentiality_CL_IOF",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "CL",
-      "target": "IOF",
-      "value": "True",
-      "context": null
-    },
-    {
-      "id": "monotonicity_Foll_Inh",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "Foll",
-      "target": "Inh",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "monotonicity_GnRH_GnRH",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "GnRH",
-      "target": "GnRH",
-      "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "monotonicity_PGF_PGF",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "PGF",
-      "target": "PGF",
-      "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "monotonicity_CL_P4",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "CL",
-      "target": "P4",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "monotonicity_P4_GnRH",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "P4",
-      "target": "GnRH",
-      "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "essentiality_FSH_Foll",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "FSH",
-      "target": "Foll",
-      "value": "True",
-      "context": null
-    },
-    {
-      "id": "monotonicity_P4_Foll",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
       "input": "P4",
       "target": "Foll",
-      "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "monotonicity_Foll_E2",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "Foll",
-      "target": "E2",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "monotonicity_Foll_CL",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "Foll",
-      "target": "CL",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "monotonicity_PGF_IOF",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "PGF",
-      "target": "IOF",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "monotonicity_E2_PGF",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "E2",
-      "target": "PGF",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "essentiality_IOF_CL",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "IOF",
-      "target": "CL",
       "value": "True",
       "context": null
     },
@@ -1181,72 +992,12 @@
       "context": null
     },
     {
-      "id": "monotonicity_P4_P4",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "P4",
-      "target": "P4",
-      "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "monotonicity_E2_GnRH",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "E2",
-      "target": "GnRH",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "monotonicity_LH_LH",
+      "id": "monotonicity_LH_Foll",
       "name": "Regulation monotonicity property",
       "annotation": "",
       "variant": "RegulationMonotonic",
       "input": "LH",
-      "target": "LH",
-      "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "essentiality_E2_PGF",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "E2",
-      "target": "PGF",
-      "value": "True",
-      "context": null
-    },
-    {
-      "id": "monotonicity_CL_CL",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "CL",
-      "target": "CL",
-      "value": "Dual",
-      "context": null
-    },
-    {
-      "id": "monotonicity_E2_E2",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "E2",
-      "target": "E2",
-      "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "monotonicity_Inh_Inh",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "Inh",
-      "target": "Inh",
+      "target": "Foll",
       "value": "Inhibition",
       "context": null
     },
@@ -1261,53 +1012,13 @@
       "context": null
     },
     {
-      "id": "essentiality_CL_P4",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "CL",
-      "target": "P4",
-      "value": "True",
-      "context": null
-    },
-    {
-      "id": "monotonicity_CL_IOF",
+      "id": "monotonicity_E2_E2",
       "name": "Regulation monotonicity property",
       "annotation": "",
       "variant": "RegulationMonotonic",
-      "input": "CL",
-      "target": "IOF",
-      "value": "Activation",
-      "context": null
-    },
-    {
-      "id": "monotonicity_IOF_CL",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "IOF",
-      "target": "CL",
+      "input": "E2",
+      "target": "E2",
       "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "monotonicity_IOF_IOF",
-      "name": "Regulation monotonicity property",
-      "annotation": "",
-      "variant": "RegulationMonotonic",
-      "input": "IOF",
-      "target": "IOF",
-      "value": "Inhibition",
-      "context": null
-    },
-    {
-      "id": "essentiality_Foll_Inh",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "Foll",
-      "target": "Inh",
-      "value": "True",
       "context": null
     },
     {
@@ -1317,16 +1028,6 @@
       "variant": "RegulationEssential",
       "input": "LH",
       "target": "CL",
-      "value": "True",
-      "context": null
-    },
-    {
-      "id": "essentiality_E2_GnRH",
-      "name": "Regulation essentiality property",
-      "annotation": "",
-      "variant": "RegulationEssential",
-      "input": "E2",
-      "target": "GnRH",
       "value": "True",
       "context": null
     },
@@ -1341,12 +1042,102 @@
       "context": null
     },
     {
-      "id": "essentiality_Foll_CL",
+      "id": "monotonicity_Inh_Inh",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Inh",
+      "target": "Inh",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_CL_IOF",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "CL",
+      "target": "IOF",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Foll_CL",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Foll",
+      "target": "CL",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_PGF_PGF",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "PGF",
+      "target": "PGF",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_P4_PGF",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "P4",
+      "target": "PGF",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_GnRH_GnRH",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "GnRH",
+      "target": "GnRH",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_E2_GnRH",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "E2",
+      "target": "GnRH",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_IOF_CL",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "IOF",
+      "target": "CL",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Foll_E2",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Foll",
+      "target": "E2",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_Foll_Inh",
       "name": "Regulation essentiality property",
       "annotation": "",
       "variant": "RegulationEssential",
       "input": "Foll",
-      "target": "CL",
+      "target": "Inh",
       "value": "True",
       "context": null
     },
@@ -1371,6 +1162,176 @@
       "context": null
     },
     {
+      "id": "essentiality_PGF_IOF",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "PGF",
+      "target": "IOF",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_P4_Foll",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "P4",
+      "target": "Foll",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_CL_CL",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "CL",
+      "target": "CL",
+      "value": "Dual",
+      "context": null
+    },
+    {
+      "id": "essentiality_Foll_CL",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Foll",
+      "target": "CL",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_LH_LH",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "LH",
+      "target": "LH",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_GnRH_LH",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "GnRH",
+      "target": "LH",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_P4_GnRH",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "P4",
+      "target": "GnRH",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_P4_GnRH",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "P4",
+      "target": "GnRH",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_LH_CL",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "LH",
+      "target": "CL",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_PGF_IOF",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "PGF",
+      "target": "IOF",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_FSH_Foll",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "FSH",
+      "target": "Foll",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_P4_LH",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "P4",
+      "target": "LH",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_E2_PGF",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "E2",
+      "target": "PGF",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_E2_PGF",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "E2",
+      "target": "PGF",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_CL_P4",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "CL",
+      "target": "P4",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_IOF_IOF",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "IOF",
+      "target": "IOF",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "essentiality_E2_GnRH",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "E2",
+      "target": "GnRH",
+      "value": "True",
+      "context": null
+    },
+    {
       "id": "monotonicity_FSH_Foll",
       "name": "Regulation monotonicity property",
       "annotation": "",
@@ -1381,12 +1342,52 @@
       "context": null
     },
     {
-      "id": "essentiality_PGF_IOF",
+      "id": "essentiality_P4_PGF",
       "name": "Regulation essentiality property",
       "annotation": "",
       "variant": "RegulationEssential",
-      "input": "PGF",
-      "target": "IOF",
+      "input": "P4",
+      "target": "PGF",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Foll_Inh",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Foll",
+      "target": "Inh",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_CL_P4",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "CL",
+      "target": "P4",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_GnRH_LH",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "GnRH",
+      "target": "LH",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_IOF_CL",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "IOF",
+      "target": "CL",
       "value": "True",
       "context": null
     },
@@ -1398,6 +1399,26 @@
       "input": "FSH",
       "target": "FSH",
       "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_P4_P4",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "P4",
+      "target": "P4",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "essentiality_CL_IOF",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "CL",
+      "target": "IOF",
+      "value": "True",
       "context": null
     }
   ],
