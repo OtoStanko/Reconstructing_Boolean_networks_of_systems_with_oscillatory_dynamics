@@ -1,0 +1,165 @@
+#position:P4:448.79982332256105,205.45161854209798
+$P4:Lut4
+Lut4 -> P4
+#position:LH_pit:370.1169151691977,38.5
+$LH_pit:!P4
+P4 -| LH_pit
+#position:LH_blood:266.94597121272653,189.20248890334125
+$LH_blood:LH_pit & !LH_blood
+LH_blood -| LH_blood
+LH_pit -> LH_blood
+#position:IhA_e:544.0735975438313,637.7242027173594
+$IhA_e:IhA
+IhA -> IhA_e
+#position:FSH_pit:378.86636111268797,671.2467111133201
+$FSH_pit:!IhA_e & !freq & !IhB
+IhA_e -| FSH_pit
+freq -| FSH_pit
+IhB -| FSH_pit
+#position:freq:343.0701397096076,827.0530986321614
+$freq:!freq
+freq -| freq
+#position:IhB:288.48117726749456,627.898216381383
+$IhB:Sc2 | AF2
+Sc2 -> IhB
+AF2 -> IhB
+#position:FSH_blood:236.75914346692392,527.8290190307534
+$FSH_blood:FSH_pit & !FSH_blood
+FSH_blood -| FSH_blood
+FSH_pit -> FSH_blood
+#position:R_FSH_des:22.5,389.56884518678845
+$R_FSH_des:FSHmhyphenR
+FSHmhyphenR -> R_FSH_des
+#position:R_FSH:59.930708532714874,556.9657447923689
+$R_FSH:R_FSH_des | (R_FSH & !FSH_blood)
+R_FSH_des -> R_FSH
+FSH_blood -| R_FSH
+R_FSH -> R_FSH
+#position:FSHmhyphenR:145.27300607115316,424.66778001463433
+$FSHmhyphenR:FSH_blood & R_FSH & !FSHmhyphenR
+FSHmhyphenR -| FSHmhyphenR
+FSH_blood -> FSHmhyphenR
+R_FSH -> FSHmhyphenR
+#position:R_LH:280.08596239864926,37.55670660316258
+$R_LH:R_LH_des | (R_LH & !LH_blood)
+LH_blood -| R_LH
+R_LH_des -> R_LH
+R_LH -> R_LH
+#position:R_LH_des:459.35913299397646,67.1799441124208
+$R_LH_des:LHmhyphenR
+LHmhyphenR -> R_LH_des
+#position:LHmhyphenR:358.31835525785476,221.14287205330555
+$LHmhyphenR:LH_blood & R_LH & !LHmhyphenR
+LHmhyphenR -| LHmhyphenR
+LH_blood -> LHmhyphenR
+R_LH -> LHmhyphenR
+#position:s:341.8609579551489,368.9991147949996
+$s:(FSH_blood & !s) | (s & !P4)
+FSH_blood -> s
+P4 -| s
+s -? s
+#position:AF1:150.59944228933477,598.6764035202799
+$AF1:FSHmhyphenR | AF1
+FSHmhyphenR -> AF1
+AF1 -> AF1
+#position:AF2:274.13364301966016,444.15158789381235
+$AF2:(AF2 & !LHmhyphenR) | (AF2 & !s) | (FSHmhyphenR & AF1 & !AF2)
+FSHmhyphenR -> AF2
+LHmhyphenR -| AF2
+AF1 -> AF2
+AF2 -? AF2
+s -| AF2
+#position:AF3:237.17718179437227,334.78790234332484
+$AF3:(AF3 & !LHmhyphenR) | (AF3 & !s) | (LHmhyphenR & AF2 & s & !AF3)
+LHmhyphenR -? AF3
+AF3 -? AF3
+AF2 -> AF3
+s -? AF3
+#position:AF4:326.70586704284506,302.04714895647885
+$AF4:(AF4 & !LHmhyphenR) | (AF4 & !s) | (LHmhyphenR & AF3 & s & !AF4)
+LHmhyphenR -? AF4
+AF4 -? AF4
+AF3 -> AF4
+s -? AF4
+#position:PrF:447.59043350853676,310.0813394505012
+$PrF:(PrF & !LHmhyphenR) | (PrF & !s) | (LHmhyphenR & AF4 & s)
+LHmhyphenR -? PrF
+AF4 -> PrF
+PrF -> PrF
+s -? PrF
+#position:OvF:471.049959648769,355.4033919995056
+$OvF:LHmhyphenR & PrF & s & !OvF
+LHmhyphenR -> OvF
+OvF -| OvF
+PrF -> OvF
+s -> OvF
+#position:Sc1:461.6161909949275,465.52825636601096
+$Sc1:OvF & !Sc1
+OvF -> Sc1
+Sc1 -| Sc1
+#position:Sc2:370.5386897506235,533.2903155588848
+$Sc2:Sc1
+Sc1 -> Sc2
+#position:GmhyphenR_a:491.71375205334857,802.415416339782
+$GmhyphenR_a:(GmhyphenR_i & !GmhyphenR_a) | (R_G_a & GnRH & !GmhyphenR_a)
+GmhyphenR_a -| GmhyphenR_a
+GmhyphenR_i -> GmhyphenR_a
+R_G_a -> GmhyphenR_a
+GnRH -> GmhyphenR_a
+#position:Lut1:469.07836901957353,582.3059817644704
+$Lut1:(Sc2 & !GmhyphenR_a) | (Sc2 & !Lut1)
+GmhyphenR_a -| Lut1
+Lut1 -| Lut1
+Sc2 -> Lut1
+#position:Lut2:633.529970051386,546.9965996692831
+$Lut2:Lut1
+Lut1 -> Lut2
+#position:Lut3:665.3606717342243,410.4926894490693
+$Lut3:Lut2
+Lut2 -> Lut3
+#position:Lut4:561.4333931765686,320.0183286643429
+$Lut4:Lut3
+Lut3 -> Lut4
+#position:E2:383.44837537239243,397.97943527208855
+$E2:Lut4 | Lut1 | AF4 | (LH_blood & AF3) | (AF2 & !E2) | (LH_blood & PrF & !E2)
+LH_blood -> E2
+Lut4 -> E2
+Lut1 -> E2
+AF4 -> E2
+AF3 -> E2
+PrF -> E2
+AF2 -> E2
+E2 -| E2
+#position:IhA:550.6937710387839,458.55301444120556
+$IhA:Lut2 | Lut4 | Lut3 | Lut1 | Sc1 | (PrF & !IhA)
+Lut2 -> IhA
+Lut4 -> IhA
+Lut3 -> IhA
+Lut1 -> IhA
+IhA -| IhA
+PrF -> IhA
+Sc1 -> IhA
+#position:GnRH:437.1540681215422,933.0013805344724
+$GnRH:GmhyphenR_a | (mass & freq & !R_G_a) | (mass & freq & !GnRH)
+GmhyphenR_a -> GnRH
+R_G_a -| GnRH
+mass -> GnRH
+GnRH -| GnRH
+freq -> GnRH
+#position:R_G_a:582.9623463231958,907.1382782331309
+$R_G_a:GmhyphenR_a | (R_G_i & !R_G_a) | (R_G_i & !GnRH)
+GmhyphenR_a -> R_G_a
+R_G_a -| R_G_a
+R_G_i -> R_G_a
+GnRH -| R_G_a
+#position:mass:358.4899872579802,1063.3288205865015
+$mass:true
+#position:R_G_i:643.3680020153315,1047.1708075147646
+$R_G_i:!R_G_i | (GmhyphenR_i & R_G_a)
+GmhyphenR_i -> R_G_i
+R_G_a -> R_G_i
+R_G_i -| R_G_i
+#position:GmhyphenR_i:527.2069900652316,1031.161022272506
+$GmhyphenR_i:GmhyphenR_a & !GmhyphenR_i
+GmhyphenR_a -> GmhyphenR_i
+GmhyphenR_i -| GmhyphenR_i

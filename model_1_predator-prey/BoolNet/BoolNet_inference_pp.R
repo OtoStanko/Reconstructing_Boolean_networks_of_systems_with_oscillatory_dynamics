@@ -20,6 +20,7 @@ binarized_data
 net <- reconstructNetwork(binarized_data,
                           method="bestfit",
                           maxK=2,
+                          readableFunctions=TRUE,
                           requiredDependencies=list("Hares"=c("Lynxes", "Hares"), "Lynxes"=c("Hares", "Lynxes")))
 net
 plotNetworkWiring(net)
@@ -41,6 +42,7 @@ binarized_data
 net <- reconstructNetwork(binarized_data,
                           method="bestfit",
                           maxK=2,
+                          readableFunctions=TRUE,
                           requiredDependencies=list("Hares"=c("Lynxes", "Hares"), "Lynxes"=c("Hares", "Lynxes")))
 net
 plotNetworkWiring(net)

@@ -12,15 +12,15 @@ wc = os.getcwd()
 """
 pp_model = os.path.join(wc, "model_1_predator-prey")
 ode_file_pp = os.path.join(pp_model, "predator-prey_ODE_model.dode")
-sim_raw_pp = os.path.join(pp_model, "predator_prey_ODE_sim_results.csv")
+sim_raw_pp = os.path.join(pp_model, "predator_prey_ODE_sim_columns.csv")
 
 """
 BoolNet
 """
 def pp_boolnet():
     print("Running function: pp_boolnet")
-    raw_ts = os.path.join(pp_model, "predator_prey_ODE_sim_results_rows.csv")
-    bin_ts = os.path.join(pp_model, "predator_prey_ODE_sim_binarized_k_means.csv")
+    raw_ts = os.path.join(pp_model, "predator_prey_ODE_sim_rows.csv")
+    bin_ts = os.path.join(pp_model, "predator_prey_ODE_sim_rows_binarized.csv")
     bin_ts = os.path.join(pp_model, "Leigh1968_harelynx_rows_binarized.csv")
     bin_ts_simple = os.path.join(pp_model,
                                  "Leigh1968_harelynx_rows_binarized_simplified.csv")
@@ -62,7 +62,7 @@ def pp_sailor():
     print(boolean_expressions)
     SAILoR_to_aeon(boolean_expressions, os.path.join(sailor_pp_model_path, "predator-prey_simDataset.aeon"))
 
-    ts_raw_lynxhare = os.path.join(pp_model, "Leigh1968_harelynx_tabs.csv")
+    ts_raw_lynxhare = os.path.join(pp_model, "Leigh1968_harelynx_columns_tabs.csv")
     decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=ts_raw_lynxhare,
                                                 referenceNetPaths=prior_networks_pp)
     print(decoder_simDataset)
@@ -73,7 +73,7 @@ def pp_sailor():
         boolean_expressions.append(bfun[4])
     print(boolean_expressions)
     SAILoR_to_aeon(boolean_expressions, os.path.join(sailor_pp_model_path, "predator-prey_hudsonBayDataset.aeon"))
-pp_sailor()
+#pp_sailor()
 
 
 """
@@ -83,7 +83,7 @@ pp_sailor()
 """
 be_model = os.path.join(wc, "model_2_bovine-estrous")
 ode_file_be = os.path.join(be_model, "bovine-estrous-cycle_ODE_model.dode")
-sim_raw_be = os.path.join(be_model, "bov_cycle_ODE_sim_results.csv")
+sim_raw_be = os.path.join(be_model, "bov_cycle_ODE_sim_columns.csv")
 
 """
 Augusta
@@ -109,10 +109,10 @@ BoolNet
 #print(ode_system_gc.get_requiredDependencies())
 def be_boolnet():
     print("Running function: be_boolnet")
-    raw_ts = os.path.join(be_model, "bov_cycle_ODE_sim_results_rows.csv")
-    bin_ts = os.path.join(be_model, "simulation_binarized_rows.csv")
+    raw_ts = os.path.join(be_model, "bov_cycle_ODE_sim_rows.csv")
+    bin_ts = os.path.join(be_model, "bov_cycle_ODE_sim_rows_binarized.csv")
     bin_ts_simple = os.path.join(be_model,
-                                 "simulation_binarized_rows_simplified_auto.csv")
+                                 "bov_cycle_ODE_sim_rows_binarized_simplified_auto.csv")
     simplify_TS(None, bin_ts, None, bin_ts_simple)
 #be_boolnet()
 
@@ -159,7 +159,7 @@ def be_sailor():
 """
 gc_model = os.path.join(wc, "model_3_gyn-cycle")
 ode_file_gc = os.path.join(gc_model, "gyn-cycle_ODE_model.dode")
-sim_raw_gc = os.path.join(gc_model, "copasi_simulation_100d.csv")
+sim_raw_gc = os.path.join(gc_model, "copasi_sim_columns.csv")
 
 """
 Augusta
@@ -189,7 +189,7 @@ BoolNet
 #print(ode_system_gc.get_requiredDependencies())
 def gc_preprocess():
     print("Running function: gc_preprocess")
-    sim_raw_gc_rows = os.path.join(gc_model, "gyn-cycle_sim_rows.csv")
+    sim_raw_gc_rows = os.path.join(gc_model, "gyn_cycle_sim_rows.csv")
     raw_ts = pd.read_csv(sim_raw_gc, delimiter='\t')
     raw_ts = raw_ts.T
     rows_to_drop = ['Ant_c', 'Ago_R_i', 'Ago_R_a', 'Ant_p', 'Ant_d',
@@ -202,8 +202,8 @@ def gc_preprocess():
 
 def gc_boolnet():
     print("Running function: gc_boolnet")
-    bin_ts = os.path.join(gc_model, "simulation_binarized_rows.csv")
-    bin_ts_simple = os.path.join(gc_model, "simulation_binarized_rows_simplified_auto.csv")
+    bin_ts = os.path.join(gc_model, "bov_cycle_ODE_sim_rows_binarized.csv")
+    bin_ts_simple = os.path.join(gc_model, "bov_cycle_ODE_sim_rows_binarized_simplified_auto.csv")
     simplify_TS(None, bin_ts, None, bin_ts_simple)
 #gc_boolnet()
 

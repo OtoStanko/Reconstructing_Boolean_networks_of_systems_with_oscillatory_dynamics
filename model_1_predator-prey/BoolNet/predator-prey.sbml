@@ -5,23 +5,23 @@
 			<compartment id="default" constant="true"/>
 		</listOfCompartments>
 		<qual:listOfQualitativeSpecies>
-			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="Rabbits" qual:name="Rabbits" qual:maxLevel="1"/>
-			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="Foxes" qual:name="Foxes" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="Hares" qual:name="Hares" qual:maxLevel="1"/>
+			<qual:qualitativeSpecies qual:compartment="default" qual:constant="false" qual:id="Lynxes" qual:name="Lynxes" qual:maxLevel="1"/>
 		</qual:listOfQualitativeSpecies>
 		<qual:listOfTransitions>
-			<qual:transition qual:id="tr_Rabbits" qual:name="Interactions targeting Rabbits">
+			<qual:transition qual:id="tr_Hares" qual:name="Interactions targeting Hares">
 				<qual:listOfInputs>
-					<qual:input qual:qualitativeSpecies="Foxes" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Lynxes" qual:transitionEffect="none"/>
 				</qual:listOfInputs>
 				<qual:listOfOutputs>
-					<qual:output qual:qualitativeSpecies="Rabbits" qual:transitionEffect="assignmentLevel"/>
+					<qual:output qual:qualitativeSpecies="Hares" qual:transitionEffect="assignmentLevel"/>
 				</qual:listOfOutputs>
 				<qual:listOfFunctionTerms>
 					<qual:functionTerm qual:resultLevel="1">
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
 							<apply>
 								<eq/>
-								<ci>Foxes</ci>
+								<ci>Lynxes</ci>
 								<cn type="integer">0</cn>
 							</apply>
 						</math>
@@ -29,20 +29,29 @@
 					<qual:defaultTerm qual:resultLevel="0"/>
 				</qual:listOfFunctionTerms>
 			</qual:transition>
-			<qual:transition qual:id="tr_Foxes" qual:name="Interactions targeting Foxes">
+			<qual:transition qual:id="tr_Lynxes" qual:name="Interactions targeting Lynxes">
 				<qual:listOfInputs>
-					<qual:input qual:qualitativeSpecies="Rabbits" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Lynxes" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Hares" qual:transitionEffect="none"/>
 				</qual:listOfInputs>
 				<qual:listOfOutputs>
-					<qual:output qual:qualitativeSpecies="Foxes" qual:transitionEffect="assignmentLevel"/>
+					<qual:output qual:qualitativeSpecies="Lynxes" qual:transitionEffect="assignmentLevel"/>
 				</qual:listOfOutputs>
 				<qual:listOfFunctionTerms>
 					<qual:functionTerm qual:resultLevel="1">
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
 							<apply>
-								<eq/>
-								<ci>Rabbits</ci>
-								<cn type="integer">1</cn>
+								<and/>
+								<apply>
+									<eq/>
+									<ci>Lynxes</ci>
+									<cn type="integer">0</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>Hares</ci>
+									<cn type="integer">1</cn>
+								</apply>
 							</apply>
 						</math>
 					</qual:functionTerm>

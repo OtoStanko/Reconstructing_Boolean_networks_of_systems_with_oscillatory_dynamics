@@ -146,9 +146,9 @@ for hormone in hormones:
 df.set_index('Time', inplace=True, drop=True)
 print(df)
 
-simulation_output_file = os.path.join(".", "bov_cycle_ODE_sim_results.csv")
+simulation_output_file = os.path.join(".", "bov_cycle_ODE_sim_columns.csv")
 df.to_csv(simulation_output_file, sep='\t')
 
-simulation_output_file_rows = os.path.join(".", "bov_cycle_ODE_sim_results_rows.csv")
+simulation_output_file_rows = os.path.join(".", "bov_cycle_ODE_sim_rows.csv")
 df_t = df.T
 df_t.to_csv(simulation_output_file_rows, sep=',')
