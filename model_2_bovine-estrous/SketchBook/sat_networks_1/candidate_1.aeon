@@ -1,0 +1,39 @@
+CL -? CL
+Foll -> CL
+IOF -| CL
+LH -> CL
+E2 -| E2
+Foll -> E2
+FSH -| FSH
+Inh -| FSH
+FSH -> Foll
+Foll -? Foll
+LH -| Foll
+P4 -| Foll
+E2 -> GnRH
+GnRH -| GnRH
+P4 -| GnRH
+CL -> IOF
+IOF -| IOF
+PGF -> IOF
+Foll -> Inh
+Inh -| Inh
+GnRH -> LH
+LH -| LH
+P4 -| LH
+CL -> P4
+P4 -| P4
+E2 -> PGF
+P4 -> PGF
+PGF -| PGF
+$CL: (Foll & !IOF & LH) | (CL & Foll & IOF & LH) | (CL & !Foll & !IOF & LH) | (!CL & Foll & !IOF & !LH)
+$E2: Foll | !E2
+$FSH: !Inh | !FSH
+$Foll: (FSH & !LH & !P4) | (FSH & Foll & LH & !P4) | (FSH & !Foll & !LH & P4)
+$GnRH: !GnRH | (E2 & GnRH & !P4)
+$IOF: PGF | !IOF | CL
+$Inh: !Inh | Foll
+$LH: (GnRH & !P4) | (GnRH & !LH)
+$P4: CL & !P4
+$PGF: !PGF | P4 | E2
+

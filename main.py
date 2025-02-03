@@ -37,6 +37,7 @@ def pp_eulerlike_transform():
                                 "euler-like_transformation",
                                 "predator-prey_model.aeon")
     ode_eulerlike_transform_to_aeon(ode_file_pp, aeon_file_pp)
+#pp_eulerlike_transform()
 
 
 """
@@ -215,8 +216,9 @@ def gc_eulerlike_transform():
     print("Running function: gc_eulerlike_transform")
     aeon_file_gc = os.path.join(gc_model,
                                 "euler-like_transformation",
-                                "gyn-cycle_model.aeon")
+                                "gyn-cycle_model_fixedNames.aeon")
     ode_eulerlike_transform_to_aeon(ode_file_gc, aeon_file_gc)
+#gc_eulerlike_transform()
 
 
 """

@@ -2,7 +2,7 @@
 
 dLH_Pit/dt=(b_LH_syn+k_LH_E2*E2)*(1-P4)-(b_LH_Rel+k_LH_GmhyphenR*GnRH_R_a)*LH_Pit
 dLH_bld/dt=(1/V_blood)*(b_LH_Rel+k_LH_GmhyphenR*GnRH_R_a)*LH_Pit-(k_LH_on*R_LH+k_LH_cl)*LH_bld
-dFSH_pit/dt=(1-IhA_e)*(1-InhB)*(1-freq)-(b_FSH_Rel+k_FSH_GmhyphenR*GnRH_R_a)*FSH_pit
+dFSH_pit/dt=(1-InhA_delay)*(1-InhB)*(1-freq)-(b_FSH_Rel+k_FSH_GmhyphenR*GnRH_R_a)*FSH_pit
 dFSH_bld/dt=(1/V_blood)*(b_FSH_Rel+k_FSH_GmhyphenR*GnRH_R_a)*FSH_pit-(k_FSH_on*R_FSH+k_FSH_cl)*FSH_bld
 dR_FSH/dt=k_FSH_recy*R_FSH_des-k_FSH_on*FSH_bld*R_FSH
 dFSH_R/dt=k_FSH_on*FSH_bld*R_FSH-k_FSH_des*FSH_R

@@ -1,38 +1,42 @@
+import biodivine_aeon
 from biodivine_aeon import *
 import os
 
 
 pp_model = os.path.join(os.getcwd(), "model_1_predator-prey")
-augusta_pp_model_path = os.path.join(pp_model, "augusta", "pp.sbml")
 boolnet_pp_model_path = os.path.join(pp_model, "BoolNet", "predator-prey.sbml")
 euler_like_pp_model_path = os.path.join(pp_model, "euler-like_transformation", "predator-prey_model.aeon")
 sailor_pp_model_path = os.path.join(pp_model, "SAILoR", "predator-prey.aeon")
+sketchBook_pp_model_path = os.path.join(pp_model, "SketchBook", "candidate_1.aeon")
 ideal_pp_model_path = os.path.join(pp_model, "predator-prey_boolean_model_ideal.aeon")
-pp_model_paths = [augusta_pp_model_path, boolnet_pp_model_path,
+pp_model_paths = [boolnet_pp_model_path,
                   euler_like_pp_model_path, sailor_pp_model_path,
-                  ideal_pp_model_path]
+                  sketchBook_pp_model_path, ideal_pp_model_path]
 
 be_model = os.path.join(os.getcwd(), "model_2_bovine-estrous")
-augusta_be_model_path = os.path.join(be_model, "augusta", "be.sbml")
 boolnet_be_model_path = os.path.join(be_model, "BoolNet", "bovine-estrous_maxK4_colored_edges.aeon")
 euler_like_be_model_path = os.path.join(be_model, "euler-like_transformation", "first_model.aeon")
 euler_like_automated_be_model_path = os.path.join(be_model, "euler-like_transformation", "bovine-estrous-cycle_model.aeon")
 sailor_be_model_path = os.path.join(be_model, "SAILoR", "bovine-estrous_model.aeon")
-be_model_paths = [augusta_be_model_path, boolnet_be_model_path,
-                  euler_like_automated_be_model_path, sailor_be_model_path]
+sketchBook_be_model_path = os.path.join(be_model, "SketchBook", "sat_networks_1", "candidate_1.aeon")
+be_model_paths = [boolnet_be_model_path, euler_like_automated_be_model_path,
+                  sailor_be_model_path, sketchBook_be_model_path]
 
 
 gc_model = os.path.join(os.getcwd(), "model_3_gyn-cycle")
-augusta_gc_model_path = os.path.join(gc_model, "augusta", "gc.sbml")
 boolnet_gc_model_path = os.path.join(gc_model, "BoolNet", "gyn-cycle.sbml")
 euler_like_gc_model_path = os.path.join(gc_model, "euler-like_transformation", "gyn-cycle_model.aeon")
 sailor_gc_model_path = os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon")
-gc_model_paths = [augusta_gc_model_path, boolnet_gc_model_path,
+gc_model_paths = [boolnet_gc_model_path,
                   euler_like_gc_model_path, sailor_gc_model_path]
 
 for model_path in pp_model_paths:
+    print()
+    print("**********")
     print(model_path)
+    print("**********")
     model = BooleanNetwork.from_file(model_path, repair_graph=True)
+    biodivine_aeon.RegulatoryGraph
     print(model.implicit_parameters())
     print(model.variables())
     for v in model.variables():
@@ -41,42 +45,21 @@ for model_path in pp_model_paths:
     stg = AsynchronousGraph.mk_for_model_checking(model, 2)
 
     attractors = Attractors.attractors(stg)
-
     print(attractors)
     for attractor in attractors:
         classes = Classification.classify_long_term_behavior(stg, attractor)
         print(classes)
     print()
-    variables = model.variables()
-    rabbits = HctlFormula(model.get_variable_name(variables[0]))
-    foxes = HctlFormula(model.get_variable_name(variables[1]))
-    both_zero = HctlFormula.mk_and(HctlFormula.mk_not(rabbits), HctlFormula.mk_not(foxes))
-    rabbits_up = HctlFormula.mk_and(rabbits, HctlFormula.mk_not(foxes))
-    both_up = HctlFormula.mk_and(rabbits, foxes)
-    foxes_up = HctlFormula.mk_and(HctlFormula.mk_not(rabbits), foxes)
-    # "(LH & EU(!P4, (E2 & EU(!LH, (P4 & EU(!E2, LH))))))"
-    attractors_mc = ModelChecking.verify(stg, HctlFormula.mk_imp(both_zero, rabbits_up))
+    cyclic_property = "3 {x}: (EF((~Hares & ~Lynxes) & AX (Hares & ~Lynxes & (AX (Hares & Lynxes & (AX (~Hares & Lynxes & (AX (~Hares & ~Lynxes)))))))))"
+    attractors_mc = ModelChecking.verify(stg, cyclic_property)
     print(attractors_mc)
-    attractors_mc = ModelChecking.verify(stg, HctlFormula.mk_imp(rabbits_up, both_up))
-    print(attractors_mc)
-    attractors_mc = ModelChecking.verify(stg, HctlFormula.mk_imp(both_up, foxes_up))
-    print(attractors_mc)
-    attractors_mc = ModelChecking.verify(stg, HctlFormula.mk_imp(foxes_up, both_zero))
-    print(attractors_mc)
-    a1 = HctlFormula.mk_exist_until(HctlFormula.mk_not(rabbits_up), both_zero)
-    a2 = HctlFormula.mk_and(both_up, a1)
-    b1 = HctlFormula.mk_exist_until(HctlFormula.mk_not(both_zero), a2)
-    b2 = HctlFormula.mk_and(rabbits_up, b1)
-    c1 = HctlFormula.mk_exist_until(HctlFormula.mk_not(both_up), b2)
-    c2 = HctlFormula.mk_and(both_zero, c1)
-    print(c2)
-    attractors_mc = ModelChecking.verify(stg, c2)
-    print(attractors_mc)
-    print()
 
 
 for model_path in be_model_paths:
+    print()
+    print("**********")
     print(model_path)
+    print("**********")
     model = BooleanNetwork.from_file(model_path)
     for v in model.variables():
         print(model.get_variable_name(v), "=", model.get_update_function(v))
@@ -88,18 +71,11 @@ for model_path in be_model_paths:
     for attractor in attractors:
         classes = Classification.classify_long_term_behavior(stg, attractor)
         print(classes)
-    lh = HctlFormula("LH")
-    e2 = HctlFormula("E2")
-    p4 = HctlFormula("P4")
-    a1 = HctlFormula.mk_exist_until(HctlFormula.mk_not(e2), lh)
-    a2 = HctlFormula.mk_and(p4, a1)
-    b1 = HctlFormula.mk_exist_until(HctlFormula.mk_not(lh), a2)
-    b2 = HctlFormula.mk_and(e2, b1)
-    c1 = HctlFormula.mk_exist_until(HctlFormula.mk_not(p4), b2)
-    c2 = HctlFormula.mk_and(lh, c1)
-    print(c2)
+    formula = "(LH & ((~P4) EU (E2 & ((~LH) EU (P4 & ((~E2) EU LH))))))"
+    #ovulation_behaviour = "3 {x}: (EF((~Hares & ~Lynxes) & AX (Hares & ~Lynxes & (AX (Hares & Lynxes & (AX (~Hares & Lynxes & (AX (~Hares & ~Lynxes)))))))))"
+    ovulation_behaviour = "3 {x}: (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x}))))))"
     # "(LH & EU(!P4, (E2 & EU(!LH, (P4 & EU(!E2, LH))))))"
-    attractors_mc = ModelChecking.verify(stg, c2)
+    attractors_mc = ModelChecking.verify(stg, ovulation_behaviour)
     print(attractors_mc)
     print()
 
