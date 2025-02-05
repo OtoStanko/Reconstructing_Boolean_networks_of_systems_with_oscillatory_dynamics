@@ -233,3 +233,43 @@ def visualize_lynx_hare_discrete():
         plt.grid(True)  # Optional: Add grid for better readability
         plt.show()
 #visualize_lynx_hare_discrete()
+
+
+def find_first_cycle(ts_csv_file_path):
+    df = pd.read_csv(ts_csv_file_path)
+    df = df.drop(columns=df.columns[0])
+    path = []
+    cycles = []
+    for _, row in df.iterrows():
+        row_list = list(row)
+        if row_list in path:
+            # found a cycle
+            start = path.index(row_list)
+            cycles.append(path[start:])
+            print(cycles)
+            path = list()
+        path.append(row_list)
+    for cycle in cycles:
+        print(len(cycle))
+        
+
+def create_formula_for_path(ts_csv_file_path):
+    df = pd.read_csv(ts_csv_file_path)
+    df = df.drop(columns=df.columns[0])
+    formula_builder = "3 {x}: ("
+    num_closing_brackets = 1
+    for _, row in df.iterrows():
+        formula_terms = []
+        for column, value in row.items():
+            if value == 1:
+                formula_terms.append(column)
+            elif value == 0:
+                formula_terms.append(f"~{column}")
+        state = ' & '.join(formula_terms)
+        formula_builder = formula_builder + "{} EF (".format(" &" if num_closing_brackets > 1 else "") + state
+        num_closing_brackets += 1
+        print(formula_builder + num_closing_brackets*")")
+
+
+#create_formula_for_path(os.path.join(os.getcwd(), "model_2_bovine-estrous", "bov_cycle_ODE_sim_columns_binarized_simplified_auto.csv"))
+find_first_cycle(os.path.join(os.getcwd(), "model_2_bovine-estrous", "bov_cycle_ODE_sim_columns_binarized_simplified_auto.csv"))

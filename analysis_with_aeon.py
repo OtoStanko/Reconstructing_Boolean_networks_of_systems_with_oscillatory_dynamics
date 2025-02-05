@@ -50,8 +50,11 @@ for model_path in pp_model_paths:
         classes = Classification.classify_long_term_behavior(stg, attractor)
         print(classes)
     print()
-    cyclic_property = "3 {x}: (EF((~Hares & ~Lynxes) & AX (Hares & ~Lynxes & (AX (Hares & Lynxes & (AX (~Hares & Lynxes & (AX (~Hares & ~Lynxes)))))))))"
-    attractors_mc = ModelChecking.verify(stg, cyclic_property)
+    cyclic_property_ax = "3 {x}: (EF (~Hares & ~Lynxes & AX (Hares & ~Lynxes & (AX (Hares & Lynxes & (AX (~Hares & Lynxes & (AX (~Hares & ~Lynxes)))))))))"
+    attractors_mc = ModelChecking.verify(stg, cyclic_property_ax)
+    print(attractors_mc)
+    cyclic_property_ef = "3 {x}: (EF (~Hares & ~Lynxes & EF (Hares & ~Lynxes & EF (Hares & Lynxes & EF (~Hares & Lynxes & EF (~Hares & ~Lynxes))))))"
+    attractors_mc = ModelChecking.verify(stg, cyclic_property_ef)
     print(attractors_mc)
 
 
@@ -71,10 +74,10 @@ for model_path in be_model_paths:
     for attractor in attractors:
         classes = Classification.classify_long_term_behavior(stg, attractor)
         print(classes)
+    # "(LH & EU(!P4, (E2 & EU(!LH, (P4 & EU(!E2, LH))))))"
     formula = "(LH & ((~P4) EU (E2 & ((~LH) EU (P4 & ((~E2) EU LH))))))"
     #ovulation_behaviour = "3 {x}: (EF((~Hares & ~Lynxes) & AX (Hares & ~Lynxes & (AX (Hares & Lynxes & (AX (~Hares & Lynxes & (AX (~Hares & ~Lynxes)))))))))"
     ovulation_behaviour = "3 {x}: (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x}))))))"
-    # "(LH & EU(!P4, (E2 & EU(!LH, (P4 & EU(!E2, LH))))))"
     attractors_mc = ModelChecking.verify(stg, ovulation_behaviour)
     print(attractors_mc)
     print()
