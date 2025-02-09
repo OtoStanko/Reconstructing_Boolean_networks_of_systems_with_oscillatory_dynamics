@@ -14,11 +14,73 @@ class ODE:
         if index < len(self.input_variables):
             return self.input_variables[index]
 
+    def return_regulatory_network(self):
+        rhs = self.rhs
+        str_len = len(rhs)
+        brackets_count = 0
+        i = 0
+        terms_pos = []
+        terms_neg = []
+        term_start = i
+        while i < str_len:
+            if rhs[i] == '(':
+                brackets_count += 1
+            elif rhs[i] == ')':
+                brackets_count -= 1
+            if (rhs[i] == "+" or rhs[i] == "-") and brackets_count == 0:
+                # found end of term
+                term = rhs[term_start:i]
+                if term[0] != "-":
+                    terms_pos.append(term)
+                else:
+                    terms_neg.append(term)
+                term_start = i
+            i += 1
+        term = rhs[term_start:i]
+        if term[0] != "-":
+            terms_pos.append(term)
+        else:
+            terms_neg.append(term)
+        green = set()
+        red = set()
+        for var in self.input_variables:
+            #print(var)
+            pattern = r'(^|[-+*/()=]+)' + re.escape(var) + r'($|[-+*/()=]|\s)'
+            for term in terms_pos:
+                r = re.findall(pattern, term)
+                if len(r) > 0:
+                    for match in r:
+                        if "-" in match[0]:
+                            red.add(var)
+                        else:
+                            green.add(var)
+                #print(r)
+            for term in terms_neg:
+                r = re.findall(pattern, term)
+                if len(r) > 0:
+                    for match in r:
+                        if "-" in match[0]:
+                            green.add(var)
+                        else:
+                            red.add(var)
+                #print(r)
+        regulatory_network = ""
+        dual_regulations = green.intersection(red)
+        for var in dual_regulations:
+            regulatory_network += var + " -? " + self.variable_name + "\n"
+        for var in green.difference(dual_regulations):
+            regulatory_network += var + " -> " + self.variable_name + "\n"
+        for var in red.difference(dual_regulations):
+            regulatory_network += var + " -| " + self.variable_name + "\n"
+        #print("positive:", green)
+        #print("negative:", red)
+        return regulatory_network
+
     def __str__(self):
-        equation = "d"+self.variable_name + "/dt = " + self.rhs + "\n"
+        equation = "d" + self.variable_name + "/dt = " + self.rhs + "\n"
         input_info = "input variables: " + str(self.input_variables) + "\n"
         input_length = "num_input_variables: " + str(self.num_vars) + "\n"
-        parameters = "parameters: " + str(self.parameters)
+        parameters = "parameters: " + str(self.parameters) + "\n"
         return equation + input_info + input_length + parameters
 
 
@@ -55,6 +117,8 @@ class ODESystem:
         # Now we want for each ode a number of variables that it is dependent on
         sorted_parameters = dict(sorted(self.parameters.items(), key=lambda x: -len(x[0])))
         print(sorted_parameters)
+        # We have variables from lhs
+        # Variable lies between +-*/()= and start of the line
         for ode in self.odes:
             for variable in self.all_variables:
                 pattern = r'(^|[-+*/()=])' + re.escape(variable) + r'($|[-+*/()=]|\s)'
@@ -75,6 +139,12 @@ class ODESystem:
             for ode in self.odes:
                 for variable in ode.input_variables:
                     network_file.write(str(variable) + "\t" + str(ode.variable_name) + "\t" + "1" + "\n")
+
+    def to_network_aeon_format(self, network_file):
+        with open(network_file, "w") as network_file:
+            for ode in self.odes:
+                ode_interactions = ode.return_regulatory_network()
+                network_file.write(ode_interactions)
 
     def get_requiredDependencies(self):
         max_input_vars = 0
