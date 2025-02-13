@@ -246,30 +246,53 @@ def find_first_cycle(ts_csv_file_path):
             # found a cycle
             start = path.index(row_list)
             cycles.append(path[start:])
-            print(cycles)
+            #print(cycles)
             path = list()
         path.append(row_list)
-    for cycle in cycles:
-        print(len(cycle))
-        
+    return cycles, list(df.columns)
 
-def create_formula_for_path(ts_csv_file_path):
+
+def csv_ts_to_states(ts_csv_file_path):
     df = pd.read_csv(ts_csv_file_path)
     df = df.drop(columns=df.columns[0])
-    formula_builder = "3 {x}: ("
-    num_closing_brackets = 1
+    ts = []
     for _, row in df.iterrows():
+        row_list = list(row)
+        ts.append(row_list)
+    return ts, list(df.columns)
+
+
+def create_formula_for_path(ts, head, include_basic_transitions=True, ax=False, on_non_triv_att=False):
+    formula_base = "3 {x}: ("
+    if on_non_triv_att:
+        formula_base += "AX (~{x} & AF {x}) & ("
+    states = []
+    formula_builder = formula_base
+    num_closing_brackets = 1
+    formula = ""
+    basic_transitions = []
+    for i in range(len(ts)):
+        state = ts[i]
         formula_terms = []
-        for column, value in row.items():
+        for column, value in zip(head, state):
             if value == 1:
                 formula_terms.append(column)
             elif value == 0:
                 formula_terms.append(f"~{column}")
         state = ' & '.join(formula_terms)
-        formula_builder = formula_builder + "{} EF (".format(" &" if num_closing_brackets > 1 else "") + state
+        formula_builder = formula_builder + "{}{} (".format(" & " if num_closing_brackets > 1 else "",
+                                                            "AX" if (ax and i!=0) else "EF") + state
         num_closing_brackets += 1
-        print(formula_builder + num_closing_brackets*")")
+        states.append(state)
+        formula = formula_builder + num_closing_brackets * ")" + on_non_triv_att * ")"
+    if include_basic_transitions:
+        for i in range(len(states)-1):
+            basic_transitions.append(formula_base + "EF (" + states[i] + " & {} (".format("AX" if ax else "EF")
+                                     + states[i+1] + ")))" + on_non_triv_att * ")")
+    return formula, basic_transitions
 
 
-#create_formula_for_path(os.path.join(os.getcwd(), "model_2_bovine-estrous", "bov_cycle_ODE_sim_columns_binarized_simplified_auto.csv"))
-find_first_cycle(os.path.join(os.getcwd(), "model_2_bovine-estrous", "bov_cycle_ODE_sim_columns_binarized_simplified_auto.csv"))
+#print(create_formula_for_path(os.path.join(os.getcwd(), "model_1_predator-prey", "predator_prey_ODE_sim_columns_binarized_simplified.csv")))
+#find_first_cycle(os.path.join(os.getcwd(), "model_2_bovine-estrous", "bov_cycle_ODE_sim_columns_binarized_simplified_auto.csv"))
+ts, head = csv_ts_to_states(os.path.join(os.getcwd(), "model_1_predator-prey", "predator_prey_ODE_sim_columns_binarized_simplified.csv"))
+create_formula_for_path(ts, head)

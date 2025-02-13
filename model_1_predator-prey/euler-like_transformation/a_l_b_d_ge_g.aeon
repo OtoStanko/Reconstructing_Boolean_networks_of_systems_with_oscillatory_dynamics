@@ -1,6 +1,18 @@
-$x: x & !y
-x -? x
-y -? x
-$y: x & y
-x -? y
-y -? y
+Lynxes -| Hares
+Lynxes -> Lynxes
+Hares -> Hares
+Hares -> Lynxes
+$Hares: Hares & !Lynxes
+$Lynxes: Hares & Lynxes
+#position:Lynxes:104.184166,-51.01802
+#position:Hares:0,0
+#!static_property:essentiality_Hares_Hares:#`{"id":"essentiality_Hares_Hares","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"Hares","target":"Hares","value":"True","context":null}`#
+#!static_property:essentiality_Hares_Lynxes:#`{"id":"essentiality_Hares_Lynxes","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"Hares","target":"Lynxes","value":"True","context":null}`#
+#!static_property:essentiality_Lynxes_Hares:#`{"id":"essentiality_Lynxes_Hares","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"Lynxes","target":"Hares","value":"True","context":null}`#
+#!static_property:essentiality_Lynxes_Lynxes:#`{"id":"essentiality_Lynxes_Lynxes","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"Lynxes","target":"Lynxes","value":"True","context":null}`#
+#!static_property:monotonicity_Hares_Hares:#`{"id":"monotonicity_Hares_Hares","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"Hares","target":"Hares","value":"Activation","context":null}`#
+#!static_property:monotonicity_Hares_Lynxes:#`{"id":"monotonicity_Hares_Lynxes","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"Hares","target":"Lynxes","value":"Activation","context":null}`#
+#!static_property:monotonicity_Lynxes_Hares:#`{"id":"monotonicity_Lynxes_Hares","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"Lynxes","target":"Hares","value":"Inhibition","context":null}`#
+#!static_property:monotonicity_Lynxes_Lynxes:#`{"id":"monotonicity_Lynxes_Lynxes","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"Lynxes","target":"Lynxes","value":"Activation","context":null}`#
+#!variable:Hares:#`{"id":"Hares","name":"Hares","annotation":"","update_fn":"Hares & !Lynxes"}`#
+#!variable:Lynxes:#`{"id":"Lynxes","name":"Lynxes","annotation":"","update_fn":"Hares & Lynxes"}`#
