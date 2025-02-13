@@ -52,28 +52,43 @@ def pp_sailor():
     #ode_system_pp.to_network(prior_network_predator_prey)
     prior_networks_pp = [os.path.join(sailor_pp_model_path, "prior_networks", "prior_network_pp_{:02d}.tsv".format(i))
                          for i in range(1, 16)]
-    decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=sim_raw_pp,
-                                     referenceNetPaths=prior_networks_pp)
-    print(decoder_simDataset)
-    best = decoder_simDataset.run()
 
+    lynxhare_raw = os.path.join(pp_model, "Leigh1968_harelynx_columns_tabs.csv")
+    lynxhare_bin_simplified = os.path.join(pp_model, "Leigh1968_harelynx_columns_binarized_simplified_SAILoR.tsv")
+
+    decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=lynxhare_raw,
+                                                referenceNetPaths=prior_networks_pp)
+    best = decoder_simDataset.run()
     boolean_expressions = []
     for bfun in best:
         boolean_expressions.append(bfun[4])
-    print(boolean_expressions)
+    SAILoR_to_aeon(boolean_expressions, os.path.join(sailor_pp_model_path, "predator-prey_hudsonBayDataset.aeon"))
+
+    decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=lynxhare_raw,
+                                                referenceNetPaths=prior_networks_pp, binarisedPath=lynxhare_bin_simplified)
+    best = decoder_simDataset.run()
+    boolean_expressions = []
+    for bfun in best:
+        boolean_expressions.append(bfun[4])
+    SAILoR_to_aeon(boolean_expressions,
+                   os.path.join(sailor_pp_model_path, "predator-prey_hudsonBayDataset_binarised.aeon"))
+
+    sim_bin_pp = os.path.join(pp_model, "predator_prey_ODE_sim_columns_binarised_simplified_SAILoR.tsv")
+    decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=sim_raw_pp,
+                                                referenceNetPaths=prior_networks_pp)
+    best = decoder_simDataset.run()
+    boolean_expressions = []
+    for bfun in best:
+        boolean_expressions.append(bfun[4])
     SAILoR_to_aeon(boolean_expressions, os.path.join(sailor_pp_model_path, "predator-prey_simDataset.aeon"))
 
-    ts_raw_lynxhare = os.path.join(pp_model, "Leigh1968_harelynx_columns_tabs.csv")
-    decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=ts_raw_lynxhare,
-                                                referenceNetPaths=prior_networks_pp)
-    print(decoder_simDataset)
+    decoder_simDataset = ContextSpecificDecoder(timeSeriesPath=sim_raw_pp,
+                                                referenceNetPaths=prior_networks_pp, binarisedPath=sim_bin_pp)
     best = decoder_simDataset.run()
-
     boolean_expressions = []
     for bfun in best:
         boolean_expressions.append(bfun[4])
-    print(boolean_expressions)
-    SAILoR_to_aeon(boolean_expressions, os.path.join(sailor_pp_model_path, "predator-prey_hudsonBayDataset.aeon"))
+    SAILoR_to_aeon(boolean_expressions, os.path.join(sailor_pp_model_path, "predator-prey_simDataset_binarised.aeon"))
 #pp_sailor()
 
 
@@ -140,8 +155,10 @@ def be_sailor():
     ode_system_pp = ODESystem(ode_file_be)
     ode_system_pp.to_network(prior_network_bovine_estrous)
 
+    sim_bin_be = os.path.join(be_model, "bov_cycle_ODE_sim_columns_binarized_simplified_auto_SAILoR.tsv")
     decoder = ContextSpecificDecoder(timeSeriesPath=sim_raw_be,
-                                     referenceNetPaths=[prior_network_bovine_estrous])
+                                     referenceNetPaths=[prior_network_bovine_estrous],
+                                     binarisedPath=sim_bin_be)
     print(decoder)
     best = decoder.run()
 
@@ -149,8 +166,8 @@ def be_sailor():
     for bfun in best:
         boolean_expressions.append(bfun[4])
     print(boolean_expressions)
-    SAILoR_to_aeon(boolean_expressions, os.path.join(be_model, "SAILoR", "bovine-estrous_model.aeon"))
-#be_sailor()
+    SAILoR_to_aeon(boolean_expressions, os.path.join(be_model, "SAILoR", "bovine-estrous_model_binarised.aeon"))
+be_sailor()
 
 
 """
@@ -243,3 +260,7 @@ def gc_sailor():
     print(boolean_expressions)
     SAILoR_to_aeon(boolean_expressions, os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon"))
 #gc_sailor()
+
+
+#ode_system_gc = ODESystem(ode_file_gc)
+#print(ode_system_gc)
