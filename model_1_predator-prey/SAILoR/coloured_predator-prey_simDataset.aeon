@@ -1,0 +1,9 @@
+Hares -> Hares
+$Hares: Hares
+$Lynxes: false
+#position:Hares:-10.192136,8.153708
+#position:Lynxes:85.10434,-35.16287
+#!static_property:essentiality_Hares_Hares:#`{"id":"essentiality_Hares_Hares","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"Hares","target":"Hares","value":"True","context":null}`#
+#!static_property:monotonicity_Hares_Hares:#`{"id":"monotonicity_Hares_Hares","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"Hares","target":"Hares","value":"Activation","context":null}`#
+#!variable:Hares:#`{"id":"Hares","name":"Hares","annotation":"","update_fn":"Hares"}`#
+#!variable:Lynxes:#`{"id":"Lynxes","name":"Lynxes","annotation":"","update_fn":"false"}`#

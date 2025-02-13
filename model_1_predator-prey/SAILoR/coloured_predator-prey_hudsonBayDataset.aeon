@@ -1,0 +1,6 @@
+$Hares: true
+$Lynxes: false
+#position:Lynxes:77.460236,-42.806973
+#position:Hares:-10.192136,5.6056747
+#!variable:Hares:#`{"id":"Hares","name":"Hares","annotation":"","update_fn":"true"}`#
+#!variable:Lynxes:#`{"id":"Lynxes","name":"Lynxes","annotation":"","update_fn":"false"}`#
