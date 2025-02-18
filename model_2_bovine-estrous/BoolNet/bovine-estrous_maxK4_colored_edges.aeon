@@ -1,0 +1,55 @@
+$P4:(((!Foll & !IOF) | (P4 & !IOF)) | (Foll & P4))
+Foll -? P4
+P4 -> P4
+IOF -| P4
+$GnRH:((!P4 & Inh) & !IOF)
+P4 -| GnRH
+Inh -> GnRH
+IOF -| GnRH
+$Inh:(((((E2 & !PGF) & !IOF) | ((E2 & PGF) & IOF)) | ((P4 & PGF) & IOF)) | ((P4 & E2) & !IOF))
+P4 -> Inh
+E2 -> Inh
+PGF -? Inh
+IOF -? Inh
+$IOF:((((!Foll & !Inh) & IOF) | ((Inh & PGF) & IOF)) | ((Foll & Inh) & PGF))
+Foll -? IOF
+Inh -? IOF
+PGF -> IOF
+IOF -> IOF
+$FSH:((!LH & !Inh) | ((FSH & !LH) & !IOF))
+FSH -> FSH
+LH -| FSH
+Inh -| FSH
+IOF -| FSH
+$LH:(GnRH & !CL)
+GnRH -> LH
+CL -| LH
+$CL:(((!FSH & !IOF) | (P4 & !IOF)) | (FSH & P4))
+FSH -? CL
+P4 -> CL
+IOF -| CL
+$Foll:((((((!CL & !PGF) & !IOF) | ((CL & PGF) & IOF)) | ((FSH & !CL) & !PGF)) | ((FSH & !PGF) & !IOF)) | ((FSH & CL) & !IOF))
+FSH -> Foll
+CL -? Foll
+PGF -? Foll
+IOF -? Foll
+$PGF:((((!Foll & Inh) & IOF) | ((Foll & P4) & !IOF)) | ((P4 & Inh) & IOF))
+Foll -? PGF
+P4 -> PGF
+Inh -> PGF
+IOF -? PGF
+$E2:(((((!P4 & !PGF) & !IOF) | ((!P4 & E2) & !PGF)) | ((P4 & PGF) & !IOF)) | ((P4 & E2) & PGF))
+P4 -? E2
+E2 -> E2
+PGF -? E2
+IOF -| E2
+#position:LH:158.93095,-39.50826
+#position:Inh:-106.85188,88.89358
+#position:CL:151.74763,118.52478
+#position:PGF:-34.120766,219.09125
+#position:E2:-104.158134,-79.91444
+#position:P4:-108.64771,-0.00000020062447
+#position:GnRH:47.589493,-126.60601
+#position:IOF:152.64554,230.76414
+#position:FSH:158.03304,37.71243
+#position:Foll:21.54996,135.58516

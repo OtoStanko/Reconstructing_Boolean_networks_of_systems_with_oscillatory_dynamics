@@ -1,0 +1,75 @@
+CL -| IOF
+Foll -> E2
+CL -? Foll
+PGF -> IOF
+IOF -? Inh
+IOF -? Foll
+E2 -> IOF
+CL -> P4
+FSH -> Foll
+P4 -> CL
+LH -> GnRH
+P4 -? Inh
+P4 -> PGF
+IOF -| CL
+Inh -| FSH
+$CL: P4 & !IOF
+$E2: Foll
+$FSH: !Inh
+$Foll: (CL & IOF) | FSH | (!CL & !IOF)
+$GnRH: LH
+$IOF: (!CL & PGF) | (E2 & PGF)
+$Inh: (!P4 & !IOF) | (P4 & IOF)
+$LH: false
+$P4: CL
+$PGF: P4
+#position:PGF:-34.120766,219.09125
+#position:Foll:21.54996,135.58516
+#position:E2:-104.158134,-79.91444
+#position:GnRH:47.589493,-126.60601
+#position:CL:151.74763,118.52478
+#position:Inh:-106.85188,88.89358
+#position:LH:158.93095,-39.50826
+#position:P4:-108.64771,-0.00000020062447
+#position:IOF:152.64554,230.76414
+#position:FSH:158.03304,37.71243
+#!static_property:essentiality_CL_Foll:#`{"id":"essentiality_CL_Foll","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"CL","target":"Foll","value":"True","context":null}`#
+#!static_property:essentiality_CL_IOF:#`{"id":"essentiality_CL_IOF","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"CL","target":"IOF","value":"True","context":null}`#
+#!static_property:essentiality_CL_P4:#`{"id":"essentiality_CL_P4","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"CL","target":"P4","value":"True","context":null}`#
+#!static_property:essentiality_E2_IOF:#`{"id":"essentiality_E2_IOF","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"E2","target":"IOF","value":"True","context":null}`#
+#!static_property:essentiality_FSH_Foll:#`{"id":"essentiality_FSH_Foll","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"FSH","target":"Foll","value":"True","context":null}`#
+#!static_property:essentiality_Foll_E2:#`{"id":"essentiality_Foll_E2","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"Foll","target":"E2","value":"True","context":null}`#
+#!static_property:essentiality_IOF_CL:#`{"id":"essentiality_IOF_CL","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"IOF","target":"CL","value":"True","context":null}`#
+#!static_property:essentiality_IOF_Foll:#`{"id":"essentiality_IOF_Foll","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"IOF","target":"Foll","value":"True","context":null}`#
+#!static_property:essentiality_IOF_Inh:#`{"id":"essentiality_IOF_Inh","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"IOF","target":"Inh","value":"True","context":null}`#
+#!static_property:essentiality_Inh_FSH:#`{"id":"essentiality_Inh_FSH","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"Inh","target":"FSH","value":"True","context":null}`#
+#!static_property:essentiality_LH_GnRH:#`{"id":"essentiality_LH_GnRH","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"LH","target":"GnRH","value":"True","context":null}`#
+#!static_property:essentiality_P4_CL:#`{"id":"essentiality_P4_CL","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"P4","target":"CL","value":"True","context":null}`#
+#!static_property:essentiality_P4_Inh:#`{"id":"essentiality_P4_Inh","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"P4","target":"Inh","value":"True","context":null}`#
+#!static_property:essentiality_P4_PGF:#`{"id":"essentiality_P4_PGF","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"P4","target":"PGF","value":"True","context":null}`#
+#!static_property:essentiality_PGF_IOF:#`{"id":"essentiality_PGF_IOF","name":"Regulation essentiality property","annotation":"","variant":"RegulationEssential","input":"PGF","target":"IOF","value":"True","context":null}`#
+#!static_property:monotonicity_CL_Foll:#`{"id":"monotonicity_CL_Foll","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"CL","target":"Foll","value":"Dual","context":null}`#
+#!static_property:monotonicity_CL_IOF:#`{"id":"monotonicity_CL_IOF","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"CL","target":"IOF","value":"Inhibition","context":null}`#
+#!static_property:monotonicity_CL_P4:#`{"id":"monotonicity_CL_P4","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"CL","target":"P4","value":"Activation","context":null}`#
+#!static_property:monotonicity_E2_IOF:#`{"id":"monotonicity_E2_IOF","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"E2","target":"IOF","value":"Activation","context":null}`#
+#!static_property:monotonicity_FSH_Foll:#`{"id":"monotonicity_FSH_Foll","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"FSH","target":"Foll","value":"Activation","context":null}`#
+#!static_property:monotonicity_Foll_E2:#`{"id":"monotonicity_Foll_E2","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"Foll","target":"E2","value":"Activation","context":null}`#
+#!static_property:monotonicity_IOF_CL:#`{"id":"monotonicity_IOF_CL","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"IOF","target":"CL","value":"Inhibition","context":null}`#
+#!static_property:monotonicity_IOF_Foll:#`{"id":"monotonicity_IOF_Foll","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"IOF","target":"Foll","value":"Dual","context":null}`#
+#!static_property:monotonicity_IOF_Inh:#`{"id":"monotonicity_IOF_Inh","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"IOF","target":"Inh","value":"Dual","context":null}`#
+#!static_property:monotonicity_Inh_FSH:#`{"id":"monotonicity_Inh_FSH","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"Inh","target":"FSH","value":"Inhibition","context":null}`#
+#!static_property:monotonicity_LH_GnRH:#`{"id":"monotonicity_LH_GnRH","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"LH","target":"GnRH","value":"Activation","context":null}`#
+#!static_property:monotonicity_P4_CL:#`{"id":"monotonicity_P4_CL","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"P4","target":"CL","value":"Activation","context":null}`#
+#!static_property:monotonicity_P4_Inh:#`{"id":"monotonicity_P4_Inh","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"P4","target":"Inh","value":"Dual","context":null}`#
+#!static_property:monotonicity_P4_PGF:#`{"id":"monotonicity_P4_PGF","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"P4","target":"PGF","value":"Activation","context":null}`#
+#!static_property:monotonicity_PGF_IOF:#`{"id":"monotonicity_PGF_IOF","name":"Regulation monotonicity property","annotation":"","variant":"RegulationMonotonic","input":"PGF","target":"IOF","value":"Activation","context":null}`#
+#!variable:CL:#`{"id":"CL","name":"CL","annotation":"","update_fn":"P4 & !IOF"}`#
+#!variable:E2:#`{"id":"E2","name":"E2","annotation":"","update_fn":"Foll"}`#
+#!variable:FSH:#`{"id":"FSH","name":"FSH","annotation":"","update_fn":"!Inh"}`#
+#!variable:Foll:#`{"id":"Foll","name":"Foll","annotation":"","update_fn":"(CL & IOF) | FSH | (!CL & !IOF)"}`#
+#!variable:GnRH:#`{"id":"GnRH","name":"GnRH","annotation":"","update_fn":"LH"}`#
+#!variable:IOF:#`{"id":"IOF","name":"IOF","annotation":"","update_fn":"(!CL & PGF) | (E2 & PGF)"}`#
+#!variable:Inh:#`{"id":"Inh","name":"Inh","annotation":"","update_fn":"(!P4 & !IOF) | (P4 & IOF)"}`#
+#!variable:LH:#`{"id":"LH","name":"LH","annotation":"","update_fn":"false"}`#
+#!variable:P4:#`{"id":"P4","name":"P4","annotation":"","update_fn":"CL"}`#
+#!variable:PGF:#`{"id":"PGF","name":"PGF","annotation":"","update_fn":"P4"}`#

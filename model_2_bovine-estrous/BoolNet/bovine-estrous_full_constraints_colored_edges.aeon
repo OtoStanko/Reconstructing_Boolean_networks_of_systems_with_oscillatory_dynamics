@@ -1,0 +1,59 @@
+$Inh:(((E2 & !IOF) & Foll) | (E2 & Inh))
+E2 -> Inh
+IOF -| Inh
+Inh -> Inh
+Foll -> Inh
+$GnRH:((Inh & E2) & !P4)
+Inh -> GnRH
+E2 -> GnRH
+P4 -| GnRH
+GnRH -?? GnRH
+$E2:((((!GnRH & !IOF) & Foll) | ((!GnRH & E2) & Foll)) | ((GnRH & !IOF) & E2))
+GnRH -? E2
+IOF -| E2
+E2 -> E2
+Foll -> E2
+$P4:((!Foll & CL) | (Foll & P4))
+Foll -? P4
+P4 -> P4
+CL -> P4
+$LH:((!CL & !P4) & GnRH)
+CL -| LH
+P4 -| LH
+LH -?? LH
+GnRH -> LH
+$FSH:((!LH & !Inh) | ((!LH & !IOF) & FSH))
+LH -| FSH
+IOF -| FSH
+Inh -| FSH
+FSH -> FSH
+$IOF:((((!Foll & IOF) & !CL) | ((IOF & PGF) & !CL)) | ((Foll & IOF) & PGF))
+Foll -? IOF
+IOF -> IOF
+PGF -> IOF
+CL -| IOF
+$CL:(((!IOF & CL) & !LH) | ((!IOF & CL) & Foll))
+IOF -| CL
+CL -> CL
+Foll -> CL
+LH -| CL
+$Foll:((!LH & FSH) | ((!P4 & Foll) & LH))
+P4 -| Foll
+Foll -> Foll
+LH -? Foll
+FSH -> Foll
+$PGF:(((!Foll & PGF) | ((Foll & !E2) & P4)) | (PGF & P4))
+Foll -? PGF
+PGF -> PGF
+E2 -| PGF
+P4 -> PGF
+#position:LH:158.93095,-39.50826
+#position:Inh:-106.85188,88.89358
+#position:CL:151.74763,118.52478
+#position:PGF:-34.120766,219.09125
+#position:E2:-104.158134,-79.91444
+#position:P4:-108.64771,-0.00000020062447
+#position:GnRH:47.589493,-126.60601
+#position:IOF:152.64554,230.76414
+#position:FSH:158.03304,37.71243
+#position:Foll:21.54996,135.58516
