@@ -294,5 +294,5 @@ def create_formula_for_path(ts, head, include_basic_transitions=True, ax=False, 
 
 #print(create_formula_for_path(os.path.join(os.getcwd(), "model_1_predator-prey", "predator_prey_ODE_sim_columns_binarized_simplified.csv")))
 #find_first_cycle(os.path.join(os.getcwd(), "model_2_bovine-estrous", "bov_cycle_ODE_sim_columns_binarized_simplified_auto.csv"))
-ts, head = csv_ts_to_states(os.path.join(os.getcwd(), "model_1_predator-prey", "predator_prey_ODE_sim_columns_binarized_simplified.csv"))
-create_formula_for_path(ts, head)
+#ts, head = csv_ts_to_states(os.path.join(os.getcwd(), "model_1_predator-prey", "predator_prey_ODE_sim_columns_binarized_simplified.csv"))
+#create_formula_for_path(ts, head)

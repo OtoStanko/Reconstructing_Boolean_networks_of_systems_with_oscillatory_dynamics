@@ -12,19 +12,29 @@ gc_model_paths = [boolnet_gc_model_path,
 
 
 for model_path in gc_model_paths:
+    print()
+    print(len(model_path) * "*")
     print(model_path)
+    print(len(model_path) * "*")
     model = BooleanNetwork.from_file(model_path, repair_graph=True)
-    print(model.implicit_parameters())
-    print(model.variables())
+
+    print("Model implicit params:", model.implicit_parameters())
+
+    print("\nModel update functions")
     for v in model.variables():
         print(model.get_variable_name(v), "=", model.get_update_function(v))
+    print("\nModel regulations")
+    for regulation in model.regulations():
+        print(regulation)
 
-    stg = AsynchronousGraph.mk_for_model_checking(model, 2)
-
+    stg = AsynchronousGraph.mk_for_model_checking(model, 35)
     attractors = Attractors.attractors(stg)
-
+    print("\nModel attractors ({})".format(len(attractors)))
     print(attractors)
     for attractor in attractors:
+        print(">")
+        print("Attractor cardinality:", attractor.cardinality())
+        print("Attractor vertices:", attractor.vertices())
         classes = Classification.classify_long_term_behavior(stg, attractor)
-        print(classes)
+        print("class:", classes)
     print()

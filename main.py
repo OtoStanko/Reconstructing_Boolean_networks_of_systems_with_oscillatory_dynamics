@@ -166,8 +166,8 @@ def be_sailor():
     for bfun in best:
         boolean_expressions.append(bfun[4])
     print(boolean_expressions)
-    SAILoR_to_aeon(boolean_expressions, os.path.join(be_model, "SAILoR", "bovine-estrous_model_binarised.aeon"))
-be_sailor()
+    SAILoR_to_aeon(boolean_expressions, os.path.join(be_model, "SAILoR", "bovine-estrous_model_binarised_2.aeon"))
+#be_sailor()
 
 
 """
@@ -248,9 +248,12 @@ def gc_sailor():
     ode_system_gc = ODESystem(ode_file_gc)
     ode_system_gc.to_network(prior_network_gyn_cycle)
 
-    decoder = ContextSpecificDecoder(timeSeriesPath=sim_raw_gc,
+    sim_raw_gc_columns = os.path.join(gc_model, "gyn_cycle_sim_columns.csv")
+    sim_bin_gc = os.path.join(gc_model, "gyn_cycle_sim_columns_binarized_simplified_auto_SAILoR.tsv")
+    decoder = ContextSpecificDecoder(timeSeriesPath=sim_raw_gc_columns,
                                      referenceNetPaths=[prior_network_gyn_cycle, prior_network_gyn_cycle, prior_network_gyn_cycle,
-                                                        prior_network_gyn_cycle, prior_network_gyn_cycle, prior_network_gyn_cycle])
+                                                        prior_network_gyn_cycle, prior_network_gyn_cycle, prior_network_gyn_cycle],
+                                     binarisedPath=sim_bin_gc)
     print(decoder)
     best = decoder.run()
 
@@ -261,6 +264,8 @@ def gc_sailor():
     SAILoR_to_aeon(boolean_expressions, os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon"))
 #gc_sailor()
 
-
+#gc_bin_ts = os.path.join(gc_model, "gyn_cycle_sim_rows_red_binarized.csv")
+#gc_bin_ts_simple = os.path.join(gc_model, "gyn_cycle_sim_rows_red_binarized_simplified.csv")
+#simplify_TS(None, gc_bin_ts, None, gc_bin_ts_simple)
 #ode_system_gc = ODESystem(ode_file_gc)
 #print(ode_system_gc)
