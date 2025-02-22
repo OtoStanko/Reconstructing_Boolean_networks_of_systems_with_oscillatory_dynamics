@@ -263,12 +263,13 @@ def csv_ts_to_states(ts_csv_file_path):
 
 
 def create_formula_for_path(ts, head, include_basic_transitions=True, ax=False, on_non_triv_att=False):
-    formula_base = "3 {x}: ("
+    # !{x}: (AG EF {X} & AX ~{x} & (... EF (... EF (...))))
+    formula_base = "!{x}: "
     if on_non_triv_att:
-        formula_base += "AX (~{x} & AF {x}) & ("
+        formula_base += "(AG EF {x} & AX ~{x}) & "
     states = []
     formula_builder = formula_base
-    num_closing_brackets = 1
+    num_closing_brackets = 0
     formula = ""
     basic_transitions = []
     for i in range(len(ts)):
@@ -280,15 +281,17 @@ def create_formula_for_path(ts, head, include_basic_transitions=True, ax=False, 
             elif value == 0:
                 formula_terms.append(f"~{column}")
         state = ' & '.join(formula_terms)
-        formula_builder = formula_builder + "{}{} (".format(" & " if num_closing_brackets > 1 else "",
-                                                            "AX" if (ax and i!=0) else "EF") + state
+        #formula_builder = formula_builder + "{}{} (".format(" & " if num_closing_brackets > 1 else "",
+        #                                                    "" if num_closing_brackets == 1 else ("AX" if (ax and i!=0) else "EF")) + state
+        formula_builder = formula_builder + "{}(".format("" if num_closing_brackets==0 else
+                                                         " & AX " if ax else " & EF ") + state
         num_closing_brackets += 1
         states.append(state)
-        formula = formula_builder + num_closing_brackets * ")" + on_non_triv_att * ")"
+        formula = formula_builder + num_closing_brackets * ")"
     if include_basic_transitions:
         for i in range(len(states)-1):
-            basic_transitions.append(formula_base + "EF (" + states[i] + " & {} (".format("AX" if ax else "EF")
-                                     + states[i+1] + ")))" + on_non_triv_att * ")")
+            basic_transitions.append(formula_base + "(" + states[i] + " & {} (".format("AX" if ax else "EF")
+                                     + states[i+1] + "))")
     return formula, basic_transitions
 
 

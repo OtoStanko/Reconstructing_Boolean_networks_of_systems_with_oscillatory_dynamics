@@ -93,7 +93,7 @@ for model_path in be_model_paths:
         result_ovul_pattern = True
     ovul_att = "3 {x}: (AX (~{x} & AF {x}) & (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x})))))))"
     attractors_mc = ModelChecking.verify(stg, ovul_att)
-    print(attractors_mc)
+    print(attractors_mc.colors(), attractors_mc.vertices())
     if attractors_mc.cardinality() > 0:
         result_ovul_att = True
 
