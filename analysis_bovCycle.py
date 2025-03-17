@@ -1,7 +1,8 @@
-from biodivine_aeon import *
 import os
 
-from supporting_scripts import find_first_cycle, create_formula_for_path
+from biodivine_aeon import *
+
+from supporting_scripts import create_formula_for_path, find_first_cycle
 
 be_model = os.path.join(os.getcwd(), "model_2_bovine-estrous")
 boolnet_be_model_path_full_const = os.path.join(be_model, "BoolNet", "bovine-estrous_full_constraints_colored_edges.aeon")
@@ -85,13 +86,13 @@ for model_path in be_model_paths:
     else:
         print(msg_nok)
     print("Existence of a cycle that includes key ovulation hormonal pattern:")
-    ovulation_behaviour = "3 {x}: (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x}))))))"
+    ovulation_behaviour = "!{x}: (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x}))))))"
     print(ovulation_behaviour)
     attractors_mc = ModelChecking.verify(stg, ovulation_behaviour)
     print(attractors_mc)
     if attractors_mc.cardinality() > 0:
         result_ovul_pattern = True
-    ovul_att = "3 {x}: (AX (~{x} & AF {x}) & (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x})))))))"
+    ovul_att = "!{x}: (AG EF {x} & AX ~{x} & (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x})))))))"
     attractors_mc = ModelChecking.verify(stg, ovul_att)
     print(attractors_mc.colors(), attractors_mc.vertices())
     if attractors_mc.cardinality() > 0:

@@ -1,5 +1,6 @@
-from biodivine_aeon import *
 import os
+
+from biodivine_aeon import *
 
 from supporting_scripts import create_formula_for_path, find_first_cycle
 
@@ -36,9 +37,6 @@ print(basic_transitions_ax)
 path_formula_ef, basic_transitions_ef = create_formula_for_path(cycles_intersect, head)
 print(path_formula_ef)
 print(basic_transitions_ef)
-
-cyclic_property_ax = "3 {x}: (EF (~Hares & ~Lynxes & AX (Hares & ~Lynxes & AX (Hares & Lynxes & AX (~Hares & Lynxes & AX (~Hares & ~Lynxes))))))"
-cyclic_property_ef = "3 {x}: (EF (~Hares & ~Lynxes & EF (Hares & ~Lynxes & EF (Hares & Lynxes & EF (~Hares & Lynxes & EF (~Hares & ~Lynxes))))))"
 
 msg_ok = ">OK"
 msg_nok = ">FAIL"
@@ -89,8 +87,8 @@ for model_path in pp_model_paths:
         else:
             results_ax_nok += 1
             print(msg_nok)
-    print(cyclic_property_ax)
-    attractors_mc = ModelChecking.verify(stg, cyclic_property_ax)
+    print(path_formula_ax)
+    attractors_mc = ModelChecking.verify(stg, path_formula_ax)
     print(attractors_mc)
     if attractors_mc.cardinality() > 0:
         result_ax_whole = True
@@ -113,8 +111,8 @@ for model_path in pp_model_paths:
         else:
             results_ef_nok += 1
             print(msg_nok)
-    print(cyclic_property_ef)
-    attractors_mc = ModelChecking.verify(stg, cyclic_property_ef)
+    print(path_formula_ef)
+    attractors_mc = ModelChecking.verify(stg, path_formula_ef)
     print(attractors_mc)
     if attractors_mc.cardinality() > 0:
         result_ef_whole = True
