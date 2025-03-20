@@ -1,5 +1,7 @@
 import os.path
 import re
+from cProfile import label
+
 import scipy.signal
 
 from Eulerlike_transformation.EulerlikeTransformer import EulerlikeTransformer
@@ -90,6 +92,7 @@ def gyn_cycle_visualization():
                         'Ago_d', 's113', 's114', 's115', 's116',
                         'Ago_c', 'Ant_R', 'LH_Pit', 'FSH_pit']
     #df = df.drop(columns=columns_to_drop)
+    #df = (df - df.min()) / (df.max() - df.min())
     print(df.columns)
     print(df)
     time_column = df.columns[0]
@@ -99,7 +102,7 @@ def gyn_cycle_visualization():
     E2_Inh_foll_colors = ["red", "darkblue", "blue", "gray", "gray", "gray", "gray", "yellow", "orange"]
     FSH_foll = ["FSH_bld", "AF1", "AF2", "AF3", "AF4", "PrF", "OvF"]
     GnRH_LH_FSH = ["GnRH", "LH_bld", "FSH_bld"]
-    GnRH_LH_FSH = ["GnRH"]
+    #GnRH_LH_FSH = ["GnRH"]
     plots = [LH_P4_Lut, E2_Inh_foll, FSH_foll, GnRH_LH_FSH]
     plots_colors = [LH_P4_Lut_colors, E2_Inh_foll_colors, [], []]
 
@@ -124,6 +127,22 @@ def gyn_cycle_visualization():
         plt.show()
     #plt.title(f"Time Series Plot for {column}")
     #plt.legend()
+    fig, ax1 = plt.subplots()
+    ax1.plot(df[time_column][starttime:endtime], df["LH_bld"][starttime:endtime], 'g-', label="LH")
+    ax1.plot(df[time_column][starttime:endtime], df["FSH_bld"][starttime:endtime], 'r-', label="FSH")
+    ax1.set_ylabel('LH_bld, FSH_bld')
+    ax1.set_ylim(0, 120)
+
+    ax2 = ax1.twinx()  # Create a second y-axis
+    ax2.plot(df[time_column][starttime:endtime], df["GnRH"][starttime:endtime], 'b-', label="GnRH")
+    ax2.set_ylabel('GnRH')
+    ax2.set_ylim(0, 0.25)
+
+    lines1, labels1 = ax1.get_legend_handles_labels()
+    lines2, labels2 = ax2.get_legend_handles_labels()
+    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left')
+    plt.title("Dual Y-Axis Plot")
+    plt.show()
 gyn_cycle_visualization()
 
 
