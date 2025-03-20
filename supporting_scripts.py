@@ -1,5 +1,6 @@
 import os.path
 import re
+import scipy.signal
 
 from Eulerlike_transformation.EulerlikeTransformer import EulerlikeTransformer
 from Eulerlike_transformation.ODESystem import ODESystem
@@ -83,28 +84,47 @@ def predator_prey_augusta_run():
 #predator_prey_augusta_run()
 
 
-def gyn_cycle_augusta_visualization():
+def gyn_cycle_visualization():
     df = pd.read_csv('model_3_gyn-cycle/copasi_sim_columns.csv', delimiter='\t')
     columns_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
                         'Ago_d', 's113', 's114', 's115', 's116',
                         'Ago_c', 'Ant_R', 'LH_Pit', 'FSH_pit']
     #df = df.drop(columns=columns_to_drop)
+    print(df.columns)
     print(df)
     time_column = df.columns[0]
-    columns_to_plot = ['LH_bld', 'FSH_bld', 'P4', 'E2']
-    fig, axes = plt.subplots(2, 2, figsize=(10, 8))
-    axes = axes.flatten()
-    for column, ax in zip(columns_to_plot, axes):
-        #plt.figure(figsize=(10, 6))  # Create a new figure for each column
-        ax.plot(df[time_column], df[column], label=column)
-        ax.set_title(column)
-        ax.set_xlabel('days')
-        plt.grid(True)
+    LH_P4_Lut = ["LH_bld", "P4",'Lut1', 'Lut2', 'Lut3', 'Lut4']
+    LH_P4_Lut_colors = ["orange", "blue", "green", "green", "green", "green"]
+    E2_Inh_foll = ["E2", "InhA", "InhA_delay", "AF1", "AF2", "AF3", "AF4", "PrF", "OvF"]
+    E2_Inh_foll_colors = ["red", "darkblue", "blue", "gray", "gray", "gray", "gray", "yellow", "orange"]
+    FSH_foll = ["FSH_bld", "AF1", "AF2", "AF3", "AF4", "PrF", "OvF"]
+    GnRH_LH_FSH = ["GnRH", "LH_bld", "FSH_bld"]
+    GnRH_LH_FSH = ["GnRH"]
+    plots = [LH_P4_Lut, E2_Inh_foll, FSH_foll, GnRH_LH_FSH]
+    plots_colors = [LH_P4_Lut_colors, E2_Inh_foll_colors, [], []]
+
+    lh_peaks, _ = scipy.signal.find_peaks(df["LH_bld"], distance=10, height=0.5)
+    if len(lh_peaks) >= 3:
+        starttime = lh_peaks[0]-1
+        endtime = lh_peaks[2]+1
+        #ct = time_column - time_column[lh_peaks[1]]
+    else:
+        starttime = 0
+        endtime = len(time_column)
+        #ct = time_column
+
+    for plot, colors in zip(plots, plots_colors):
+        for i in range(len(plot)):
+            column = plot[i]
+            plt.plot(df[time_column][starttime:endtime], df[column][starttime:endtime], label=column)
+        plt.grid()
+        plt.legend(loc='upper right')
+        plt.xlabel('time')
+        plt.ylabel('relative units')
+        plt.show()
     #plt.title(f"Time Series Plot for {column}")
     #plt.legend()
-    plt.tight_layout()
-    plt.show()
-#gyn_cycle_augusta_visualization()
+gyn_cycle_visualization()
 
 
 def hormonal_cycle_euler_transform_to_aeon():

@@ -18,7 +18,7 @@ for i in range(1, len(cycles)):
     cycles_intersect = [val for val in cycles_intersect if val in cycles[i]]
 cycles_intersect.append(cycles_intersect[0])
 print(cycles_intersect)
-path_formula_ef, basic_transitions_ef = create_formula_for_path(cycles_intersect, head, on_non_triv_att=True)
+path_formula_ef, basic_transitions_ef = create_formula_for_path(cycles_intersect, head, on_non_triv_att=False)
 #print(path_formula_ef)
 #print(basic_transitions_ef)
 
@@ -58,15 +58,14 @@ for model_path in gc_model_paths:
     print()
 
     print("\nPeriodic behaviour analysis:")
-    test_formula = "!{x}: (R_GnRH_a & ~R_GnRH_i & ~GnRH_R_i & ~GnRH & ~LH_bld & ~AF3 & ~FSH_bld & ~AF4 & ~InhB & ~LH_Pit & ~Lut1 & ~Lut3 & ~OvF & ~P4 & ~R_FSH_des & ~R_Foll & ~AF1 & ~R_LH_des & ~Sc1 & InhA_delay & FSH_pit & ~E2 & ~PrF & ~GnRH_R_a & ~InhA & ~Lut4 & ~FSH_R & R_LH & ~AF2 & ~Sc2 & ~Lut2 & R_FSH & ~LH_R & ~freq & ~mass & EF (R_GnRH_a & ~R_GnRH_i & ~GnRH_R_i & ~GnRH & ~LH_bld & ~AF3 & ~FSH_bld & ~AF4 & ~InhB & ~LH_Pit & ~Lut1 & ~Lut3 & ~OvF & ~P4 & ~R_FSH_des & ~R_Foll & AF1 & ~R_LH_des & ~Sc1 & InhA_delay & FSH_pit & ~E2 & ~PrF & ~GnRH_R_a & ~InhA & ~Lut4 & ~FSH_R & R_LH & ~AF2 & ~Sc2 & ~Lut2 & R_FSH & ~LH_R & ~freq & ~mass)) & (AX ~{x} & AG EF {x})"
     results_ef_ok = 0
     results_ef_nok = 0
     result_ef_whole = False
     print("\nResult of EF path for gyn cycle:")
     for partial_transition in basic_transitions_ef:
         print()
-        print(test_formula)
-        attractor_mc = ModelChecking.verify(stg, test_formula)
+        print(partial_transition)
+        attractor_mc = ModelChecking.verify(stg, partial_transition)
         print(attractor_mc)
         if attractor_mc.cardinality() > 0:
             results_ef_ok += 1
