@@ -24,7 +24,7 @@ for i in range(1, len(cycles)):
     cycles_intersect = [val for val in cycles_intersect if val in cycles[i]]
 cycles_intersect.append(cycles_intersect[0])
 print(len(cycles_intersect))
-path_formula_ef, basic_transitions_ef = create_formula_for_path(cycles_intersect, head, on_non_triv_att=True)
+path_formula_ef, basic_transitions_ef = create_formula_for_path(cycles_intersect, head, on_non_triv_att=False)
 
 msg_ok = ">OK"
 msg_nok = ">FAIL"
@@ -66,37 +66,56 @@ for model_path in be_model_paths:
     result_ovul_pattern = False
     result_ovul_att = False
     print("\nResult of EF path for bovine estrous cycle:")
-    for partial_transition in basic_transitions_ef:
-        print()
-        print(partial_transition)
-        attractor_mc = ModelChecking.verify(stg, partial_transition)
-        print(attractor_mc)
-        if attractor_mc.cardinality() > 0:
-            results_ef_ok += 1
-            print(msg_ok)
+    for attractor in attractors:
+        stg_att = stg.restrict(attractor)
+        classes = Classification.classify_long_term_behavior(stg, attractor)
+        print("\n***********")
+        print("class:", classes)
+        cls_keys = list(classes.keys())
+        if Class(["disorder"]) not in cls_keys:
+            continue
+        print(attractor.vertices())
+        print_buffer = "\n"
+        print_at_the_end = False
+        for partial_transition in basic_transitions_ef:
+            print_buffer += partial_transition + "\n"
+            attractor_mc = ModelChecking.verify(stg_att, partial_transition)
+            print_buffer += str(attractor_mc) + "\n"
+            if attractor_mc.cardinality() > 0:
+                results_ef_ok += 1
+                print_at_the_end = True
+                print_buffer += msg_ok + "\n"
+            else:
+                results_ef_nok += 1
+                print_buffer += msg_nok + "\n"
+        print_buffer += path_formula_ef + "\n"
+        attractors_mc = ModelChecking.verify(stg_att, path_formula_ef)
+        print_buffer += str(attractors_mc) + "\n"
+        if attractors_mc.cardinality() > 0:
+            result_ef_whole = True
+            print_buffer += msg_ok + "\n"
         else:
-            results_ef_nok += 1
-            print(msg_nok)
-    print(path_formula_ef)
-    attractors_mc = ModelChecking.verify(stg, path_formula_ef)
-    print(attractors_mc)
-    if attractors_mc.cardinality() > 0:
-        result_ef_whole = True
-        print(msg_ok)
-    else:
-        print(msg_nok)
-    print("Existence of a cycle that includes key ovulation hormonal pattern:")
-    ovulation_behaviour = "!{x}: (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x}))))))"
-    print(ovulation_behaviour)
-    attractors_mc = ModelChecking.verify(stg, ovulation_behaviour)
-    print(attractors_mc)
-    if attractors_mc.cardinality() > 0:
-        result_ovul_pattern = True
-    ovul_att = "!{x}: (AG EF {x} & AX ~{x} & (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x})))))))"
-    attractors_mc = ModelChecking.verify(stg, ovul_att)
-    print(attractors_mc.colors(), attractors_mc.vertices())
-    if attractors_mc.cardinality() > 0:
-        result_ovul_att = True
+            print_buffer += msg_nok + "\n"
+        print_buffer += "Existence of a cycle that includes key ovulation hormonal pattern:\n"
+        #print("Existence of a cycle that includes key ovulation hormonal pattern:")
+        ovulation_behaviour = "!{x}: (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x}))))))"
+        #print(ovulation_behaviour)
+        print_buffer += ovulation_behaviour + "\n"
+        attractors_mc = ModelChecking.verify(stg_att, ovulation_behaviour)
+        #print(attractors_mc)
+        print_buffer += str(attractors_mc) + "\n"
+        if attractors_mc.cardinality() > 0:
+            result_ovul_pattern = True
+            print_at_the_end = True
+        ovul_att = "!{x}: (AG EF {x} & AX ~{x} & (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x})))))))"
+        attractors_mc = ModelChecking.verify(stg_att, ovul_att)
+        #print(attractors_mc.colors(), attractors_mc.vertices())
+        print_buffer += str(attractors_mc.colors()) + " " + str(attractors_mc.vertices()) + "\n"
+        if attractors_mc.cardinality() > 0:
+            result_ovul_att = True
+            print_at_the_end = True
+        if print_at_the_end:
+            print(print_buffer)
 
     model_info = model_path.split(os.sep)
     method = model_info[-2]

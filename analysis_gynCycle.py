@@ -58,6 +58,7 @@ for model_path in gc_model_paths:
     print()
 
     print("\nPeriodic behaviour analysis:")
+
     results_ef_ok = 0
     results_ef_nok = 0
     result_ef_whole = False

@@ -143,7 +143,7 @@ def gyn_cycle_visualization():
     ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left')
     plt.title("Dual Y-Axis Plot")
     plt.show()
-gyn_cycle_visualization()
+#gyn_cycle_visualization()
 
 
 def hormonal_cycle_euler_transform_to_aeon():
