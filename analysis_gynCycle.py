@@ -62,25 +62,48 @@ for model_path in gc_model_paths:
     results_ef_nok = 0
     result_ef_whole = False
     print("\nResult of EF path for gyn cycle:")
-    for partial_transition in basic_transitions_ef:
-        print()
-        print(partial_transition)
-        attractor_mc = ModelChecking.verify(stg, partial_transition)
-        print(attractor_mc)
-        if attractor_mc.cardinality() > 0:
-            results_ef_ok += 1
-            print(msg_ok)
+    for attractor in attractors:
+        stg_att = stg.restrict(attractor)
+        classes = Classification.classify_long_term_behavior(stg, attractor)
+        print("\n***********")
+        print("class:", classes)
+        #print(list(classes.keys()))
+        if Class(["disorder"]) not in list(classes.keys()):
+            continue
+        print(attractor.vertices())
+        print_buffer = "\n"
+        print_at_the_end = False
+        for partial_transition in basic_transitions_ef:
+            #print()
+            #print(partial_transition)
+            print_buffer += partial_transition + "\n"
+            attractor_mc = ModelChecking.verify(stg_att, partial_transition)
+            #print(attractor_mc)
+            print_buffer += str(attractor_mc) + "\n"
+            if attractor_mc.cardinality() > 0:
+                results_ef_ok += 1
+                print_at_the_end = True
+                #print(msg_ok)
+                print_buffer += msg_ok + "\n"
+            else:
+                results_ef_nok += 1
+                #print(msg_nok)
+                print_buffer += msg_nok + "\n"
+        #print(path_formula_ef)
+        print_buffer += path_formula_ef + "\n"
+        attractors_mc = ModelChecking.verify(stg_att, path_formula_ef)
+        #print(attractors_mc)
+        print_buffer += str(attractors_mc) + "\n"
+        if attractors_mc.cardinality() > 0:
+            result_ef_whole = True
+            print_at_the_end = True
+            #print(msg_ok)
+            print_buffer += msg_ok + "\n"
         else:
-            results_ef_nok += 1
-            print(msg_nok)
-    print(path_formula_ef)
-    attractors_mc = ModelChecking.verify(stg, path_formula_ef)
-    print(attractors_mc)
-    if attractors_mc.cardinality() > 0:
-        result_ef_whole = True
-        print(msg_ok)
-    else:
-        print(msg_nok)
+            #print(msg_nok)
+            print_buffer += msg_nok + "\n"
+        if print_at_the_end:
+            print(print_buffer)
 
     model_info = model_path.split(os.sep)
     method = model_info[-2]
