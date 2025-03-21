@@ -96,15 +96,25 @@ def gyn_cycle_visualization():
     print(df.columns)
     print(df)
     time_column = df.columns[0]
-    LH_P4_Lut = ["LH_bld", "P4",'Lut1', 'Lut2', 'Lut3', 'Lut4']
-    LH_P4_Lut_colors = ["orange", "blue", "green", "green", "green", "green"]
-    E2_Inh_foll = ["E2", "InhA", "InhA_delay", "AF1", "AF2", "AF3", "AF4", "PrF", "OvF"]
-    E2_Inh_foll_colors = ["red", "darkblue", "blue", "gray", "gray", "gray", "gray", "yellow", "orange"]
-    FSH_foll = ["FSH_bld", "AF1", "AF2", "AF3", "AF4", "PrF", "OvF"]
-    GnRH_LH_FSH = ["GnRH", "LH_bld", "FSH_bld"]
+    LH_P4_Lut = [["LH_bld"], ["P4"], ["Lut1", "Lut2", "Lut3", "Lut4"]]
+    LH_P4_Lut_colors = [["orange"], ["blue"], ["green", "green", "green", "green"]]
+
+    E2_Inh_foll = [["E2", "InhA_delay"], ["InhA", "PrF"], ["AF1", "AF2", "AF3", "AF4"], ["OvF"]]
+    E2_Inh_foll_colors = [["red", "blue"], ["darkblue", "yellow"], ["gray", "gray", "gray", "gray"], ["orange"]]
+
+    many = [["LH_bld"], ["Lut1", "Lut2", "Lut3", "Lut4"], ["P4", "FSH_bld", "InhA", "PrF"],
+            ["E2", "InhA_delay"],
+            ["AF1", "AF2", "AF3", "AF4"], ["OvF"]]
+    many_colors = [["orange"], ["green", "green", "green", "green"], ["blue", "yellow", "darkblue", "lime"],
+                   ["red", "blue"],
+                   ["gray", "gray", "gray", "gray"], ["orange"]]
+    ovf = [["OvF"], ["Sc1", "Sc2"]]
+    ovf_c = [["orange"], ["lightblue", "blue"]]
+    FSH_foll = [["FSH_bld"], ["AF1", "AF2", "AF3", "AF4", "PrF", "OvF"]]
+    GnRH_LH_FSH = [["GnRH", "LH_bld", "FSH_bld"]]
     #GnRH_LH_FSH = ["GnRH"]
-    plots = [LH_P4_Lut, E2_Inh_foll, FSH_foll, GnRH_LH_FSH]
-    plots_colors = [LH_P4_Lut_colors, E2_Inh_foll_colors, [], []]
+    plots = [LH_P4_Lut, E2_Inh_foll, many, ovf]
+    plots_colors = [LH_P4_Lut_colors, E2_Inh_foll_colors, many_colors, ovf_c]
 
     lh_peaks, _ = scipy.signal.find_peaks(df["LH_bld"], distance=10, height=0.5)
     if len(lh_peaks) >= 3:
@@ -115,35 +125,24 @@ def gyn_cycle_visualization():
         starttime = 0
         endtime = len(time_column)
         #ct = time_column
+    starttime = 50
+    endtime = len(df[time_column])
 
     for plot, colors in zip(plots, plots_colors):
+        print(plot, colors)
+        fig, axes = plt.subplots(nrows=len(plot), ncols=1, figsize=(8, 10), sharex=True)
         for i in range(len(plot)):
-            column = plot[i]
-            plt.plot(df[time_column][starttime:endtime], df[column][starttime:endtime], label=column)
-        plt.grid()
-        plt.legend(loc='upper right')
-        plt.xlabel('time')
-        plt.ylabel('relative units')
+            grp = plot[i]
+            for j in range(len(grp)):
+                hormone = grp[j]
+                axes[i].plot(df[time_column][starttime:endtime],
+                             df[hormone][starttime:endtime],
+                             label=hormone, color=colors[i][j])
+            axes[i].legend(loc='upper right')
         plt.show()
     #plt.title(f"Time Series Plot for {column}")
     #plt.legend()
-    fig, ax1 = plt.subplots()
-    ax1.plot(df[time_column][starttime:endtime], df["LH_bld"][starttime:endtime], 'g-', label="LH")
-    ax1.plot(df[time_column][starttime:endtime], df["FSH_bld"][starttime:endtime], 'r-', label="FSH")
-    ax1.set_ylabel('LH_bld, FSH_bld')
-    ax1.set_ylim(0, 120)
-
-    ax2 = ax1.twinx()  # Create a second y-axis
-    ax2.plot(df[time_column][starttime:endtime], df["GnRH"][starttime:endtime], 'b-', label="GnRH")
-    ax2.set_ylabel('GnRH')
-    ax2.set_ylim(0, 0.25)
-
-    lines1, labels1 = ax1.get_legend_handles_labels()
-    lines2, labels2 = ax2.get_legend_handles_labels()
-    ax1.legend(lines1 + lines2, labels1 + labels2, loc='upper left')
-    plt.title("Dual Y-Axis Plot")
-    plt.show()
-#gyn_cycle_visualization()
+gyn_cycle_visualization()
 
 
 def hormonal_cycle_euler_transform_to_aeon():
