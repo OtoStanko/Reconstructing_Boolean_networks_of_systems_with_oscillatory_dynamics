@@ -96,37 +96,39 @@ def gyn_cycle_visualization():
     print(df.columns)
     print(df)
     time_column = df.columns[0]
-    LH_P4_Lut = [["LH_bld"], ["P4"], ["Lut1", "Lut2", "Lut3", "Lut4"]]
-    LH_P4_Lut_colors = [["orange"], ["blue"], ["green", "green", "green", "green"]]
 
-    E2_Inh_foll = [["E2", "InhA_delay"], ["InhA", "PrF"], ["AF1", "AF2", "AF3", "AF4"], ["OvF"]]
-    E2_Inh_foll_colors = [["red", "blue"], ["darkblue", "yellow"], ["gray", "gray", "gray", "gray"], ["orange"]]
+    GnRH_cycle = [['GnRH'], ['R_GnRH_i', 'R_GnRH_a', 'GnRH_R_i', 'GnRH_R_a'], ['freq'], ['mass']]
+    GnRH_cycle_c = [['orange'], ['lightblue', 'blue', 'lightgreen', 'green'], ['red'], ['black']]
 
-    many = [["LH_bld"], ["Lut1", "Lut2", "Lut3", "Lut4"], ["P4", "FSH_bld", "InhA", "PrF"],
-            ["E2", "InhA_delay"],
-            ["AF1", "AF2", "AF3", "AF4"], ["OvF"]]
-    many_colors = [["orange"], ["green", "green", "green", "green"], ["blue", "yellow", "darkblue", "lime"],
-                   ["red", "blue"],
-                   ["gray", "gray", "gray", "gray"], ["orange"]]
-    ovf = [["OvF"], ["Sc1", "Sc2"]]
-    ovf_c = [["orange"], ["lightblue", "blue"]]
-    FSH_foll = [["FSH_bld"], ["AF1", "AF2", "AF3", "AF4", "PrF", "OvF"]]
-    GnRH_LH_FSH = [["GnRH", "LH_bld", "FSH_bld"]]
-    #GnRH_LH_FSH = ["GnRH"]
-    plots = [LH_P4_Lut, E2_Inh_foll, many, ovf]
-    plots_colors = [LH_P4_Lut_colors, E2_Inh_foll_colors, many_colors, ovf_c]
+    LH_cycle = [['LH_Pit'], ['LH_bld'], ['R_LH', 'LH_R', 'R_LH_des']]
+    LH_cycle_c = [['yellow'], ['orange'], ['pink', 'red', 'gray']]
+
+    FSH_cycle = [['FSH_pit'], ['FSH_bld'], ['R_FSH', 'FSH_R', 'R_FSH_des']]
+    FSH_cycle_c = [['yellow'], ['orange'], ['pink', 'red', 'gray']]
+
+    CLs_P4 = [["P4"], ["Sc1", "Sc2"], ["Lut1", "Lut2", "Lut3", "Lut4"]]
+    CLs_P4_c = [["darkblue"], ["lightblue", "blue"], ["lightgreen", "lightgreen", "lightgreen", "darkgreen"]]
+
+    E2_Inh_folls = [["E2", "InhA_delay", "InhB"], ["InhA", "PrF", "R_Foll"], ["AF1", "AF2", "AF3", "AF4"], ["OvF"]]
+    E2_Inh_folls_c = [["red", "blue", "green"], ["darkblue", "darkgray", "cyan"], ["gray", "lightgreen", "gray", "black"], ["orange"]]
+
+
+    plots = [GnRH_cycle, LH_cycle, FSH_cycle, CLs_P4, E2_Inh_folls]
+    plots_colors = [GnRH_cycle_c, LH_cycle_c, FSH_cycle_c, CLs_P4_c, E2_Inh_folls_c]
 
     lh_peaks, _ = scipy.signal.find_peaks(df["LH_bld"], distance=10, height=0.5)
-    if len(lh_peaks) >= 3:
-        starttime = lh_peaks[0]-1
-        endtime = lh_peaks[2]+1
+    if len(lh_peaks) >= 4:
+        starttime = lh_peaks[1]+3
+        endtime = lh_peaks[3]+1
+        t_ovu = lh_peaks[2]
         #ct = time_column - time_column[lh_peaks[1]]
     else:
         starttime = 0
         endtime = len(time_column)
+        t_ovu = lh_peaks[0]
         #ct = time_column
-    starttime = 50
-    endtime = len(df[time_column])
+    #starttime = 50
+    #endtime = len(df[time_column])
 
     for plot, colors in zip(plots, plots_colors):
         print(plot, colors)
@@ -138,12 +140,12 @@ def gyn_cycle_visualization():
                 axes[i].plot(df[time_column][starttime:endtime],
                              df[hormone][starttime:endtime],
                              label=hormone, color=colors[i][j])
+            axes[i].axvline(t_ovu, color='lightgray', ls='--')
             axes[i].legend(loc='upper right')
         plt.show()
     #plt.title(f"Time Series Plot for {column}")
     #plt.legend()
-gyn_cycle_visualization()
-
+#gyn_cycle_visualization()
 
 def hormonal_cycle_euler_transform_to_aeon():
     create_aeon_model("model_3_gyn-cycle/hormonal_cycle_equations.txt", "model_3_gyn-cycle/boolean_functions_aeon.aeon")

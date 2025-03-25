@@ -6,9 +6,13 @@ from supporting_scripts import create_formula_for_path, find_first_cycle
 
 gc_model = os.path.join(os.getcwd(), "model_3_gyn-cycle")
 boolnet_gc_model_path = os.path.join(gc_model, "BoolNet", "gyn-cycle.sbml")
+boolnet_gc_model_path_full_consts = os.path.join(gc_model, "BoolNet", "gyn-cycle_full_constraints.sbml")
+boolnet_gc_model_path_maxK4 = os.path.join(gc_model, "BoolNet", "gyn-cycle_maxK4.sbml")
+boolnet_gc_model_path_maxK8 = os.path.join(gc_model, "BoolNet", "gyn-cycle_maxK8.sbml")
 euler_like_gc_model_path = os.path.join(gc_model, "euler-like_transformation", "gyn-cycle_model_fixedNames.aeon")
 sailor_gc_model_path = os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon")
-gc_model_paths = [boolnet_gc_model_path,
+gc_model_paths = [boolnet_gc_model_path, boolnet_gc_model_path_full_consts,
+                  boolnet_gc_model_path_maxK4, boolnet_gc_model_path_maxK8,
                   euler_like_gc_model_path, sailor_gc_model_path]
 
 

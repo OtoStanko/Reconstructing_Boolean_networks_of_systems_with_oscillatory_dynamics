@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sbml xmlns="http://www.sbml.org/sbml/level3/version1/core" level="3" version="1" xmlns:qual="http://www.sbml.org/sbml/level3/version1/qual/version1" qual:required="true">
-	<model id="predator_prey_full_constraints">
+	<model id="gyn_cycle_full_constraints">
 		<listOfCompartments>
 			<compartment id="default" constant="true"/>
 		</listOfCompartments>
@@ -80,6 +80,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_R_GnRH_i" qual:name="Interactions targeting R_GnRH_i">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="R_Foll" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="freq" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="GnRH_R_i" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_GnRH_i" qual:transitionEffect="none"/>
@@ -97,22 +98,9 @@
 									<and/>
 									<apply>
 										<eq/>
-										<ci>GnRH_R_i</ci>
-										<cn type="integer">1</cn>
-									</apply>
-									<apply>
-										<eq/>
-										<ci>R_GnRH_i</ci>
-										<cn type="integer">1</cn>
-									</apply>
-									<apply>
-										<eq/>
-										<ci>R_GnRH_a</ci>
+										<ci>R_Foll</ci>
 										<cn type="integer">0</cn>
 									</apply>
-								</apply>
-								<apply>
-									<and/>
 									<apply>
 										<eq/>
 										<ci>freq</ci>
@@ -150,6 +138,57 @@
 										<eq/>
 										<ci>R_GnRH_i</ci>
 										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_GnRH_a</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>R_Foll</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>freq</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_i</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_GnRH_i</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>R_Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_i</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_GnRH_i</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_GnRH_a</ci>
+										<cn type="integer">0</cn>
 									</apply>
 								</apply>
 							</apply>
@@ -354,6 +393,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_LH_bld" qual:name="Interactions targeting LH_bld">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="E2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_LH" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="GnRH_R_a" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="LH_Pit" qual:transitionEffect="none"/>
@@ -366,21 +406,52 @@
 					<qual:functionTerm qual:resultLevel="1">
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
 							<apply>
-								<and/>
+								<or/>
 								<apply>
-									<eq/>
-									<ci>R_LH</ci>
-									<cn type="integer">0</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>R_LH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH_Pit</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH_bld</ci>
+										<cn type="integer">1</cn>
+									</apply>
 								</apply>
 								<apply>
-									<eq/>
-									<ci>GnRH_R_a</ci>
-									<cn type="integer">1</cn>
-								</apply>
-								<apply>
-									<eq/>
-									<ci>LH_Pit</ci>
-									<cn type="integer">1</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>E2</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_LH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH_Pit</ci>
+										<cn type="integer">1</cn>
+									</apply>
 								</apply>
 							</apply>
 						</math>
@@ -458,6 +529,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_FSH_bld" qual:name="Interactions targeting FSH_bld">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="freq" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_FSH" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="GnRH_R_a" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="FSH_pit" qual:transitionEffect="none"/>
@@ -473,6 +545,11 @@
 								<or/>
 								<apply>
 									<and/>
+									<apply>
+										<eq/>
+										<ci>freq</ci>
+										<cn type="integer">0</cn>
+									</apply>
 									<apply>
 										<eq/>
 										<ci>R_FSH</ci>
@@ -499,6 +576,57 @@
 									<apply>
 										<eq/>
 										<ci>GnRH_R_a</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_pit</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_bld</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>freq</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_FSH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_pit</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>freq</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_FSH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_pit</ci>
 										<cn type="integer">1</cn>
 									</apply>
 									<apply>
@@ -515,6 +643,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_AF4" qual:name="Interactions targeting AF4">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="Sc2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="LH_R" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_Foll" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="AF4" qual:transitionEffect="none"/>
@@ -528,6 +657,11 @@
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
 							<apply>
 								<and/>
+								<apply>
+									<eq/>
+									<ci>Sc2</ci>
+									<cn type="integer">0</cn>
+								</apply>
 								<apply>
 									<eq/>
 									<ci>LH_R</ci>
@@ -608,6 +742,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_LH_Pit" qual:name="Interactions targeting LH_Pit">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="AF2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="GnRH_R_a" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="E2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="P4" qual:transitionEffect="none"/>
@@ -620,21 +755,57 @@
 					<qual:functionTerm qual:resultLevel="1">
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
 							<apply>
-								<and/>
+								<or/>
 								<apply>
-									<eq/>
-									<ci>GnRH_R_a</ci>
-									<cn type="integer">1</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF2</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>E2</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>P4</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH_Pit</ci>
+										<cn type="integer">0</cn>
+									</apply>
 								</apply>
 								<apply>
-									<eq/>
-									<ci>P4</ci>
-									<cn type="integer">0</cn>
-								</apply>
-								<apply>
-									<eq/>
-									<ci>LH_Pit</ci>
-									<cn type="integer">1</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF2</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>P4</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH_Pit</ci>
+										<cn type="integer">1</cn>
+									</apply>
 								</apply>
 							</apply>
 						</math>
@@ -644,6 +815,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_Lut1" qual:name="Interactions targeting Lut1">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="AF1" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="mass" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="Sc2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="GnRH_R_a" qual:transitionEffect="none"/>
@@ -679,6 +851,34 @@
 									<and/>
 									<apply>
 										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>mass</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Lut1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>mass</ci>
 										<cn type="integer">1</cn>
 									</apply>
@@ -691,24 +891,6 @@
 										<eq/>
 										<ci>Lut1</ci>
 										<cn type="integer">0</cn>
-									</apply>
-								</apply>
-								<apply>
-									<and/>
-									<apply>
-										<eq/>
-										<ci>mass</ci>
-										<cn type="integer">1</cn>
-									</apply>
-									<apply>
-										<eq/>
-										<ci>Sc2</ci>
-										<cn type="integer">1</cn>
-									</apply>
-									<apply>
-										<eq/>
-										<ci>Lut1</ci>
-										<cn type="integer">1</cn>
 									</apply>
 								</apply>
 							</apply>
@@ -776,6 +958,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_OvF" qual:name="Interactions targeting OvF">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="FSH_bld" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="LH_R" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="PrF" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_Foll" qual:transitionEffect="none"/>
@@ -787,6 +970,34 @@
 				<qual:listOfFunctionTerms>
 					<qual:functionTerm qual:resultLevel="1">
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
+							<apply>
+								<and/>
+								<apply>
+									<eq/>
+									<ci>FSH_bld</ci>
+									<cn type="integer">0</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>LH_R</ci>
+									<cn type="integer">1</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>PrF</ci>
+									<cn type="integer">1</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>R_Foll</ci>
+									<cn type="integer">1</cn>
+								</apply>
+								<apply>
+									<eq/>
+									<ci>OvF</ci>
+									<cn type="integer">0</cn>
+								</apply>
+							</apply>
 						</math>
 					</qual:functionTerm>
 					<qual:defaultTerm qual:resultLevel="0"/>
@@ -937,6 +1148,7 @@
 			<qual:transition qual:id="tr_R_Foll" qual:name="Interactions targeting R_Foll">
 				<qual:listOfInputs>
 					<qual:input qual:qualitativeSpecies="AF1" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="mass" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_Foll" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="P4" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="FSH_bld" qual:transitionEffect="none"/>
@@ -954,6 +1166,11 @@
 									<apply>
 										<eq/>
 										<ci>AF1</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>mass</ci>
 										<cn type="integer">0</cn>
 									</apply>
 									<apply>
@@ -985,6 +1202,29 @@
 										<cn type="integer">1</cn>
 									</apply>
 								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>mass</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>P4</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
 							</apply>
 						</math>
 					</qual:functionTerm>
@@ -995,6 +1235,7 @@
 				<qual:listOfInputs>
 					<qual:input qual:qualitativeSpecies="AF3" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="FSH_pit" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="GnRH_R_a" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="FSH_R" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="AF1" qual:transitionEffect="none"/>
 				</qual:listOfInputs>
@@ -1015,6 +1256,16 @@
 									</apply>
 									<apply>
 										<eq/>
+										<ci>FSH_pit</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>AF1</ci>
 										<cn type="integer">1</cn>
 									</apply>
@@ -1033,6 +1284,11 @@
 									</apply>
 									<apply>
 										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>FSH_R</ci>
 										<cn type="integer">1</cn>
 									</apply>
@@ -1051,12 +1307,50 @@
 									</apply>
 									<apply>
 										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>FSH_R</ci>
 										<cn type="integer">0</cn>
 									</apply>
 								</apply>
 								<apply>
 									<and/>
+									<apply>
+										<eq/>
+										<ci>AF3</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_pit</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>FSH_pit</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">1</cn>
+									</apply>
 									<apply>
 										<eq/>
 										<ci>FSH_R</ci>
@@ -1078,6 +1372,11 @@
 									<apply>
 										<eq/>
 										<ci>FSH_pit</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
 										<cn type="integer">1</cn>
 									</apply>
 									<apply>
@@ -1174,7 +1473,8 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_Sc1" qual:name="Interactions targeting Sc1">
 				<qual:listOfInputs>
-					<qual:input qual:qualitativeSpecies="R_FSH" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="FSH_bld" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="freq" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="mass" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="Sc1" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="OvF" qual:transitionEffect="none"/>
@@ -1191,7 +1491,35 @@
 									<and/>
 									<apply>
 										<eq/>
-										<ci>R_FSH</ci>
+										<ci>freq</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>mass</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Sc1</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>OvF</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>FSH_bld</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>mass</ci>
 										<cn type="integer">0</cn>
 									</apply>
 									<apply>
@@ -1209,8 +1537,13 @@
 									<and/>
 									<apply>
 										<eq/>
-										<ci>R_FSH</ci>
-										<cn type="integer">0</cn>
+										<ci>FSH_bld</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>freq</ci>
+										<cn type="integer">1</cn>
 									</apply>
 									<apply>
 										<eq/>
@@ -1306,6 +1639,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_FSH_pit" qual:name="Interactions targeting FSH_pit">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="Lut4" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="freq" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="GnRH_R_a" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="FSH_pit" qual:transitionEffect="none"/>
@@ -1321,6 +1655,34 @@
 								<or/>
 								<apply>
 									<and/>
+									<apply>
+										<eq/>
+										<ci>Lut4</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>freq</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>InhB</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>Lut4</ci>
+										<cn type="integer">0</cn>
+									</apply>
 									<apply>
 										<eq/>
 										<ci>GnRH_R_a</ci>
@@ -1339,6 +1701,11 @@
 								</apply>
 								<apply>
 									<and/>
+									<apply>
+										<eq/>
+										<ci>Lut4</ci>
+										<cn type="integer">0</cn>
+									</apply>
 									<apply>
 										<eq/>
 										<ci>freq</ci>
@@ -1550,6 +1917,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_PrF" qual:name="Interactions targeting PrF">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="AF1" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="LH_R" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="PrF" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_Foll" qual:transitionEffect="none"/>
@@ -1562,21 +1930,52 @@
 					<qual:functionTerm qual:resultLevel="1">
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
 							<apply>
-								<and/>
+								<or/>
 								<apply>
-									<eq/>
-									<ci>PrF</ci>
-									<cn type="integer">1</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH_R</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>AF4</ci>
+										<cn type="integer">0</cn>
+									</apply>
 								</apply>
 								<apply>
-									<eq/>
-									<ci>R_Foll</ci>
-									<cn type="integer">1</cn>
-								</apply>
-								<apply>
-									<eq/>
-									<ci>AF4</ci>
-									<cn type="integer">0</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>PrF</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_Foll</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>AF4</ci>
+										<cn type="integer">0</cn>
+									</apply>
 								</apply>
 							</apply>
 						</math>
@@ -1586,6 +1985,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_GnRH_R_a" qual:name="Interactions targeting GnRH_R_a">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="freq" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="GnRH_R_a" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="GnRH" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="GnRH_R_i" qual:transitionEffect="none"/>
@@ -1608,8 +2008,41 @@
 									</apply>
 									<apply>
 										<eq/>
+										<ci>GnRH</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>GnRH_R_i</ci>
 										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_GnRH_a</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>freq</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_a</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>GnRH_R_i</ci>
+										<cn type="integer">0</cn>
 									</apply>
 									<apply>
 										<eq/>
@@ -1621,17 +2054,22 @@
 									<and/>
 									<apply>
 										<eq/>
+										<ci>freq</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>GnRH_R_a</ci>
 										<cn type="integer">1</cn>
 									</apply>
 									<apply>
 										<eq/>
-										<ci>GnRH</ci>
+										<ci>GnRH_R_i</ci>
 										<cn type="integer">1</cn>
 									</apply>
 									<apply>
 										<eq/>
-										<ci>GnRH_R_i</ci>
+										<ci>R_GnRH_a</ci>
 										<cn type="integer">1</cn>
 									</apply>
 								</apply>
@@ -1884,7 +2322,8 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_FSH_R" qual:name="Interactions targeting FSH_R">
 				<qual:listOfInputs>
-					<qual:input qual:qualitativeSpecies="Lut3" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="AF1" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Lut2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_FSH" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="FSH_R" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="FSH_bld" qual:transitionEffect="none"/>
@@ -1896,21 +2335,103 @@
 					<qual:functionTerm qual:resultLevel="1">
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
 							<apply>
-								<and/>
+								<or/>
 								<apply>
-									<eq/>
-									<ci>Lut3</ci>
-									<cn type="integer">0</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>Lut2</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_FSH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_R</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_bld</ci>
+										<cn type="integer">1</cn>
+									</apply>
 								</apply>
 								<apply>
-									<eq/>
-									<ci>R_FSH</ci>
-									<cn type="integer">0</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_FSH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_R</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_bld</ci>
+										<cn type="integer">1</cn>
+									</apply>
 								</apply>
 								<apply>
-									<eq/>
-									<ci>FSH_R</ci>
-									<cn type="integer">1</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Lut2</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_FSH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_R</ci>
+										<cn type="integer">1</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Lut2</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_FSH</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_R</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_bld</ci>
+										<cn type="integer">0</cn>
+									</apply>
 								</apply>
 							</apply>
 						</math>
@@ -1920,6 +2441,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_R_LH" qual:name="Interactions targeting R_LH">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="FSH_bld" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="PrF" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_LH" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_LH_des" qual:transitionEffect="none"/>
@@ -1937,6 +2459,11 @@
 									<and/>
 									<apply>
 										<eq/>
+										<ci>FSH_bld</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>PrF</ci>
 										<cn type="integer">0</cn>
 									</apply>
@@ -1949,11 +2476,6 @@
 										<eq/>
 										<ci>R_LH_des</ci>
 										<cn type="integer">1</cn>
-									</apply>
-									<apply>
-										<eq/>
-										<ci>LH_bld</ci>
-										<cn type="integer">0</cn>
 									</apply>
 								</apply>
 								<apply>
@@ -2205,7 +2727,8 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_R_FSH" qual:name="Interactions targeting R_FSH">
 				<qual:listOfInputs>
-					<qual:input qual:qualitativeSpecies="Lut3" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="AF1" qual:transitionEffect="none"/>
+					<qual:input qual:qualitativeSpecies="Lut2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_FSH" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_FSH_des" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="FSH_bld" qual:transitionEffect="none"/>
@@ -2220,6 +2743,11 @@
 								<or/>
 								<apply>
 									<and/>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">0</cn>
+									</apply>
 									<apply>
 										<eq/>
 										<ci>R_FSH</ci>
@@ -2240,7 +2768,12 @@
 									<and/>
 									<apply>
 										<eq/>
-										<ci>Lut3</ci>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Lut2</ci>
 										<cn type="integer">1</cn>
 									</apply>
 									<apply>
@@ -2254,6 +2787,29 @@
 										<cn type="integer">1</cn>
 									</apply>
 								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>Lut2</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_FSH</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_FSH_des</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>FSH_bld</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
 							</apply>
 						</math>
 					</qual:functionTerm>
@@ -2262,6 +2818,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_LH_R" qual:name="Interactions targeting LH_R">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="FSH_bld" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="PrF" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="LH_R" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="R_LH" qual:transitionEffect="none"/>
@@ -2279,6 +2836,34 @@
 									<and/>
 									<apply>
 										<eq/>
+										<ci>PrF</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH_R</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>R_LH</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>LH_bld</ci>
+										<cn type="integer">0</cn>
+									</apply>
+								</apply>
+								<apply>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>FSH_bld</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>LH_R</ci>
 										<cn type="integer">1</cn>
 									</apply>
@@ -2297,6 +2882,11 @@
 									<and/>
 									<apply>
 										<eq/>
+										<ci>FSH_bld</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>PrF</ci>
 										<cn type="integer">1</cn>
 									</apply>
@@ -2313,24 +2903,6 @@
 									<apply>
 										<eq/>
 										<ci>LH_bld</ci>
-										<cn type="integer">0</cn>
-									</apply>
-								</apply>
-								<apply>
-									<and/>
-									<apply>
-										<eq/>
-										<ci>PrF</ci>
-										<cn type="integer">1</cn>
-									</apply>
-									<apply>
-										<eq/>
-										<ci>LH_R</ci>
-										<cn type="integer">1</cn>
-									</apply>
-									<apply>
-										<eq/>
-										<ci>R_LH</ci>
 										<cn type="integer">0</cn>
 									</apply>
 								</apply>
@@ -2342,6 +2914,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_freq" qual:name="Interactions targeting freq">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="AF1" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="InhA_delay" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="Lut2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="E2" qual:transitionEffect="none"/>
@@ -2354,21 +2927,52 @@
 					<qual:functionTerm qual:resultLevel="1">
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
 							<apply>
-								<and/>
+								<or/>
 								<apply>
-									<eq/>
-									<ci>InhA_delay</ci>
-									<cn type="integer">0</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>InhA_delay</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Lut2</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>E2</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>P4</ci>
+										<cn type="integer">0</cn>
+									</apply>
 								</apply>
 								<apply>
-									<eq/>
-									<ci>Lut2</ci>
-									<cn type="integer">0</cn>
-								</apply>
-								<apply>
-									<eq/>
-									<ci>P4</ci>
-									<cn type="integer">0</cn>
+									<and/>
+									<apply>
+										<eq/>
+										<ci>AF1</ci>
+										<cn type="integer">1</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>InhA_delay</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>Lut2</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
+										<ci>P4</ci>
+										<cn type="integer">0</cn>
+									</apply>
 								</apply>
 							</apply>
 						</math>
@@ -2378,6 +2982,7 @@
 			</qual:transition>
 			<qual:transition qual:id="tr_mass" qual:name="Interactions targeting mass">
 				<qual:listOfInputs>
+					<qual:input qual:qualitativeSpecies="OvF" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="Sc2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="Lut2" qual:transitionEffect="none"/>
 					<qual:input qual:qualitativeSpecies="LH_R" qual:transitionEffect="none"/>
@@ -2393,6 +2998,11 @@
 								<or/>
 								<apply>
 									<and/>
+									<apply>
+										<eq/>
+										<ci>OvF</ci>
+										<cn type="integer">0</cn>
+									</apply>
 									<apply>
 										<eq/>
 										<ci>Sc2</ci>
@@ -2413,6 +3023,11 @@
 									<and/>
 									<apply>
 										<eq/>
+										<ci>OvF</ci>
+										<cn type="integer">0</cn>
+									</apply>
+									<apply>
+										<eq/>
 										<ci>Lut2</ci>
 										<cn type="integer">1</cn>
 									</apply>
@@ -2429,6 +3044,11 @@
 								</apply>
 								<apply>
 									<and/>
+									<apply>
+										<eq/>
+										<ci>OvF</ci>
+										<cn type="integer">0</cn>
+									</apply>
 									<apply>
 										<eq/>
 										<ci>Sc2</ci>
