@@ -1,0 +1,1534 @@
+{
+  "model": {
+    "variables": [
+      {
+        "id": "AF1",
+        "name": "AF1",
+        "annotation": "",
+        "update_fn": "!Lut4"
+      },
+      {
+        "id": "AF2",
+        "name": "AF2",
+        "annotation": "",
+        "update_fn": "!P4"
+      },
+      {
+        "id": "AF3",
+        "name": "AF3",
+        "annotation": "",
+        "update_fn": "LH_Pit"
+      },
+      {
+        "id": "AF4",
+        "name": "AF4",
+        "annotation": "",
+        "update_fn": "AF4 & AF2"
+      },
+      {
+        "id": "E2",
+        "name": "E2",
+        "annotation": "",
+        "update_fn": "AF1 & !freq"
+      },
+      {
+        "id": "FSH_R",
+        "name": "FSH_R",
+        "annotation": "",
+        "update_fn": "AF3 | (!AF1 & Sc2) | (AF1 & !Sc2)"
+      },
+      {
+        "id": "FSH_bld",
+        "name": "FSH_bld",
+        "annotation": "",
+        "update_fn": "AF3 | (!Lut3 & AF1)"
+      },
+      {
+        "id": "FSH_pit",
+        "name": "FSH_pit",
+        "annotation": "",
+        "update_fn": "false"
+      },
+      {
+        "id": "GnRH",
+        "name": "GnRH",
+        "annotation": "",
+        "update_fn": "!P4"
+      },
+      {
+        "id": "GnRH_R_a",
+        "name": "GnRH_R_a",
+        "annotation": "",
+        "update_fn": "!Lut4"
+      },
+      {
+        "id": "GnRH_R_i",
+        "name": "GnRH_R_i",
+        "annotation": "",
+        "update_fn": "AF3"
+      },
+      {
+        "id": "InhA",
+        "name": "InhA",
+        "annotation": "",
+        "update_fn": "Sc1 | (!R_GnRH_a & !GnRH)"
+      },
+      {
+        "id": "InhA_delay",
+        "name": "InhA_delay",
+        "annotation": "",
+        "update_fn": "!AF2"
+      },
+      {
+        "id": "InhB",
+        "name": "InhB",
+        "annotation": "",
+        "update_fn": "AF3"
+      },
+      {
+        "id": "LH_Pit",
+        "name": "LH_Pit",
+        "annotation": "",
+        "update_fn": "AF4 | (R_Foll & R_LH)"
+      },
+      {
+        "id": "LH_R",
+        "name": "LH_R",
+        "annotation": "",
+        "update_fn": "PrF"
+      },
+      {
+        "id": "LH_bld",
+        "name": "LH_bld",
+        "annotation": "",
+        "update_fn": "PrF"
+      },
+      {
+        "id": "Lut1",
+        "name": "Lut1",
+        "annotation": "",
+        "update_fn": "OvF"
+      },
+      {
+        "id": "Lut2",
+        "name": "Lut2",
+        "annotation": "",
+        "update_fn": "Sc2"
+      },
+      {
+        "id": "Lut3",
+        "name": "Lut3",
+        "annotation": "",
+        "update_fn": "Lut1"
+      },
+      {
+        "id": "Lut4",
+        "name": "Lut4",
+        "annotation": "",
+        "update_fn": "Lut3"
+      },
+      {
+        "id": "OvF",
+        "name": "OvF",
+        "annotation": "",
+        "update_fn": "false"
+      },
+      {
+        "id": "P4",
+        "name": "P4",
+        "annotation": "",
+        "update_fn": "Lut2"
+      },
+      {
+        "id": "PrF",
+        "name": "PrF",
+        "annotation": "",
+        "update_fn": "false"
+      },
+      {
+        "id": "R_FSH",
+        "name": "R_FSH",
+        "annotation": "",
+        "update_fn": "!AF2"
+      },
+      {
+        "id": "R_FSH_des",
+        "name": "R_FSH_des",
+        "annotation": "",
+        "update_fn": "AF2"
+      },
+      {
+        "id": "R_Foll",
+        "name": "R_Foll",
+        "annotation": "",
+        "update_fn": "AF3"
+      },
+      {
+        "id": "R_GnRH_a",
+        "name": "R_GnRH_a",
+        "annotation": "",
+        "update_fn": "!AF3"
+      },
+      {
+        "id": "R_GnRH_i",
+        "name": "R_GnRH_i",
+        "annotation": "",
+        "update_fn": "AF3"
+      },
+      {
+        "id": "R_LH",
+        "name": "R_LH",
+        "annotation": "",
+        "update_fn": "!PrF"
+      },
+      {
+        "id": "R_LH_des",
+        "name": "R_LH_des",
+        "annotation": "",
+        "update_fn": "PrF"
+      },
+      {
+        "id": "Sc1",
+        "name": "Sc1",
+        "annotation": "",
+        "update_fn": "LH_bld"
+      },
+      {
+        "id": "Sc2",
+        "name": "Sc2",
+        "annotation": "",
+        "update_fn": "AF4"
+      },
+      {
+        "id": "freq",
+        "name": "freq",
+        "annotation": "",
+        "update_fn": "AF2"
+      },
+      {
+        "id": "mass",
+        "name": "mass",
+        "annotation": "",
+        "update_fn": "E2"
+      }
+    ],
+    "regulations": [
+      {
+        "regulator": "AF1",
+        "target": "E2",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF1",
+        "target": "FSH_R",
+        "sign": "Dual",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF1",
+        "target": "FSH_bld",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF2",
+        "target": "AF4",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF2",
+        "target": "InhA_delay",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF2",
+        "target": "R_FSH",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF2",
+        "target": "R_FSH_des",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF2",
+        "target": "freq",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF3",
+        "target": "FSH_R",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF3",
+        "target": "FSH_bld",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF3",
+        "target": "GnRH_R_i",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF3",
+        "target": "InhB",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF3",
+        "target": "R_Foll",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF3",
+        "target": "R_GnRH_a",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF3",
+        "target": "R_GnRH_i",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF4",
+        "target": "AF4",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF4",
+        "target": "LH_Pit",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "AF4",
+        "target": "Sc2",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "E2",
+        "target": "mass",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "GnRH",
+        "target": "InhA",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "LH_Pit",
+        "target": "AF3",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "LH_bld",
+        "target": "Sc1",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "Lut1",
+        "target": "Lut3",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "Lut2",
+        "target": "P4",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "Lut3",
+        "target": "FSH_bld",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "Lut3",
+        "target": "Lut4",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "Lut4",
+        "target": "AF1",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "Lut4",
+        "target": "GnRH_R_a",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "OvF",
+        "target": "Lut1",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "P4",
+        "target": "AF2",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "P4",
+        "target": "GnRH",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "PrF",
+        "target": "LH_R",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "PrF",
+        "target": "LH_bld",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "PrF",
+        "target": "R_LH",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "PrF",
+        "target": "R_LH_des",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "R_Foll",
+        "target": "LH_Pit",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "R_GnRH_a",
+        "target": "InhA",
+        "sign": "Inhibition",
+        "essential": "True"
+      },
+      {
+        "regulator": "R_LH",
+        "target": "LH_Pit",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "Sc1",
+        "target": "InhA",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "Sc2",
+        "target": "FSH_R",
+        "sign": "Dual",
+        "essential": "True"
+      },
+      {
+        "regulator": "Sc2",
+        "target": "Lut2",
+        "sign": "Activation",
+        "essential": "True"
+      },
+      {
+        "regulator": "freq",
+        "target": "E2",
+        "sign": "Inhibition",
+        "essential": "True"
+      }
+    ],
+    "uninterpreted_fns": [],
+    "layouts": [
+      {
+        "id": "default",
+        "name": "default",
+        "nodes": [
+          {
+            "layout": "default",
+            "variable": "AF1",
+            "px": 100.91293,
+            "py": 746.58044
+          },
+          {
+            "layout": "default",
+            "variable": "FSH_pit",
+            "px": 175.49834,
+            "py": 501.38818
+          },
+          {
+            "layout": "default",
+            "variable": "InhA_delay",
+            "px": -30.209969,
+            "py": 575.3272
+          },
+          {
+            "layout": "default",
+            "variable": "LH_bld",
+            "px": 323.13907,
+            "py": 356.0073
+          },
+          {
+            "layout": "default",
+            "variable": "FSH_R",
+            "px": 664.0926,
+            "py": 609.5478
+          },
+          {
+            "layout": "default",
+            "variable": "FSH_bld",
+            "px": 603.0527,
+            "py": 512.80756
+          },
+          {
+            "layout": "default",
+            "variable": "Lut4",
+            "px": 1127.6285,
+            "py": 771.8189
+          },
+          {
+            "layout": "default",
+            "variable": "AF2",
+            "px": 220.98062,
+            "py": 746.8926
+          },
+          {
+            "layout": "default",
+            "variable": "OvF",
+            "px": 654.7745,
+            "py": 751.7399
+          },
+          {
+            "layout": "default",
+            "variable": "PrF",
+            "px": 555.05194,
+            "py": 752.6379
+          },
+          {
+            "layout": "default",
+            "variable": "GnRH_R_i",
+            "px": 175.93451,
+            "py": 275.34015
+          },
+          {
+            "layout": "default",
+            "variable": "P4",
+            "px": 5.087794,
+            "py": 397.26462
+          },
+          {
+            "layout": "default",
+            "variable": "R_LH",
+            "px": 464.96597,
+            "py": 342.60873
+          },
+          {
+            "layout": "default",
+            "variable": "R_FSH",
+            "px": 740.52026,
+            "py": 511.90125
+          },
+          {
+            "layout": "default",
+            "variable": "LH_R",
+            "px": 469.2464,
+            "py": 430.2884
+          },
+          {
+            "layout": "default",
+            "variable": "R_LH_des",
+            "px": 609.5741,
+            "py": 431.1625
+          },
+          {
+            "layout": "default",
+            "variable": "freq",
+            "px": 71.39278,
+            "py": 107.6342
+          },
+          {
+            "layout": "default",
+            "variable": "mass",
+            "px": -0.8705384,
+            "py": 182.83783
+          },
+          {
+            "layout": "default",
+            "variable": "Sc2",
+            "px": 824.6502,
+            "py": 752.8354
+          },
+          {
+            "layout": "default",
+            "variable": "GnRH",
+            "px": 313.51556,
+            "py": 114.9073
+          },
+          {
+            "layout": "default",
+            "variable": "InhA",
+            "px": -29.367277,
+            "py": 679.25354
+          },
+          {
+            "layout": "default",
+            "variable": "InhB",
+            "px": -29.28136,
+            "py": 497.3267
+          },
+          {
+            "layout": "default",
+            "variable": "GnRH_R_a",
+            "px": 219.01576,
+            "py": 188.84483
+          },
+          {
+            "layout": "default",
+            "variable": "E2",
+            "px": 0.9778252,
+            "py": 299.76193
+          },
+          {
+            "layout": "default",
+            "variable": "Lut3",
+            "px": 1054.7642,
+            "py": 724.7887
+          },
+          {
+            "layout": "default",
+            "variable": "R_FSH_des",
+            "px": 819.7951,
+            "py": 605.6473
+          },
+          {
+            "layout": "default",
+            "variable": "AF4",
+            "px": 439.94485,
+            "py": 750.38116
+          },
+          {
+            "layout": "default",
+            "variable": "R_GnRH_a",
+            "px": 451.23535,
+            "py": 173.3957
+          },
+          {
+            "layout": "default",
+            "variable": "Sc1",
+            "px": 745.86926,
+            "py": 750.93677
+          },
+          {
+            "layout": "default",
+            "variable": "AF3",
+            "px": 330.77264,
+            "py": 749.6124
+          },
+          {
+            "layout": "default",
+            "variable": "R_Foll",
+            "px": 386.92545,
+            "py": 581.6111
+          },
+          {
+            "layout": "default",
+            "variable": "LH_Pit",
+            "px": 178.90915,
+            "py": 355.34097
+          },
+          {
+            "layout": "default",
+            "variable": "Lut1",
+            "px": 908.1684,
+            "py": 715.1885
+          },
+          {
+            "layout": "default",
+            "variable": "Lut2",
+            "px": 979.0245,
+            "py": 767.69714
+          },
+          {
+            "layout": "default",
+            "variable": "R_GnRH_i",
+            "px": 480.44254,
+            "py": 269.5192
+          }
+        ]
+      }
+    ]
+  },
+  "datasets": [],
+  "dyn_properties": [],
+  "stat_properties": [
+    {
+      "id": "monotonicity_AF3_FSH_bld",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF3",
+      "target": "FSH_bld",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_R_GnRH_a_InhA",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "R_GnRH_a",
+      "target": "InhA",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF2_InhA_delay",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF2",
+      "target": "InhA_delay",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "essentiality_freq_E2",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "freq",
+      "target": "E2",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_R_Foll_LH_Pit",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "R_Foll",
+      "target": "LH_Pit",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_Lut2_P4",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Lut2",
+      "target": "P4",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_LH_bld_Sc1",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "LH_bld",
+      "target": "Sc1",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF3_R_GnRH_a",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF3",
+      "target": "R_GnRH_a",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_Lut3_FSH_bld",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Lut3",
+      "target": "FSH_bld",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_PrF_LH_bld",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "PrF",
+      "target": "LH_bld",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF4_AF4",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF4",
+      "target": "AF4",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF3_FSH_bld",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF3",
+      "target": "FSH_bld",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_R_LH_LH_Pit",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "R_LH",
+      "target": "LH_Pit",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF3_FSH_R",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF3",
+      "target": "FSH_R",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_PrF_LH_R",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "PrF",
+      "target": "LH_R",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_OvF_Lut1",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "OvF",
+      "target": "Lut1",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Lut1_Lut3",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Lut1",
+      "target": "Lut3",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_LH_Pit_AF3",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "LH_Pit",
+      "target": "AF3",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Sc1_InhA",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Sc1",
+      "target": "InhA",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_Sc2_Lut2",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Sc2",
+      "target": "Lut2",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF1_FSH_bld",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF1",
+      "target": "FSH_bld",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_GnRH_InhA",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "GnRH",
+      "target": "InhA",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF4_LH_Pit",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF4",
+      "target": "LH_Pit",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF1_FSH_R",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF1",
+      "target": "FSH_R",
+      "value": "Dual",
+      "context": null
+    },
+    {
+      "id": "essentiality_P4_GnRH",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "P4",
+      "target": "GnRH",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF3_R_Foll",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF3",
+      "target": "R_Foll",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF3_InhB",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF3",
+      "target": "InhB",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF4_Sc2",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF4",
+      "target": "Sc2",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_E2_mass",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "E2",
+      "target": "mass",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF1_E2",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF1",
+      "target": "E2",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF2_freq",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF2",
+      "target": "freq",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_Sc2_FSH_R",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Sc2",
+      "target": "FSH_R",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Sc2_Lut2",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Sc2",
+      "target": "Lut2",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_R_LH_LH_Pit",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "R_LH",
+      "target": "LH_Pit",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF3_R_GnRH_i",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF3",
+      "target": "R_GnRH_i",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF2_AF4",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF2",
+      "target": "AF4",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_Sc1_InhA",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Sc1",
+      "target": "InhA",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_P4_GnRH",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "P4",
+      "target": "GnRH",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF2_R_FSH_des",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF2",
+      "target": "R_FSH_des",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF3_GnRH_R_i",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF3",
+      "target": "GnRH_R_i",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_PrF_R_LH_des",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "PrF",
+      "target": "R_LH_des",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_P4_AF2",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "P4",
+      "target": "AF2",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF3_FSH_R",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF3",
+      "target": "FSH_R",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_R_Foll_LH_Pit",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "R_Foll",
+      "target": "LH_Pit",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF2_AF4",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF2",
+      "target": "AF4",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF4_AF4",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF4",
+      "target": "AF4",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF3_R_GnRH_a",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF3",
+      "target": "R_GnRH_a",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF1_FSH_bld",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF1",
+      "target": "FSH_bld",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_LH_Pit_AF3",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "LH_Pit",
+      "target": "AF3",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF3_GnRH_R_i",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF3",
+      "target": "GnRH_R_i",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF2_InhA_delay",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF2",
+      "target": "InhA_delay",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_E2_mass",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "E2",
+      "target": "mass",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Lut4_GnRH_R_a",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Lut4",
+      "target": "GnRH_R_a",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF4_LH_Pit",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF4",
+      "target": "LH_Pit",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_PrF_LH_bld",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "PrF",
+      "target": "LH_bld",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF2_R_FSH",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF2",
+      "target": "R_FSH",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_LH_bld_Sc1",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "LH_bld",
+      "target": "Sc1",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Lut3_Lut4",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Lut3",
+      "target": "Lut4",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Lut3_FSH_bld",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Lut3",
+      "target": "FSH_bld",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF1_FSH_R",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF1",
+      "target": "FSH_R",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_Lut3_Lut4",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Lut3",
+      "target": "Lut4",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_Lut1_Lut3",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Lut1",
+      "target": "Lut3",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Lut4_AF1",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Lut4",
+      "target": "AF1",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF3_R_GnRH_i",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF3",
+      "target": "R_GnRH_i",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_Lut4_AF1",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Lut4",
+      "target": "AF1",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_OvF_Lut1",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "OvF",
+      "target": "Lut1",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_PrF_R_LH_des",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "PrF",
+      "target": "R_LH_des",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_PrF_LH_R",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "PrF",
+      "target": "LH_R",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_R_GnRH_a_InhA",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "R_GnRH_a",
+      "target": "InhA",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Lut2_P4",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Lut2",
+      "target": "P4",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "monotonicity_P4_AF2",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "P4",
+      "target": "AF2",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "monotonicity_freq_E2",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "freq",
+      "target": "E2",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF4_Sc2",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF4",
+      "target": "Sc2",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF2_R_FSH_des",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF2",
+      "target": "R_FSH_des",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_PrF_R_LH",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "PrF",
+      "target": "R_LH",
+      "value": "Inhibition",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF2_R_FSH",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF2",
+      "target": "R_FSH",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_AF2_freq",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "AF2",
+      "target": "freq",
+      "value": "Activation",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF3_R_Foll",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF3",
+      "target": "R_Foll",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "monotonicity_Sc2_FSH_R",
+      "name": "Regulation monotonicity property",
+      "annotation": "",
+      "variant": "RegulationMonotonic",
+      "input": "Sc2",
+      "target": "FSH_R",
+      "value": "Dual",
+      "context": null
+    },
+    {
+      "id": "essentiality_GnRH_InhA",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "GnRH",
+      "target": "InhA",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_PrF_R_LH",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "PrF",
+      "target": "R_LH",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF3_InhB",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF3",
+      "target": "InhB",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_AF1_E2",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "AF1",
+      "target": "E2",
+      "value": "True",
+      "context": null
+    },
+    {
+      "id": "essentiality_Lut4_GnRH_R_a",
+      "name": "Regulation essentiality property",
+      "annotation": "",
+      "variant": "RegulationEssential",
+      "input": "Lut4",
+      "target": "GnRH_R_a",
+      "value": "True",
+      "context": null
+    }
+  ],
+  "annotation": ""
+}
