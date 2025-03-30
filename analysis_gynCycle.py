@@ -24,7 +24,7 @@ for i in range(1, len(cycles)):
 cycles_intersect.append(cycles_intersect[0])
 print(cycles_intersect)
 path_formula_ef, basic_transitions_ef = create_formula_for_path(cycles_intersect, head, on_non_triv_att=False)
-ovulation_behaviour = "!{x}: ((AF1 | AF2 | AF3 | AF4) & ~InhA & ~E2 & EF ((AF1 | AF2 | AF3 | AF4) & InhA & E2 & EF (PrF & EF (OvF & LH_bld & ~(Lut1 | Lut2 | Lut3 | Lut4) & ~P4 & EF (~LH_bld & (Lut1 | Lut2 | Lut3 | Lut4) & ~P4 & EF (~E2 & ~LH_bld & P4 & ~InhA & ~(AF1 | AF2 | AF3 | AF4) & (Lut1 | Lut2 | Lut3 | Lut4) & EF {x}))))))"
+ovulation_behaviour = "!{x}: ((AF1 | AF2 | AF3 | AF4) & ~InhA & ~E2 & EF ((AF1 | AF2 | AF3 | AF4) & InhA & E2 & EF (PrF & EF (OvF & LH_bld & ~(Lut1 | Lut2 | Lut3 | Lut4) & ~P4 & EF (~LH_bld & (Lut1 | Lut2 | Lut3 | Lut4) & ~P4 & EF (~E2 & ~LH_bld & P4 & ~InhA & ~(AF1 | AF2 | AF3 | AF4) & (Lut1 | Lut2 | Lut3 | Lut4)))))))"
 
 msg_ok = ">OK"
 msg_nok = ">FAIL"
