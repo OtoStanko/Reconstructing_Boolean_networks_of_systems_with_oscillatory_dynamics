@@ -264,6 +264,19 @@ def gc_sailor():
     SAILoR_to_aeon(boolean_expressions, os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon"))
 #gc_sailor()
 
+
+def gc_sketchbook():
+    print("Running function: gc_sketchbook")
+    cycles, head = find_first_cycle(os.path.join(gc_model, "gyn_cycle_sim_columns_binarized_simplified_auto.csv"))
+    cycles_intersect = cycles[0]
+    for i in range(1, len(cycles)):
+        cycles_intersect = [val for val in cycles_intersect if val in cycles[i]]
+    cycles_intersect.append(cycles_intersect[0])
+    trs = create_formulae_for_SketchBook_transitions(cycles_intersect, head)
+    for i in trs:
+        print(i)
+gc_sketchbook()
+
 #gc_bin_ts = os.path.join(gc_model, "gyn_cycle_sim_rows_red_binarized.csv")
 #gc_bin_ts_simple = os.path.join(gc_model, "gyn_cycle_sim_rows_red_binarized_simplified.csv")
 #simplify_TS(None, gc_bin_ts, None, gc_bin_ts_simple)

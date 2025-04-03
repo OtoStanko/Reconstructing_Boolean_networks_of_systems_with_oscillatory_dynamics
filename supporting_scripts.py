@@ -227,7 +227,7 @@ def visualize_lynx_hare():
     # Plot each value series against years
     plt.figure(figsize=(10, 6))
     for column in values.columns:
-        plt.plot(years, values[column], label=column)
+        plt.plot(years, values[column], label=column, color="blue" if column=='Hares' else "orange")
 
     # Add labels and title
     plt.xlabel('Year')
@@ -235,12 +235,12 @@ def visualize_lynx_hare():
     plt.title('Hudson Bay company Lynx-Hare dataset (1847 - 1903)')
 
     # Optional: Add a legend to indicate what each line represents
-    plt.legend(loc='upper left')
+    plt.legend(loc='upper right')
 
     # Show the plot
     plt.grid(True)  # Optional: Add grid for better readability
     plt.show()
-#visualize_lynx_hare()
+visualize_lynx_hare()
 
 
 def visualize_lynx_hare_discrete():
@@ -258,21 +258,39 @@ def visualize_lynx_hare_discrete():
         plt.figure(figsize=(10, 6))
         ts = values[feature]
         ts = ts / max(ts)
-        plt.plot(years, ts, label="raw {}".format(feature))
-        plt.plot(years, df_disc[feature], label="discretized {}".format(feature))
+        colors_orig = 'blue' if feature == 'Hares' else 'orange'
+        plt.plot(years, ts, label="normalized {}".format(feature),
+                 color='blue' if feature == 'Hares' else 'orange')
+        plt.plot(years, df_disc[feature], label="discretized {}".format(feature),
+                 color='darkblue' if feature == 'Hares' else 'red')
 
         # Add labels and title
         plt.xlabel('Year')
-        plt.ylabel('# of furs sold to Hudson Bay company')
+        #plt.ylabel('# of furs sold to Hudson Bay company')
         plt.title('Hudson Bay company {} dataset (1847 - 1903) raw vs discretized values'.format(feature))
 
         # Optional: Add a legend to indicate what each line represents
-        plt.legend(loc='upper left')
+        plt.legend(loc='upper right')
 
         # Show the plot
         plt.grid(True)  # Optional: Add grid for better readability
         plt.show()
-#visualize_lynx_hare_discrete()
+
+    plt.figure(figsize=(10, 6))
+    for feature in features:
+        plt.plot(years, df_disc[feature], label="discretized {}".format(feature),
+                 color='darkblue' if feature == 'Hares' else 'red')
+    plt.xlabel('Year')
+    #plt.ylabel('# of furs sold to Hudson Bay company')
+    plt.title('Hudson Bay company dataset (1847 - 1903) discretized values')
+
+    # Optional: Add a legend to indicate what each line represents
+    plt.legend(loc='upper right')
+
+    # Show the plot
+    plt.grid(True)  # Optional: Add grid for better readability
+    plt.show()
+visualize_lynx_hare_discrete()
 
 
 def find_first_cycle(ts_csv_file_path):
@@ -300,6 +318,25 @@ def csv_ts_to_states(ts_csv_file_path):
         row_list = list(row)
         ts.append(row_list)
     return ts, list(df.columns)
+
+
+def create_formulae_for_SketchBook_transitions(ts, head):
+    formula_base = "\exists {x}: \jump {x}: ("
+    states = []
+    for i in range(len(ts)):
+        state = ts[i]
+        formula_terms = []
+        for column, value in zip(head, state):
+            if value == 1:
+                formula_terms.append(column)
+            elif value == 0:
+                formula_terms.append(f"~{column}")
+        state = ' & '.join(formula_terms)
+        states.append(state)
+    basic_transitions = []
+    for i in range(len(states) - 1):
+        basic_transitions.append(formula_base + states[i] + " & EF (" + states[i + 1] + "))")
+    return basic_transitions
 
 
 def create_formula_for_path(ts, head, include_basic_transitions=True, ax=False, on_non_triv_att=False):

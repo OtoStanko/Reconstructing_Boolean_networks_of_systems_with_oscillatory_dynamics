@@ -281,14 +281,14 @@
       "name": "Generic dynamic property",
       "annotation": "",
       "variant": "GenericDynProp",
-      "formula": "3 {x}: (~Hares & ~Lynxes) => (AX (Hares & ~Lynxes))"
+      "formula": "\\exists {x}: \\jump {x}: (~Hares & ~Lynxes & AX (Hares & ~Lynxes))"
     },
     {
-      "id": "lynxes_to_down",
+      "id": "hares_to_both",
       "name": "Generic dynamic property",
       "annotation": "",
       "variant": "GenericDynProp",
-      "formula": "3 {x}: (~Hares & Lynxes) => (AX (~Hares & ~Lynxes))"
+      "formula": "\\exists {x}: \\jump {x}: (Hares & ~Lynxes & AX (Hares & Lynxes))"
     },
     {
       "id": "attractor",
@@ -306,18 +306,18 @@
       "dataset": "dataset_2"
     },
     {
-      "id": "hares_to_both",
+      "id": "lynxes_to_down",
       "name": "Generic dynamic property",
       "annotation": "",
       "variant": "GenericDynProp",
-      "formula": "3 {x}: (Hares & ~Lynxes) => (AX (Hares & Lynxes))"
+      "formula": "\\exists {x}: \\jump {x}: (~Hares & Lynxes & AX (~Hares & ~Lynxes))"
     },
     {
       "id": "both_to_lynxes",
       "name": "Generic dynamic property",
       "annotation": "",
       "variant": "GenericDynProp",
-      "formula": "3 {x}: (Hares & Lynxes) => (AX (~Hares & Lynxes))"
+      "formula": "\\exists {x}: \\jump {x}: (Hares & Lynxes & AX (~Hares & Lynxes))"
     }
   ],
   "stat_properties": [],
