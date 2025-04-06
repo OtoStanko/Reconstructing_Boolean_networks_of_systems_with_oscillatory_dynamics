@@ -35,7 +35,7 @@ for model_path in gc_model_paths:
     bna = BNAnalysis(model_path)
     bna.print_basic_info()
     results_classes = bna.attractor_analysis()
-    results = bna.analyze_periodic_behaviour(basic_transitions_ef, path_formula_ef, ovulation_behaviour, False)
+    results = bna.analyze_periodic_behaviour(basic_transitions_ef, path_formula_ef, ovulation_behaviour, True)
     model_info = model_path.split(os.sep)
     method = model_info[-2]
     model = model_info[-1]

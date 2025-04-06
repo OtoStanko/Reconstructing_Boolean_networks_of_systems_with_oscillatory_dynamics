@@ -240,7 +240,7 @@ def visualize_lynx_hare():
     # Show the plot
     plt.grid(True)  # Optional: Add grid for better readability
     plt.show()
-visualize_lynx_hare()
+#visualize_lynx_hare()
 
 
 def visualize_lynx_hare_discrete():
@@ -290,7 +290,7 @@ def visualize_lynx_hare_discrete():
     # Show the plot
     plt.grid(True)  # Optional: Add grid for better readability
     plt.show()
-visualize_lynx_hare_discrete()
+#visualize_lynx_hare_discrete()
 
 
 def find_first_cycle(ts_csv_file_path):

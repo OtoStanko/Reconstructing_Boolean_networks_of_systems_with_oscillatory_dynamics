@@ -267,7 +267,41 @@ def gc_sailor():
 
 def gc_sketchbook():
     print("Running function: gc_sketchbook")
+    sb = os.path.join(gc_model, "SketchBook")
     cycles, head = find_first_cycle(os.path.join(gc_model, "gyn_cycle_sim_columns_binarized_simplified_auto.csv"))
+    cycles_intersect = cycles[0]
+    for i in range(1, len(cycles)):
+        cycles_intersect = [val for val in cycles_intersect if val in cycles[i]]
+    cycles_intersect.append(cycles_intersect[0])
+    trs = create_formulae_for_SketchBook_transitions(cycles_intersect, head)
+    for i in trs:
+        print(i)
+
+    print()
+    cycles, head = find_first_cycle(
+        os.path.join(sb, "LH_submodel", "gyn_cycle_sim_columns_binarized_simplified_LH.csv"))
+    cycles_intersect = cycles[0]
+    for i in range(1, len(cycles)):
+        cycles_intersect = [val for val in cycles_intersect if val in cycles[i]]
+    cycles_intersect.append(cycles_intersect[0])
+    trs = create_formulae_for_SketchBook_transitions(cycles_intersect, head)
+    for i in trs:
+        print(i)
+
+    print()
+    cycles, head = find_first_cycle(
+        os.path.join(sb, "FSH_submodel", "gyn_cycle_sim_columns_binarized_simplified_FSH.csv"))
+    cycles_intersect = cycles[0]
+    for i in range(1, len(cycles)):
+        cycles_intersect = [val for val in cycles_intersect if val in cycles[i]]
+    cycles_intersect.append(cycles_intersect[0])
+    trs = create_formulae_for_SketchBook_transitions(cycles_intersect, head)
+    for i in trs:
+        print(i)
+
+    print()
+    cycles, head = find_first_cycle(
+        os.path.join(sb, "GnRH_submodel", "gyn_cycle_sim_columns_binarized_simplified_GnRH.csv"))
     cycles_intersect = cycles[0]
     for i in range(1, len(cycles)):
         cycles_intersect = [val for val in cycles_intersect if val in cycles[i]]
