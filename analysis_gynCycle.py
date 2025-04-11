@@ -12,9 +12,11 @@ boolnet_gc_model_path_maxK4 = os.path.join(gc_model, "BoolNet", "gyn-cycle_maxK4
 boolnet_gc_model_path_maxK8 = os.path.join(gc_model, "BoolNet", "gyn-cycle_maxK8.sbml")
 euler_like_gc_model_path = os.path.join(gc_model, "euler-like_transformation", "gyn-cycle_model_fixedNames.aeon")
 sailor_gc_model_path = os.path.join(gc_model, "SAILoR", "gyn-cycle_model.aeon")
+sketchBook_gc_model_path = os.path.join(gc_model, "SketchBook", "reduced_submodel", "sat_networks_1", "candidate_rebuild.aeon")
 gc_model_paths = [boolnet_gc_model_path_full_consts,
                   boolnet_gc_model_path_maxK8,
-                  euler_like_gc_model_path, sailor_gc_model_path]
+                  euler_like_gc_model_path, sailor_gc_model_path,
+                  sketchBook_gc_model_path]
 
 
 cycles, head = find_first_cycle(os.path.join(gc_model, "gyn_cycle_sim_columns_binarized_simplified_auto.csv"))
