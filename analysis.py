@@ -54,7 +54,7 @@ class BNAnalysis:
         print(attractors_dict)
         return results_classes
 
-    def analyze_periodic_behaviour(self, basic_transitions_ef, path_formula_ef, ovulation_behaviour, whole_stg=True):
+    def analyze_periodic_behaviour(self, basic_transitions_ef, path_formula_ef, ovulation_behaviour=None, whole_stg=True):
         print("\nPeriodic behaviour analysis:")
         if whole_stg:
             results_ef_ok = 0
@@ -79,13 +79,14 @@ class BNAnalysis:
                 print(msg_ok)
             else:
                 print(msg_nok)
-            print("Ovul behaviour on whole STG")
-            attractors_mc = ModelChecking.verify(self.stg, ovulation_behaviour)
-            if attractors_mc.cardinality() > 0:
-                print(msg_ok)
-                result_ovul_pattern = True
-            else:
-                print(msg_nok)
+            if ovulation_behaviour is not None:
+                print("Ovul behaviour on whole STG")
+                attractors_mc = ModelChecking.verify(self.stg, ovulation_behaviour)
+                if attractors_mc.cardinality() > 0:
+                    print(msg_ok)
+                    result_ovul_pattern = True
+                else:
+                    print(msg_nok)
 
         print("Analysis on attractors:")
         results_ef_ok_att = 0
@@ -125,26 +126,24 @@ class BNAnalysis:
             else:
                 print_buffer += msg_nok + "\n"
 
-            attractors_mc = ModelChecking.verify(stg_att, ovulation_behaviour)
-            print_buffer += str(attractors_mc.colors()) + " " + str(attractors_mc.vertices()) + "\n"
-            if attractors_mc.cardinality() > 0:
-                result_ovul_att = True
-                print_at_the_end = True
+            if ovulation_behaviour is not None:
+                attractors_mc = ModelChecking.verify(stg_att, ovulation_behaviour)
+                print_buffer += str(attractors_mc.colors()) + " " + str(attractors_mc.vertices()) + "\n"
+                if attractors_mc.cardinality() > 0:
+                    result_ovul_att = True
+                    print_at_the_end = True
 
             if print_at_the_end:
                 print(print_buffer)
 
-        model_info = self.model_path.split(os.sep)
-        method = model_info[-2]
-        model = model_info[-1]
         if whole_stg:
             whole_stg_res = [str(results_ef_ok) + "/" + str(results_ef_ok + results_ef_nok),
-                             result_ef_whole, result_ovul_pattern]
+                             result_ef_whole, result_ovul_pattern if ovulation_behaviour is not None else "-"]
         else:
             whole_stg_res = []
         return (whole_stg_res +
                 [str(results_ef_ok_att) + "/" + str(results_ef_ok_att + results_ef_nok_att),
-                 result_ef_whole_att, result_ovul_att])
+                 result_ef_whole_att, result_ovul_att if ovulation_behaviour is not None else "-"])
 
 
 
