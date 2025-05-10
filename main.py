@@ -208,7 +208,7 @@ SAILoR inference from time series and prior networks
 def gc_sailor():
     print("Running function: gc_sailor")
     from SAILoR.SAILoR import ContextSpecificDecoder
-    prior_network_gyn_cycle = os.path.join(gc_model, "prior_network_gc.csv")
+    prior_network_gyn_cycle = os.path.join(gc_model, "SAILoR", "prior_networks", "prior_network_gc.tsv")
     ode_system_gc = ODESystem(ode_file_gc)
     ode_system_gc.to_network(prior_network_gyn_cycle)
 
