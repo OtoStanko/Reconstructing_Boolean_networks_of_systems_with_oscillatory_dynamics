@@ -135,7 +135,7 @@ def be_sailor():
     print("Running function: be_sailor")
     from SAILoR.SAILoR import ContextSpecificDecoder
 
-    prior_network_bovine_estrous = os.path.join(be_model, "prior_network_be.tsv")
+    prior_network_bovine_estrous = os.path.join(be_model, "SAILoR", "prior_networks", "prior_network_be.tsv")
     ode_system_pp = ODESystem(ode_file_be)
     ode_system_pp.to_network(prior_network_bovine_estrous)
 
