@@ -1,14 +1,14 @@
-Literature:
+<h2> Reconstructing Boolean Network Models of Systems with Complex Oscillatory Dynamics </h2>
 
-ODE gynCycle model: A mathematical model of the human menstrual cycle for the administration of GnRH analogues https://www.sciencedirect.com/science/article/pii/S0022519312005954
+This is a repository for my master thesis work at Faculty of informatics, Masaryk University, Brno.
 
-Inference from ODE:
- * Complementing ODE-Based System Analysis Using Boolean Networks Derived from an Euler-Like Transformation
-   https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0140954
+The official description of the thesis: <br>
+The general topic of the thesis is the reconstruction and analysis of Boolean Networks reflecting complex oscillatory patterns in the dynamics of biological systems. On the one hand, the thesis will bring a new methodological contribution. On the other hand, the methodology will be evaluated on a case study of real-world biological problems.
 
-Inference from TS:
- * SAILoR: Structure-Aware Inference of Logic Rules
-   https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0304102
- * Augusta: From RNA‐Seq to gene regulatory networks and Boolean models
-   https://www.sciencedirect.com/science/article/pii/S2001037024000138
+The theoretical goal of the thesis is to get familiar with the oscillatory behaviour of several biologically relevant systems and to make an overview of modelling and analysis techniques relevant for oscillatory phenomena. The specific focus is given to logical models of Regulatory Networks, in particular, Boolean Networks. 
+
+In the practical part, the student will design a comprehensive workflow combining several methods to address the inference of Boolean Network models from several types of known information. First, already existing differential models (ODE) of oscillatory phenomena will be considered as the source of initially given information. These models will be used to generate synthetic data complementing the inference procedure. Second, the student will also include available experimental data. Third, the hypothesised properties of the oscillatory dynamics will be formally expressed in a suitable temporal logic. The overall workflow will use and combine all these three types of source information to handle the inference task.
+
+Several examples of concrete systems involving oscillatory dynamics will be considered for evaluating the proposed workflow. In particular, the student will consider systems of the bovine estrous cycle and the human menstrual cycle that he has studied in his previous research. Based on the achieved results the student will discuss the advantages and potential drawbacks of the proposed workflow.
+
 
