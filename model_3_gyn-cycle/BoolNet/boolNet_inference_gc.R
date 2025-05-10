@@ -36,25 +36,6 @@ bn
 
 toSBML(bn, file.path(getwd(), model_directory, "BoolNet", "gyn-cycle_full_constraints.sbml"))
 
-#
-# maxK = 4 only
-#
-net <- reconstructNetwork(binarized_data,
-                          method="bestfit",
-                          maxK=4,
-                          readableFunctions=TRUE)
-net
-plotNetworkWiring(net)
-
-ones_vector <- rep(1, length(net$genes))
-dontCareDefaults <- lapply(seq_along(net$interactions),
-                           function(idx)
-                             rep(F, sum(net$interactions[idx][[1]][[ones_vector[idx]]]$func == -1)))
-names(dontCareDefaults) <- net$genes
-bn <- chooseNetwork(net, ones_vector, dontCareValues=dontCareDefaults)
-bn
-
-toSBML(bn, file.path(getwd(), model_directory, "BoolNet", "gyn-cycle_maxK4.sbml"))
 
 #
 # maxK = 8 only
