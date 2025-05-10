@@ -1,14 +1,38 @@
-<h2> Reconstructing Boolean Network Models of Systems with Complex Oscillatory Dynamics </h2>
+# Reconstructing Boolean Network Models of Systems with Complex Oscillatory Dynamics
 
-This is a repository for my master thesis work at Faculty of informatics, Masaryk University, Brno.
+This repository contains the implementation, data, and documentation associated with my master's thesis at the [Faculty of Informatics, Masaryk University](https://www.fi.muni.cz/), Brno.
 
-The official description of the thesis: <br>
-The general topic of the thesis is the reconstruction and analysis of Boolean Networks reflecting complex oscillatory patterns in the dynamics of biological systems. On the one hand, the thesis will bring a new methodological contribution. On the other hand, the methodology will be evaluated on a case study of real-world biological problems.
+## Thesis Description
 
-The theoretical goal of the thesis is to get familiar with the oscillatory behaviour of several biologically relevant systems and to make an overview of modelling and analysis techniques relevant for oscillatory phenomena. The specific focus is given to logical models of Regulatory Networks, in particular, Boolean Networks. 
+**Title**: *Reconstructing Boolean Network Models of Systems with Complex Oscillatory Dynamics*
 
-In the practical part, the student will design a comprehensive workflow combining several methods to address the inference of Boolean Network models from several types of known information. First, already existing differential models (ODE) of oscillatory phenomena will be considered as the source of initially given information. These models will be used to generate synthetic data complementing the inference procedure. Second, the student will also include available experimental data. Third, the hypothesised properties of the oscillatory dynamics will be formally expressed in a suitable temporal logic. The overall workflow will use and combine all these three types of source information to handle the inference task.
+**Author**: Oto Stanko  
+**Institution**: Faculty of Informatics, Masaryk University  
+**Program**: Master's Degree in Artificial intelligence and data processing, Bioinformatics and systems biology
 
-Several examples of concrete systems involving oscillatory dynamics will be considered for evaluating the proposed workflow. In particular, the student will consider systems of the bovine estrous cycle and the human menstrual cycle that he has studied in his previous research. Based on the achieved results the student will discuss the advantages and potential drawbacks of the proposed workflow.
+The general topic of the thesis is the reconstruction and analysis of Boolean Networks (BNs) that reflect complex oscillatory patterns in biological systems.
 
+## Objectives
 
+1. **Understand Oscillatory Biological Systems**  
+   Explore the oscillatory behavior of several biologically relevant systems.
+
+2. **Design an Inference Workflow**  
+   Develop a comprehensive pipeline to reconstruct Boolean Network models from:
+   - Existing ODE-based differential models
+   - Available experimental data
+   - Formalized hypotheses about system behavior
+
+3. **Evaluate on Case Studies**  
+   Apply the workflow to biologically meaningful systems:
+   - Predator-prey system
+   - Bovine estrous cycle
+   - Human menstrual cycle
+
+5. **Analysis and Discussion**  
+   Discuss the benefits, limitations, and potential extensions of the proposed approach
+
+## Workflow Overview
+
+The figure below illustrates the complete inference pipeline combining ODE models, experimental data, and formal dynamic properties:
+![Workflow Diagram](workflow.png)
