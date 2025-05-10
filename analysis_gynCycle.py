@@ -24,9 +24,10 @@ for i in range(1, len(cycles)):
 cycles_intersect.append(cycles_intersect[0])
 print(cycles_intersect)
 path_formula_ef, basic_transitions_ef = create_formula_for_path(cycles_intersect, head, on_non_triv_att=False)
-ovulation_behaviour = "!{x}: ((AF1 | AF2 | AF3 | AF4) & ~InhA & ~E2 & EF ((AF1 | AF2 | AF3 | AF4) & InhA & E2 & EF (PrF & EF (OvF & LH_bld & ~(Lut1 | Lut2 | Lut3 | Lut4) & ~P4 & EF (~LH_bld & (Lut1 | Lut2 | Lut3 | Lut4) & ~P4 & EF (~E2 & ~LH_bld & P4 & ~InhA & ~(AF1 | AF2 | AF3 | AF4) & (Lut1 | Lut2 | Lut3 | Lut4 & EF ({x}))))))))"
+ovulation_behaviour = "!{x}: ((AF1 | AF2 | AF3 | AF4) & ~InhA & ~E2 & EF ((AF1 | AF2 | AF3 | AF4) & InhA & E2 & EF (PrF & EF (OvF & LH_bld & ~(Lut1 | Lut2 | Lut3 | Lut4) & ~P4 & EF (~LH_bld & (Lut1 | Lut2 | Lut3 | Lut4) & ~P4 & EF (~E2 & ~LH_bld & P4 & ~InhA & ~(AF1 | AF2 | AF3 | AF4) & (Lut1 | Lut2 | Lut3 | Lut4)))))))"
 
 cycles_whole = [item for sublist in cycles for item in sublist]
+cycles_whole.append(cycles_whole[0])
 path_formula_ef_whole, basic_transitions_ef_whole = create_formula_for_path(cycles_whole, head, on_non_triv_att=False)
 
 msg_ok = ">OK"

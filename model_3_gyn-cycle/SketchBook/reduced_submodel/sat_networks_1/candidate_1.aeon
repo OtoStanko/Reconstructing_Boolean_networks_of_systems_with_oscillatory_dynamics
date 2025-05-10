@@ -41,4 +41,17 @@ $R_Foll: !P4 | FSH_red
 $Sc: !Sc
 $freq: !P4 | E2
 $mass: E2
+#position:AF_red:294.79025,801.22003
+#position:P4:109.78359,653.8724
+#position:OvF:455.698,801.9749
+#position:Inh:147.02058,708.70294
+#position:FSH_red:424.06943,601.95264
+#position:freq:104.99239,471.43967
+#position:LH_red:283.83414,593.7105
+#position:Sc:516.42773,776.4159
+#position:Lut:619.03564,770.2758
+#position:E2:129.50406,562.6848
+#position:mass:38.25953,533.5483
+#position:R_Foll:322.27667,684.5808
+#position:GnRH:398.59918,478.89377
 

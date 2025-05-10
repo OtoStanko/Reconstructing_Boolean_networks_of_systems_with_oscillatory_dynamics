@@ -28,6 +28,9 @@ print(len(cycles_intersect))
 path_formula_ef, basic_transitions_ef = create_formula_for_path(cycles_intersect, head, on_non_triv_att=False)
 ovulation_behaviour = "!{x}: (Foll & EF (E2 & Inh & Foll & EF (E2 & LH & ~P4 & Inh & ~CL & EF (~LH & ~P4 & CL & EF (~E2 & ~LH & P4 & ~Inh & ~Foll & CL & (EF {x}))))))"
 
+cycles_whole = [item for sublist in cycles for item in sublist]
+path_formula_ef_whole, basic_transitions_ef_whole = create_formula_for_path(cycles_whole, head, on_non_triv_att=False)
+
 msg_ok = ">OK"
 msg_nok = ">FAIL"
 
@@ -37,10 +40,11 @@ for model_path in be_model_paths:
     bna.print_basic_info()
     results_classes = bna.attractor_analysis()
     results = bna.analyze_periodic_behaviour(basic_transitions_ef, path_formula_ef, ovulation_behaviour)
+    results_3_cycles = bna.analyze_periodic_behaviour(basic_transitions_ef_whole, "true", None)
     model_info = model_path.split(os.sep)
     method = model_info[-2]
     model = model_info[-1]
-    models_results[(method, model)] = [results_classes, results]
+    models_results[(method, model)] = [results_classes, results, results_3_cycles]
 
 for model_results in models_results.items():
     print(model_results)

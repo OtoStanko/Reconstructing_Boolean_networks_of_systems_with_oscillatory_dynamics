@@ -20,7 +20,7 @@ Sc -| Sc
 E2 -> freq
 P4 -| freq
 E2 -> mass
-$AF_red: (LH_red & R_Foll) | (!LH_R & !R_Foll) | (FSH_R & LH_R & !R_Foll)
+$AF_red: (LH_R & R_Foll) | (!LH_R & !R_Foll) | (FSH_R & LH_R & !R_Foll)
 $E2: Lut | (AF_red & LH_bld)
 $Inh: OvF | Lut | AF_red
 $Lut: OvF | !GnRH_R_a
