@@ -7,7 +7,7 @@ wc = os.getcwd()
 
 """
 **********************************
-    Predator-prey model abstractions
+    Predator-prey model inference
 **********************************
 """
 pp_model = os.path.join(wc, "model_1_predator-prey")
@@ -94,28 +94,12 @@ def pp_sailor():
 
 """
 **********************************
-    Bovine-estrous cycle abstractions
+    Bovine-estrous cycle inference
 **********************************
 """
 be_model = os.path.join(wc, "model_2_bovine-estrous")
 ode_file_be = os.path.join(be_model, "bovine-estrous-cycle_ODE_model.dode")
 sim_raw_be = os.path.join(be_model, "bov_cycle_ODE_sim_columns.csv")
-
-"""
-Augusta
-"""
-def be_augusta():
-    print("Running function: be_augusta")
-    from Augusta.Augusta import RNASeq_to_BN
-    df = pd.read_csv(sim_raw_be, delimiter='\t')
-    df = df.T
-    df = df.iloc[1:]
-    df = df * 1000
-    print(df.index)
-    print(df)
-    df.to_csv('output.csv', sep=';')
-    RNASeq_to_BN(count_table_input = 'output.csv')
-#be_augusta()
 
 
 """
@@ -166,38 +150,18 @@ def be_sailor():
     for bfun in best:
         boolean_expressions.append(bfun[4])
     print(boolean_expressions)
-    SAILoR_to_aeon(boolean_expressions, os.path.join(be_model, "SAILoR", "bovine-estrous_model_binarised_2.aeon"))
+    SAILoR_to_aeon(boolean_expressions, os.path.join(be_model, "SAILoR", "bovine-estrous_model_binarised.aeon"))
 #be_sailor()
 
 
 """
 **********************************
-    Gyn cycle abstractions
+    Gyn cycle inference
 **********************************
 """
 gc_model = os.path.join(wc, "model_3_gyn-cycle")
 ode_file_gc = os.path.join(gc_model, "gyn-cycle_ODE_model.dode")
 sim_raw_gc = os.path.join(gc_model, "copasi_sim_columns.csv")
-
-"""
-Augusta
-"""
-def gc_augusta():
-    print("Running function: gc_augusta")
-    from Augusta.Augusta import RNASeq_to_BN
-    df = pd.read_csv(sim_raw_gc, delimiter='\t')
-    df = df.T
-    df = df.iloc[1:]
-    rows_to_drop = ['Ant_c', 'Ago_R_i', 'Ago_R_a','Ant_p','Ant_d',
-                    'Ago_d', 'Ago_c', 'Ant_R', ]
-    for row_to_drop in rows_to_drop:
-        df = df.drop(index=row_to_drop)
-    df = df * 10
-    print(df.index)
-    print(df)
-    df.to_csv('output.csv', sep=';')
-    RNASeq_to_BN(count_table_input = 'output.csv')
-#gc_augusta()
 
 
 """

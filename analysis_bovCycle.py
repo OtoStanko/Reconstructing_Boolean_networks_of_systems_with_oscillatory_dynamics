@@ -1,7 +1,5 @@
 import os
 
-from biodivine_aeon import *
-
 from analysis import BNAnalysis
 from supporting_scripts import create_formula_for_path, find_first_cycle
 
@@ -10,12 +8,10 @@ boolnet_be_model_path_full_const = os.path.join(be_model, "BoolNet", "bovine-est
 boolnet_be_model_path_maxK4 = os.path.join(be_model, "BoolNet", "bovine-estrous_maxK4_colored_edges.aeon")
 euler_like_automated_be_model_path = os.path.join(be_model, "euler-like_transformation", "bovine-estrous-cycle_model_colored_edges.aeon")
 sailor_be_model_path = os.path.join(be_model, "SAILoR", "colored_bovine-estrous_model_binarised.aeon")
-sketchBook_be_model_path = os.path.join(be_model, "SketchBook", "candidate_1.aeon")
-sketchBook_be_model_path_2 = os.path.join(be_model, "SketchBook", "candidate_2.aeon")
+sketchBook_be_model_path = os.path.join(be_model, "SketchBook", "sat_networks_1", "candidate_1.aeon")
 be_model_paths = [boolnet_be_model_path_full_const, boolnet_be_model_path_maxK4,
                   euler_like_automated_be_model_path,
-                  sailor_be_model_path, sketchBook_be_model_path,
-                  sketchBook_be_model_path_2]
+                  sailor_be_model_path, sketchBook_be_model_path]
 
 
 cycles, head = find_first_cycle(os.path.join(be_model, "bov_cycle_ODE_sim_columns_binarized_simplified_auto.csv"))
