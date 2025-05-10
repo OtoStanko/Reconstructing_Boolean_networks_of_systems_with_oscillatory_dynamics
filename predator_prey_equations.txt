@@ -1,2 +1,0 @@
-h_{x}(x, y) \\ = alpha_p * X_{x} - beta_p * X_{x} * X_{y}
-h_{y}(x, y) \\ = -gama_p * X_{y} + delta_p * X_{x} * X_{y}
