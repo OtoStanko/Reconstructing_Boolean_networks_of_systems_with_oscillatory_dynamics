@@ -1,6 +1,4 @@
-import os.path
 import re
-from cProfile import label
 
 import scipy.signal
 
@@ -47,45 +45,6 @@ def parameter_names():
                     print(new_name, file=of)
 
 
-def gyn_cycle_augusta_run():
-    df = pd.read_csv('model_3_gyn-cycle/copasi_sim_columns.csv', delimiter='\t')
-    df = df.T
-    import Augusta
-    df = df.iloc[1:]
-    rows_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
-                    'Ago_d', 's113', 's114', 's115', 's116',
-                    'Ago_c', 'Ant_R', ]
-    for row_to_drop in rows_to_drop:
-        df = df.drop(index=row_to_drop)
-    df = df * 1000
-    print(df.index)
-    print(df)
-    df.to_csv('output.csv', sep=';')
-    Augusta.RNASeq_to_BN(count_table_input = 'output.csv')
-#hormonal_cycle_augusta_run()
-
-
-def predator_prey_augusta_run():
-    df = pd.read_csv('model_1_predator-prey/predator_prey_ODE_sim_columns.csv', delimiter='\t')
-    time_column = df.columns[0]
-    df = df[df['Time'] >= 4]
-    for column in df.columns[1:]:
-        #plt.figure(figsize=(10, 6))  # Create a new figure for each column
-        plt.plot(df[time_column], df[column], label=column)
-    plt.legend()
-    plt.grid(True)
-    plt.show()
-    df = df.T
-    df = df.iloc[1:]
-    import Augusta
-    #df = (df * 100).astype(int)
-    print(df.index)
-    print(df)
-    df.to_csv('predator_prey_ODE_sim_results_T.csv', sep=';')
-    Augusta.RNASeq_to_BN(count_table_input = 'predator_prey_ODE_sim_results_T.csv')
-#predator_prey_augusta_run()
-
-
 def gyn_cycle_visualization():
     df = pd.read_csv('model_3_gyn-cycle/copasi_sim_columns.csv', delimiter='\t')
     columns_to_drop = ['Ant_c', 'Ago_R-i', 'Ago_R-a','Ant_p','Ant_d',
@@ -99,22 +58,32 @@ def gyn_cycle_visualization():
 
     GnRH_cycle = [['GnRH'], ['R_GnRH_i', 'R_GnRH_a', 'GnRH_R_i', 'GnRH_R_a'], ['freq'], ['mass']]
     GnRH_cycle_c = [['orange'], ['lightblue', 'blue', 'lightgreen', 'green'], ['red'], ['black']]
+    GnRH_cycle_y = ['nmol/L', 'nmol/L', '', '']
 
     LH_cycle = [['LH_Pit'], ['LH_bld'], ['R_LH', 'LH_R', 'R_LH_des']]
     LH_cycle_c = [['yellow'], ['orange'], ['pink', 'red', 'gray']]
+    LH_cycle_y = ['IU', 'IU/L', 'IU/L']
 
     FSH_cycle = [['FSH_pit'], ['FSH_bld'], ['R_FSH', 'FSH_R', 'R_FSH_des']]
     FSH_cycle_c = [['yellow'], ['orange'], ['pink', 'red', 'gray']]
+    FSH_cycle_y = ['IU', 'IU/L', 'IU/L']
 
     CLs_P4 = [["P4"], ["Sc1", "Sc2"], ["Lut1", "Lut2", "Lut3", "Lut4"]]
     CLs_P4_c = [["darkblue"], ["lightblue", "blue"], ["lightgreen", "lightgreen", "lightgreen", "darkgreen"]]
+    CLs_P4_y = ['ng/mL', '[Foll]', '[Foll]']
 
-    E2_Inh_folls = [["E2", "InhA_delay", "InhB"], ["InhA", "PrF", "R_Foll"], ["AF1", "AF2", "AF3", "AF4"], ["OvF"]]
-    E2_Inh_folls_c = [["red", "blue", "green"], ["darkblue", "darkgray", "cyan"], ["gray", "lightgreen", "gray", "black"], ["orange"]]
+    E2_Inh = [["E2", "InhB"], ["InhA_delay"], ["InhA"]]
+    E2_Inh_c = [["red", "green"], ["blue"], ["darkblue"]]
+    E2_Inh_y = ['pg/mL', "IU/mL", "IU/mL"]
+
+    folls = [["PrF"], ["R_Foll"], ["AF1", "AF2", "AF3", "AF4"], ["OvF"]]
+    folls_c = [["darkgray"], ["cyan"], ["gray", "lightgreen", "gray", "black"], ["orange"]]
+    folls_y = ["[Foll]", "-", "[Foll]", "[Foll]"]
 
 
-    plots = [GnRH_cycle, LH_cycle, FSH_cycle, CLs_P4, E2_Inh_folls]
-    plots_colors = [GnRH_cycle_c, LH_cycle_c, FSH_cycle_c, CLs_P4_c, E2_Inh_folls_c]
+    plots = [GnRH_cycle, LH_cycle, FSH_cycle, CLs_P4, E2_Inh, folls]
+    plots_colors = [GnRH_cycle_c, LH_cycle_c, FSH_cycle_c, CLs_P4_c, E2_Inh_c, folls_c]
+    y_labels = [GnRH_cycle_y, LH_cycle_y, FSH_cycle_y, CLs_P4_y, E2_Inh_y, folls_y]
 
     lh_peaks, _ = scipy.signal.find_peaks(df["LH_bld"], distance=10, height=0.5)
     if len(lh_peaks) >= 4:
@@ -130,8 +99,8 @@ def gyn_cycle_visualization():
     #starttime = 50
     #endtime = len(df[time_column])
 
-    for plot, colors in zip(plots, plots_colors):
-        print(plot, colors)
+    for plot, colors, lbls in zip(plots, plots_colors, y_labels):
+        print(plot, colors, lbls)
         fig, axes = plt.subplots(nrows=len(plot), ncols=1, figsize=(8, 10), sharex=True)
         for i in range(len(plot)):
             grp = plot[i]
@@ -142,17 +111,12 @@ def gyn_cycle_visualization():
                              label=hormone, color=colors[i][j])
             axes[i].axvline(t_ovu, color='lightgray', ls='--')
             axes[i].legend(loc='upper right')
+            axes[i].set_ylabel(lbls[i])
+        plt.xlabel("Time [days]")
         plt.show()
     #plt.title(f"Time Series Plot for {column}")
     #plt.legend()
-#gyn_cycle_visualization()
-
-def hormonal_cycle_euler_transform_to_aeon():
-    create_aeon_model("model_3_gyn-cycle/hormonal_cycle_equations.txt", "model_3_gyn-cycle/boolean_functions_aeon.aeon")
-    with open("boolean_functions_aeon", "a") as bool_funcs_aeon:
-        print("$mass: true", file=bool_funcs_aeon, end='\n')
-        print("$freq: !freq", file=bool_funcs_aeon, end='\n')
-        print("freq -? freq", file=bool_funcs_aeon, end='\n')
+gyn_cycle_visualization()
 
 
 def simplify_parameters_file(in_file, out_file):
