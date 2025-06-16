@@ -1,0 +1,3 @@
+[submodule "SAILoR"]
+	path = SAILoR
+	url = https://github.com/OtoStanko/SAILoR.git
