@@ -36,3 +36,14 @@ The general topic of the thesis is the reconstruction and analysis of Boolean Ne
 
 The figure below illustrates the complete inference pipeline combining ODE models, experimental data, and formal dynamic properties:
 ![Workflow Diagram](workflow.png)
+
+
+## Reproducibitily
+
+The repository contains all the necessary time series for the inference process for each of the three biological systems with each of the four inference methods used in the thesis. Folder for each of the systems contains preprocessed TS before and after preprocessing (binarisation, transposition).
+
+The main files for inference are `main.py` (Euler-like tranformation, SAILoR) and `BoolNet_inference_pp.R`, `BoolNet_inference_be.R`, `boolNet_inference_gc.R` (BoolNet) in the systems' subfolders. As SketchBook is designed in a user-friendly way with implemented GUI, there is no code reproducibility. The sketches for individual systems need to be imported from the corresponding folder of the biological system and then the inference can be run from SketchBook.
+
+To run the inference of predator-prey model with Euler-like transformation navigate to the `main.py` file to the part marked as "Predator-prey model inference" and then "euler-like transformation" and run the corresponding function. To run the inference of a different system, navigate to the corresponding part of the main.py file and an appropriate function. For the inference with the BoolNet, see the R script in the corresponding system's\BoolNet folder.
+
+The analysis, which includes extraction of dynamical properties and their coding to HCTL, is divided by the systems to `analysis_predator-prey.py`, `analysis_bovCycle.py` and `analysis_gynCycle.py`. The analysis column-oriented TS of the system in a .csv file and a list of Boolean networks paths.
